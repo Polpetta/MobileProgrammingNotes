@@ -262,20 +262,31 @@ non viene fatta in automatico (in Wi-Fi Direct è prevista dal protocollo).
 L'obiettivo di questo standard è di definire una rete wireless a corto
 raggio e con consumi ridotti.
 
-\paragraph{Bluetooth}
-L'idea fondamentale di \textbf{Bluetooth} è di fornire un'interfaccia comune per le comunicazioni wireless ad-hoc, mantenendo:
+\paragraph{Bluetooth - IEEE 802.15.1}
+L'idea fondamentale di \textbf{Bluetooth} è di fornire un'interfaccia comune per 
+le comunicazioni wireless ad-hoc, mantenendo:
 \begin{itemize}
   \item costi bassi;
-  \item raggio d'azione piuttosto corto: il range è 1-100m ma tipicamente non si va oltre i 10m;
-  \item limitando il consumo energetico: infatti Bluetooth consuma meno sia del 3G che del Wi-Fi. 
+  \item raggio d'azione piuttosto corto: il range è 1-100m ma tipicamente non si 
+        va oltre i 10m;
+  \item limitando il consumo energetico: infatti Bluetooth consuma meno sia del 
+        3G che del Wi-Fi. 
 \end{itemize}
 Cercando di mantenere una velocità di trasmissione accettabile (2.1Mbps).
-Tale tecnologia sfrutta la banda a 2.4GHz che, però, essendo libera, è utilizzata da molte altre tecnologie. 
+Tale tecnologia sfrutta la banda a 2.4GHz che, però, essendo libera, è 
+utilizzata da molte altre tecnologie. 
 
 Bluetooth utilizza 2 tipologie di accesso al canale: 
 \begin {itemize}
-  \item \textbf{FHSS(Frequency Hopping Spread Spectrum) con TDD(Time Division Duplex)}, cioè la frequenza di comunicazione viene cambiata in un modo pseudo-random noto sia al trasmettitore che al ricevente, simulando che il canale di comunicazione si full duplex anche se è half duplex (viene simulato un canale che può essere utilizzato per l'invio e la ricezione simultanea con un canale che permette solo una di queste due alla volta);
-  \item \textbf{AFH(Adaptive Frequency Hopping)}, una variante del FHSS nella quale si cerca di evitare di utilizzare dei canali che sono già in uso da altri dispositivi.
+  \item \textbf{FHSS(Frequency Hopping Spread Spectrum) con TDD(Time Division 
+        Duplex)}, cioè la frequenza di comunicazione viene cambiata in un modo 
+        pseudo-random noto sia al trasmettitore che al ricevente, simulando che 
+        il canale di comunicazione sia full duplex anche se è half duplex (viene 
+        simulato un canale che può essere utilizzato per l'invio e la ricezione 
+        simultanea con un canale che permette solo una di queste due alla volta);
+  \item \textbf{AFH(Adaptive Frequency Hopping)}, una variante del FHSS nella 
+        quale si cerca di evitare di utilizzare dei canali che sono già in uso 
+        da altri dispositivi.
 
 Un dispositivo che utilizza Bluetooth può essere in uno dei seguenti stati:
 \begin{itemize}
@@ -284,13 +295,59 @@ Un dispositivo che utilizza Bluetooth può essere in uno dei seguenti stati:
   \item Page: quando è connesso ad un altro dispositivo;
   \item Connected: quando è parte di una piconet;
   \item Parked: quando è addormentato per risparmiare più energia possibile;
-  \item Sniff: quando controlla il canale periodicamente al posto di essere sempre in ascolto (risparmio energetico)
-  \item Hold: quando si addormenta per un determinato periodo, passato il quale ritorna in uno stato attivo.
+  \item Sniff: quando controlla il canale periodicamente al posto di essere 
+        sempre in ascolto (risparmio energetico)
+  \item Hold: quando si addormenta per un determinato periodo, passato il quale 
+        ritorna in uno stato attivo.
 \end{itemize}
 
-Questa tecnologia prevede che un certo dispositivo implementi uno o più profili, ovvero una serie di protocolli che definiscono lo scopo per il quale Bluetooth è sfruttato (esempi di profili sono: trasmissione di file, telefonia cordless, accesso rete LAN, sincronizzazione, ...).
+Questa tecnologia prevede che un certo dispositivo implementi uno o più profili, 
+ovvero una serie di protocolli che definiscono lo scopo per il quale Bluetooth è 
+sfruttato (esempi di profili sono: trasmissione di file, telefonia cordless, 
+accesso rete LAN, sincronizzazione, ...).
 
-Tramite il bluetooth i dispositivi creano delle reti a stella chiamate \textbf{piconet}. In ogni piconet è presente un master e al massimo 7 slave attivi (ce ne possono essere più di 200 in stato non attivi)
+Tramite il bluetooth i dispositivi creano delle reti a stella chiamate 
+\textbf{piconet}. In ogni piconet è presente un master e al massimo 7 slave 
+attivi (ce ne possono essere più di 200 in stato non attivi)
 
-Più piconet possono essere unite per formare una \textbf{scatternet}: in questo caso la congiunzione tra le due reti avviene tramite uno dei dispositivi, con la limitazione che questo non può essere master in entrambe le reti che unisce(può essere master in una e slave nell'altra o slave in entrambe).
+Più piconet possono essere unite per formare una \textbf{scatternet}: in questo 
+caso la congiunzione tra le due reti avviene tramite uno dei dispositivi, con la 
+limitazione che questo non può essere master in entrambe le reti che unisce(può 
+essere master in una e slave nell'altra o slave in entrambe).
 
+\paragraph{BLE - Bluetooth Low Energy}
+BLE è un'evoluzione del classico Bluetooth, rilasciata nel 2010, che ne migliora 
+le performance. Infatti BLE, oltre ad essere più veloce, consuma meno energia ed 
+è meno costoso. Ciò deriva dal fatto che il chip responsabile delle trasmissioni 
+è inattivo per la maggior parte del tempo ed è stata diminuita la dimensione 
+massima dei pacchetti scambiati. Oltre a ciò BLE aggiunge nuovi profili.
+
+\paragraph{IEEE 802.15.4}
+Lo IEEE 802.15.4 è uno standard per le comunicazione nelle PAN a bassissimi:
+\begin{itemize}
+  \item costo;
+  \item velocità;
+  \item energia.
+\end{itemize}
+
+I dispositivi che lo sfruttano sono pensati per avere una batteria che dura 
+molto a lungo (anche un paio d'anni), di facile utilizzo e basso costo. Tale 
+standand è utilizzato per esempio nei giocattoli interattivi e per reti 
+domestiche.
+
+La banda utilizzata è sempre quella a 2,4GHz, poichè libera, al quale viene 
+aggiunta una banda a 868MHz, in Europa, e a 915MHz, negli USA.
+
+I dispositivi che sfruttano lo IEEE 802.15.4 possono essere divisi in 
+\textbf{full function device (FFD)}, i quali implementano tutte le funzionalità 
+previste dal protocollo, \textbf{reduced function device (RFD)}, che invece ne 
+prevedono solamente un sottoinsieme e possono essere solamente impiegati come 
+foglie nelle reti, e \textbf{PAN coordinator}, che hanno lo scopo di fare da 
+coordinatori alla rete.
+
+Nelle reti con topologia a stella ci sarà un PAN coordinator come noddo centrale 
+e una combianazione qualsiasi delle altr due tipologie come foglie della rete. 
+Nelle reti ad albero, invece, il PAN coordinator sarà la radice dell'albero, gli 
+RFD le foglie, mentre gli FFD potranno essere sia foglie che nodi interni. 
+
+%=========MANCA P2P PER 802.15.4 pg 55 e poi da pg 57===================================

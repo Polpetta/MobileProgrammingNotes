@@ -17,20 +17,33 @@ Questo però comporta un problema a livello di frammentazione:
 	\item più versioni del sistema operativo sul mercato in contemporanea in quanto i dispositivi più datati non possono essere aggiornati.
 \end{itemize}
 
-In ogni caso vale la pena investire nel mercato mobile perché è ancora in espansione.
+Nonostante ciò, il mercato degli smartphone è molto interessante perché è ancora in forte espansione: negli ultimi 3 anni il tempo trascorso per la consultazione di media digitali tramite mobile è più che raddoppiato (figura \ref{lab1-fig-1}), tant'è che lo smartphone è la piattaforma più utilizzata indipendentemente dall'età (figura \ref{lab1-fig-1bis}), fatta eccezione per gli over 65, i quali utilizzano per lo più computer o tablet.
+L'utilizzo principale degli smartphone riguarda l'intrattenimento e la comunicazione, con i social network al primo posto come categoria di applicazione più utilizzata (figura \ref{lab1-fig-2}).
 
-%\includegraphics[width=2.55578in,height=1.91896in]{media/image6.png}\includegraphics[width=2.36226in,height=1.52157in]{media/image2.png}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{lab1-fig-1}
-	\caption{Crescita del tempo trascorso nell'utilizzo di applicazioni sullo smartphone.}
+	\caption{Crescita del tempo trascorso nella consultazione di contenuti digitali. Dal grafico si può osservare come gli smartphone siano il fattore trainante della crescita.}\label{lab1-fig-1}
 \end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{lab1-fig-1bis}
+	\caption{Dispositivi utilizzati al variare dell'età. Anche in questo caso lo smartphone risulta essere il più utilizzato per la maggior parte delle fasce d'età.}\label{lab1-fig-1bis}
+\end{figure}
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{lab1-fig-2}
-	\caption{Tempo d'utilizzo delle applicazioni per smartphone suddiviso per categoria.}
+	\caption{Tempo d'utilizzo delle applicazioni per smartphone suddiviso per categoria.}\label{lab1-fig-2}
 \end{figure}
+
+
+Per quanto riguarda il come vengono scoperte nuove applicazioni, si ha che iniziano ad essere più efficaci i canali in \textit{push}, in particolare quelli quelli legati alle pubblicità \textit{in-app} e sui social network, anche se la ricerca tramite App Store risulta essere ancora il sistema di scoperta più utilizzato.
+
+Infine, un altro trend importante per le applicazioni mobile riguarda l'accettazione delle notifiche push da parte dell'utente: nell'ultimo anno la percentuale di utenti che non ha concesso il permesso di inviare notifiche ad un'applicazione è passata dal 31\% al 38\%.
+Questo aumento può essere dovuto al fatto che è aumentato il numero di applicazioni scaricate da parte dell'utente e che di conseguenza vengano accettate solo le notifiche per le applicazioni che l'utente ritiene importanti.
 
 \section{Architettura di Android}\label{architettura-di-android}
 
@@ -65,7 +78,7 @@ Android si basa su un'architettura a stack:
 		\textbf{Android runtime:} inizialmente utilizzava la Dalvik Virtual
 		Machine, un'implementazione della JVM adatta a funzionare con poche
 		risorse, con licenza open source e più efficiente della OracleJVM. Le
-		applicazioni consistevano quindi una serie di file .dex contenti del
+		applicazioni consistevano quindi una serie di file \texttt{.dex} contenti del
 		Bytecode che veniva interpretato dalla VM e che in alcuni casi veniva
 		ottimizzato mediante un compilatore just-in-time. A partire da Android
 		5.0 la DalvikVM è stata sostituita da \textbf{Android Runtime (ART)},

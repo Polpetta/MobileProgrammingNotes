@@ -24,13 +24,13 @@ L'utilizzo principale degli smartphone riguarda l'intrattenimento e la comunicaz
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{lab1-fig-1}
-	\caption{Crescita del tempo trascorso nella consultazione di contenuti digitali. Dal grafico si può osservare come gli smartphone siano il fattore trainante della crescita.}\label{lab1-fig-1}
+	\caption[Crescita del tempo trascorso nella consultazione di contenuti digitali]{Crescita del tempo trascorso nella consultazione di contenuti digitali. Dal grafico si può osservare come gli smartphone siano il fattore trainante della crescita.}\label{lab1-fig-1}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{lab1-fig-1bis}
-	\caption{Dispositivi utilizzati al variare dell'età. Anche in questo caso lo smartphone risulta essere il più utilizzato per la maggior parte delle fasce d'età.}\label{lab1-fig-1bis}
+	\caption[Dispositivi utilizzati al variare dell'età]{Dispositivi utilizzati al variare dell'età. Anche in questo caso lo smartphone risulta essere il più utilizzato per la maggior parte delle fasce d'età.}\label{lab1-fig-1bis}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -82,7 +82,7 @@ Android si basa su un'architettura a stack:
 		Bytecode che veniva interpretato dalla VM e che in alcuni casi veniva
 		ottimizzato mediante un compilatore just-in-time. A partire da Android
 		5.0 la DalvikVM è stata sostituita da \textbf{Android Runtime (ART)},
-		un sistema che utilizza tecniche di compilazione ahead-of-time per
+		un sistema che utilizza tecniche di compilazione \textit{ahead-of-time} per
 		tradurre il codice Bytecode (lo stesso che veniva interpretato dalla
 		Dalvik VM) in codice nativo. Così facendo il codice nativo deve essere
 		prodotto solamente all'installazione dell'applicazione e può essere
@@ -96,6 +96,11 @@ Android si basa su un'architettura a stack:
 		\textbf{Applicazioni}: app sviluppate utilizzando l'SDK.
 \end{itemize}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{lab1-fig-3bis}
+	\caption[Confronto tra Dalvik e ART]{Confronto tra Dalvik e ART. Con Dalvik, quando viene installato un \texttt{.apk}, il Bytecode contenuto viene trasformato in un Bytecode ottimizzato (\texttt{.odex} file) per poi essere interpretato all'esecuzione dell'applicazione, con delle ottimizzazioni effettuate da un compilatore JIT che traduce dei frammenti di Bytecode in codice nativo. Con ART viene invece compilato il Bytecode in codice nativo (\texttt{.elf} file) in modo che questo possa essere eseguito direttamente, senza passare per un interprete.}
+\end{figure}
 
 \section{Android Development Enviroment}\label{android-development-enviroment}
 
@@ -161,7 +166,6 @@ package="com.manzolik.gmanzoli.mytrains">
 		<activity android:name=".NoConnectivityActivity" />
 		<activity android:name=".FindStationActivity" />
 		<activity android:name=".StationStatusActivity" />
-		<activity android:name=".SelectTrainActivity"></activity>
 	</application>
 
 </manifest>

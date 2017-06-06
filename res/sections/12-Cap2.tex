@@ -349,6 +349,72 @@ coordinatori alla rete.
 Nelle reti con topologia a stella ci sarà un PAN coordinator come noddo centrale 
 e una combianazione qualsiasi delle altr due tipologie come foglie della rete. 
 Nelle reti ad albero, invece, il PAN coordinator sarà la radice dell'albero, gli 
-RFD le foglie, mentre gli FFD potranno essere sia foglie che nodi interni. 
+RFD le foglie, mentre gli FFD potranno essere sia foglie che nodi interni. In 
+una rete P2P, invece, deve essere sempre presente almeno un PAN coordinator, 
+tramite il quale passano le comunicazioni, ed inoltre è possibile che siano 
+presenti anche altri collegamenti punto a punto tra gli altri nodi della rete.
 
-%=========MANCA P2P PER 802.15.4 pg 55 e poi da pg 57===================================
+I frame (messaggi) che possono essere scambiati sono di 4 tipi:
+\begin{itemize}
+  \item Beacon, mandati in broadcast dal coordinator, contengono informazioni 
+        sulla rete;
+  \item Command frames, usati per l'associazione/disassociazione, notifica di 
+        confliti, richiesta di dati e beacon, etc...;
+  \item Data frames, messaggi che trasportano i dati;
+  \item Acknowledgement frames, che notificano la ricezione dei dati con successo.
+\end{itemize}
+
+Nelle comunicazioni è possibile sia criptare i dati che validare l'autenticità 
+dei dati.
+
+\paragraph{ZigBee}
+Con ZigBee si intende una tecnologia basata sullo IEEE 802.15.4 (per i livelli 
+fisico e MAC) utilizzata nell'automazione domestica, salute, collegamenti per 
+gli interruttori della luce, telecomunicazione, ...
+
+Essa supporta vari tipologie di traffico, come traffico periodico (invio, il 
+dispositivo dorme per un certo periodo, e poi invia nuovi dati), intermittente 
+(il dispositivo è svegliato solo all'occorrenza), con bassa latetenza (effettuare
+ l'invio di dati entro un certo limite). 
+
+I dispositivi ZigBee si dividono in:
+\begin{itemize}
+  \item \textbf{ZigBee Coordinator}(ZC): il più potente dei 3, si occupa della 
+        coordinazione di rete ed eventualmente anche della gestione della chiavi 
+        per la gestione della sicurezza;
+  \item \textbf{ZigBee Router}(ZR): con il compito di passare i dati da un 
+        dispositivo all'altro;
+  \item \textbf{ZigBee End Device}(ZED): non si occupa dell'instradamente, ma è 
+        il nodo terminale in una rete.
+\end{itemize}
+
+Sfruttando questi dispositivi è quindi possibile creare differenti tipologie di 
+reti:
+\begin{itemize}
+  \item A stella: con un ZC centrale e dispositivi ZED direttamente collegato ad 
+        esso;
+  \item Ad albero: con un ZC radice, ZR come nodi interni e ZED come foglie, 
+        sfrutta il routing gerarchico per l'instradamento dei pacchetti;
+  \item Mesh: reti con comunicazione P2P.
+\end{itemize}
+
+\paragraph{6LowPan}
+Con il termine 6LowPan ci si riferisce all'utilizzo di IPv6 nelle WPAN a basso 
+consumo energetico, le quali sfruttano 802.15.4 nei livelli più bassi (PHY/MAC). 
+Tale supporto agli IP è stato implementato poichè per gli IP esiste già una 
+infrastruttura consolidata e dispositivi IP-based possono essere messi in 
+comunicazione tra loro direttamente, senza la necessità di gateways o proxies.
+
+Le problematiche principali di utilizzare IPv6 con dei sottostrati basati 
+sull'802.15.4 è il calcolo di come dividere gli header dei pacchetti (nello 
+strato MAC sono gestiti pacchetti di grandezza al massimo 25 otteti, un header 
+IPv6 è di 40) ed in generale la frammentazione dei pacchetti. Oltre a questi, IP 
+assume che i dispositivi siano sempre attivi, cosa non vera per i dispositivi 
+che sfruttano 802.15.4, che devono limitare lo spreco di energia. Un ulteriore 
+problema è il multicast, previsto da IP ma non supportato dall'802.15.4 perchè 
+troppo oneroso in termini di energia.
+
+Per ovviare ai problemi di dimesionalità dei pacchetti IP, 6LowPan sfrutta la 
+compressione dei dati, eliminando anche informazioni dagli header che possono 
+essere dedotte dal contesto, e frammenta i pacchetti, evitando di ripetere ad 
+ogni pacchetto l'header IP.

@@ -31,7 +31,7 @@ tempo una buona velocità di trasmissione.
 \item
   \begin{quote}
   \textbf{Short-range}: connessione diretta tra dispositivi, ottimizzata
-  per contenere i consumi. Esempi: bluetooth e zigbee.
+  per contenere i consumi. Esempi: Bluetooth e ZigBee.
   \end{quote}
 \item
   \begin{quote}
@@ -63,11 +63,11 @@ standardizzazioni}\label{enti-per-le-standardizzazioni}
 
 \subsection{Divisione dello spettro elettromagnetico}
 Lo spettro elettromagnetico è diviso in bande che possono essere riservate o 
-meno, le bande a 2,4GHz e 5GHz sono libere (e utiliozzate da Bluetooth e per 
+meno, le bande a 2,4GHz e 5GHz sono libere (e utilizzate da Bluetooth e per 
 esempio dal Wi-Fi, che usa 802.11x). In generale più bassa è la frequenza più il 
 segnale è in grado di coprire distanze maggiori ma è in grado di raggiungere 
 data-rate meno elevati, più la frequenza è alta invece, maggiore è la capacità 
-di trasportare le informazioni ma le distanze coperte sono minori. Ciò è dovuuto 
+di trasportare le informazioni ma le distanze coperte sono minori. Ciò è dovuto 
 al fatto che maggiore la frequenza è, più l'onda interagisce con la materia.
 
 \subsection{802.11 Wireless Local Area
@@ -133,7 +133,7 @@ trasmissione solo se questo è libero. Questo perché non è possibile
 effettuare Collision detection. Prima che la trasmissione avvenga viene aspettato
 un certo tempo fisso aumentato da un tempo di backoff, aumentato ad ogni 
 collisione o ogni volta che il canale risulta occupato (le collisioni possono 
-avvenire lo stesso, principalmente perchè il tempo di trasmissione sul canale 
+avvenire lo stesso, principalmente perché il tempo di trasmissione sul canale 
 non è nullo).
 
 Ci sono varie versioni dello standard 802.11, ognuna delle quali definisce 
@@ -197,7 +197,7 @@ uno degli access point secondo il seguente procedimento:
 \end{enumerate}
 
 Una volta associato o connesso, l'host comunicherà con tutti gli altri
-host collegati in rete mediante l'access point (no connesione diretta).
+host collegati in rete mediante l'access point (no connessione diretta).
 
 \paragraph{Ad Hoc}\label{ad-hoc}
 
@@ -307,7 +307,7 @@ ovvero una serie di protocolli che definiscono lo scopo per il quale Bluetooth �
 sfruttato (esempi di profili sono: trasmissione di file, telefonia cordless, 
 accesso rete LAN, sincronizzazione, ...).
 
-Tramite il bluetooth i dispositivi creano delle reti a stella chiamate 
+Tramite il Bluetooth i dispositivi creano delle reti a stella chiamate 
 \textbf{piconet}. In ogni piconet è presente un master e al massimo 7 slave 
 attivi (ce ne possono essere più di 200 in stato non attivi)
 
@@ -346,8 +346,8 @@ prevedono solamente un sottoinsieme e possono essere solamente impiegati come
 foglie nelle reti, e \textbf{PAN coordinator}, che hanno lo scopo di fare da 
 coordinatori alla rete.
 
-Nelle reti con topologia a stella ci sarà un PAN coordinator come noddo centrale 
-e una combianazione qualsiasi delle altr due tipologie come foglie della rete. 
+Nelle reti con topologia a stella ci sarà un PAN coordinator come nodo centrale 
+e una combinazione qualsiasi delle altre due tipologie come foglie della rete. 
 Nelle reti ad albero, invece, il PAN coordinator sarà la radice dell'albero, gli 
 RFD le foglie, mentre gli FFD potranno essere sia foglie che nodi interni. In 
 una rete P2P, invece, deve essere sempre presente almeno un PAN coordinator, 
@@ -358,8 +358,8 @@ I frame (messaggi) che possono essere scambiati sono di 4 tipi:
 \begin{itemize}
   \item Beacon, mandati in broadcast dal coordinator, contengono informazioni 
         sulla rete;
-  \item Command frames, usati per l'associazione/disassociazione, notifica di 
-        confliti, richiesta di dati e beacon, etc...;
+  \item Command frames, usati per l'associazione/dissociazione, notifica di 
+        conflitti, richiesta di dati e beacon, etc...;
   \item Data frames, messaggi che trasportano i dati;
   \item Acknowledgement frames, che notificano la ricezione dei dati con successo.
 \end{itemize}
@@ -374,7 +374,7 @@ gli interruttori della luce, telecomunicazione, ...
 
 Essa supporta vari tipologie di traffico, come traffico periodico (invio, il 
 dispositivo dorme per un certo periodo, e poi invia nuovi dati), intermittente 
-(il dispositivo è svegliato solo all'occorrenza), con bassa latetenza (effettuare
+(il dispositivo è svegliato solo all'occorrenza), con bassa latenza (effettuare
  l'invio di dati entro un certo limite). 
 
 I dispositivi ZigBee si dividono in:
@@ -411,10 +411,10 @@ strato MAC sono gestiti pacchetti di grandezza al massimo 25 otteti, un header
 IPv6 è di 40) ed in generale la frammentazione dei pacchetti. Oltre a questi, IP 
 assume che i dispositivi siano sempre attivi, cosa non vera per i dispositivi 
 che sfruttano 802.15.4, che devono limitare lo spreco di energia. Un ulteriore 
-problema è il multicast, previsto da IP ma non supportato dall'802.15.4 perchè 
+problema è il multicast, previsto da IP ma non supportato dall'802.15.4 perché 
 troppo oneroso in termini di energia.
 
-Per ovviare ai problemi di dimesionalità dei pacchetti IP, 6LowPan sfrutta la 
+Per ovviare ai problemi di dimensionalità dei pacchetti IP, 6LowPan sfrutta la 
 compressione dei dati, eliminando anche informazioni dagli header che possono 
 essere dedotte dal contesto, e frammenta i pacchetti, evitando di ripetere ad 
 ogni pacchetto l'header IP.

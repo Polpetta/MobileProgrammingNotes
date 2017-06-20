@@ -1,103 +1,207 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-
-\title{MP}
-\author{gu_ly_ }
-\date{June 2017}
-
-\begin{document}
-
-Una delle tecniche proposte per risolvere il problema della localizzazione indoor è \textbf{Active badge}: sviluppata nei prima anni novanta dalla Olivetti, prevede un badge attivo e dei sensori; ogni 15 minuti il badge trasmette un segale infrarossi. Il meccanismo di telemetia prevede di utilizzare un computer, collegato ad un'unica rete di 128 sensori; ogni sensore ha una coda FIFO per mantenere in un buffer informazioni su 20 badges.
+Una delle tecniche proposte per risolvere il problema della localizzazione
+indoor è \textbf{Active badge}: sviluppata nei prima anni novanta dalla
+Olivetti, prevede un badge attivo e dei sensori; ogni 15 minuti il badge
+trasmette un segale infrarossi. Il meccanismo di telemetia prevede di utilizzare
+un computer, collegato ad un'unica rete di 128 sensori; ogni sensore ha una coda
+FIFO per mantenere in un buffer informazioni su 20 badges.
 \bigbreak
-\textbf{Active floor} è una tecnologia, basata su piastrelle a pressione: a seconda della piastrella su cui è rilevata la pressione è possibile localizzare l'utente.
+\textbf{Active floor} è una tecnologia, basata su piastrelle a pressione: a
+seconda della piastrella su cui è rilevata la pressione è possibile localizzare
+l'utente.
 \bigbreak
-Una successiva tecnologia di localizzazione indoor, decisamente più efficiente è \textbf{Active bat}: è presente all'interno del soffitto una rete di sensori a ultrasuoni; l'utente porta come wearable un piccolo emettitore: il segnale è percepito dai sensori, i quali mandano le informazioni sul time of flight del segnale infrarosso ad una base station, che calcola la posizione: con la trilaterazione è possibile individuare l'utente con una precisione di 3 centimetri.
+Una successiva tecnologia di localizzazione indoor, decisamente più efficiente è
+\textbf{Active bat}: è presente all'interno del soffitto una rete di sensori a
+ultrasuoni; l'utente porta come wearable un piccolo emettitore: il segnale è
+percepito dai sensori, i quali mandano le informazioni sul time of flight del
+segnale infrarosso ad una base station, che calcola la posizione: con la
+trilaterazione è possibile individuare l'utente con una precisione di 3
+centimetri.
 La sua evoluzione diretta è Ubisense.
 \bigbreak
-queste tecniche presentano limitazioni in termini di privacy: chiunque possa accedere alla base station, è in grado di conoscere la posizione di tutti gli utenti del sistema. \textbf{Cricket system} rappresenta una tecnologia simile, in cui è il dispositivo trasportabile a calcolare direttamente la posizione: una maggior privacy è pagata con la necessità di avere dispositivi più intelligenti e di conseguenza più costosi.
+queste tecniche presentano limitazioni in termini di privacy: chiunque possa
+accedere alla base station, è in grado di conoscere la posizione di tutti gli
+utenti del sistema. \textbf{Cricket system} rappresenta una tecnologia simile,
+in cui è il dispositivo trasportabile a calcolare direttamente la posizione: una
+maggior privacy è pagata con la necessità di avere dispositivi più intelligenti
+e di conseguenza più costosi.
 \bigbreak
-\textbf{RADAR} rappresenta una tecnologia basata su RF di localizzazione indoor: prevede di usare la struttura wifi esistente. Si basa sul concetto di location fingerprinting. E' di tipo RSS empirico. Il principale vantaggio è che non è necessaria una nuova infrastruttura.
+\textbf{RADAR} rappresenta una tecnologia basata su RF di localizzazione indoor:
+prevede di usare la struttura wifi esistente. Si basa sul concetto di location
+fingerprinting. E' di tipo RSS empirico. Il principale vantaggio è che non è
+necessaria una nuova infrastruttura.
 \bigbreak
-\textbf{placeLab} è una tecnologia che non richiede dei beacon specifici, ma basandosi sul Wifi, Bluetooth o rete cellulare disponibili nell'ambiente circostante, è in grado di determinare la posizione degli utenti. in questo modo si può risolvere sia il problema dell'hardware dedicato per i sistemi di positioning che quello della calibrazione dei componenti.
-Naturalmente placelab fornisce risultati molto diversi a seconda che si basi sul wifi o sulla rete cellulare, sia in termini di precisione che di copertura. Essendo basato sulla quantità di dispositivi nell'ambiente circostante inoltre presenta prestazioni molto diverse a seconda che sia applicato in contesto urbano, residenziale o suburbano.
-Permette però di garantire un sistema di localizzazione che non richieda all'utente di imparare ad usarlo e basato su beacons già disponibili.
+\textbf{placeLab} è una tecnologia che non richiede dei beacon specifici, ma
+basandosi sul Wifi, Bluetooth o rete cellulare disponibili nell'ambiente
+circostante, è in grado di determinare la posizione degli utenti. in questo modo
+si può risolvere sia il problema dell'hardware dedicato per i sistemi di
+positioning che quello della calibrazione dei componenti.
+Naturalmente placelab fornisce risultati molto diversi a seconda che si basi sul
+wifi o sulla rete cellulare, sia in termini di precisione che di copertura.
+Essendo basato sulla quantità di dispositivi nell'ambiente circostante inoltre
+presenta prestazioni molto diverse a seconda che sia applicato in contesto
+urbano, residenziale o suburbano.
+Permette però di garantire un sistema di localizzazione che non richieda
+all'utente di imparare ad usarlo e basato su beacons già disponibili.
 
 \section{MOBILE SENSING}
-Dal concetto di "strumentare l'ambiente" con sensori e dispositivi, si passati a strumentare le persone (accelerometri sul corpo o dispositivi come nel active bat). Ad oggi però la tecnologia spinge sul dotare dispositivi general porpuse, come i telefoni cellulari, di sensori: sensori nati con scopi ludici, come il giroscopio, o per attività quotidiane, come il microfono o l'accelerometro per la rotazione, sono diventati presto la base per percepire l'ambiente circostante.
+Dal concetto di "strumentare l'ambiente" con sensori e dispositivi, si passati a
+strumentare le persone (accelerometri sul corpo o dispositivi come nel active
+bat). Ad oggi però la tecnologia spinge sul dotare dispositivi general porpuse,
+come i telefoni cellulari, di sensori: sensori nati con scopi ludici, come il
+giroscopio, o per attività quotidiane, come il microfono o l'accelerometro per
+la rotazione, sono diventati presto la base per percepire l'ambiente
+circostante.
 
-all'inizio si sttumentava l'ambiene, poi si è passsato a strumentare le persone, poi con i cellulari abbiamo general purpose machine che permettono di sentire le cose. Inizialmente l'accelerometro era ustao per la rotazione, il giroscopio per i giochi e il microfono epr le cose normali.
+all'inizio si sttumentava l'ambiene, poi si è passsato a strumentare le persone,
+poi con i cellulari abbiamo general purpose machine che permettono di sentire le
+cose. Inizialmente l'accelerometro era ustao per la rotazione, il giroscopio per
+i giochi e il microfono epr le cose normali.
 
-E' stato necessario sviluppare tecniche molto fantasiose per superare le limitazioni poste da piattaforme ideate per altri scopi, anche se i produttori ad oggi stanno spingendo verso piattaforme hardware che facilitino il sensing e framework OS che incorporino middleware general purpose per il sensing.
+E' stato necessario sviluppare tecniche molto fantasiose per superare le
+limitazioni poste da piattaforme ideate per altri scopi, anche se i produttori
+ad oggi stanno spingendo verso piattaforme hardware che facilitino il sensing e
+framework OS che incorporino middleware general purpose per il sensing.
 
-Le reti di sensori erano adatte a percepire l'ambiente, con hardware specializzato per monitorare fenomeni specifici, le risorse interamente dedicate al sensing, ma con un alto costo in termini di deployment e manutenzione.
-Il sensing basato sui cellulari è molto comodo per le attività umane, basato però su un hardware general purpose, non adatto a misurazioni accurate dei vari fenomeni. Inoltre le risorse del sistema operativo vengono condivise tra le diverse applicazioni. Il vantaggio massimo però è legato al bassissimo costo di sviluppo e manutenzione, anche se non c'è la certezza che l'utente mantenga sul proprio telefono l'applicazione.
+Le reti di sensori erano adatte a percepire l'ambiente, con hardware
+specializzato per monitorare fenomeni specifici, le risorse interamente dedicate
+al sensing, ma con un alto costo in termini di deployment e manutenzione.
+Il sensing basato sui cellulari è molto comodo per le attività umane, basato
+però su un hardware general purpose, non adatto a misurazioni accurate dei vari
+fenomeni. Inoltre le risorse del sistema operativo vengono condivise tra le
+diverse applicazioni. Il vantaggio massimo però è legato al bassissimo costo di
+sviluppo e manutenzione, anche se non c'è la certezza che l'utente mantenga sul
+proprio telefono l'applicazione.
 
 ALcuni esempi di applicazioni sono:
 \begin{itemize}
 \item Attività fisica basata su giroscopio, bussola e accelerometro.
-\item trasporti: sfruttando sensori come l'accelerometro, il GPS o il WiFi si possono implementare meccanismi per il trasporto efficiente.
-\item contesto e ambiente: mediante microfoni e videocamera si possono implementare applicazioni come diari automatici o per app per la salute.
-\item applicazioni per l'analisi della voce e delle conversazioni: con il microfono si possono studiare applicazioni finalizzate allo studio sello stress e delle interazioni sociali.
+\item trasporti: sfruttando sensori come l'accelerometro, il GPS o il WiFi si
+possono implementare meccanismi per il trasporto efficiente.
+\item contesto e ambiente: mediante microfoni e videocamera si possono
+implementare applicazioni come diari automatici o per app per la salute.
+\item applicazioni per l'analisi della voce e delle conversazioni: con il
+microfono si possono studiare applicazioni finalizzate allo studio sello stress
+e delle interazioni sociali.
 \end{itemize}
 
 Tipicamente, il phone sensing segue un design pattern:
 \begin{itemize}
 \item collezionare dati raw, utilizzando i sensori
-\item utilizzare i valori dei sensori per per inferire una particolare attivita':
+\item utilizzare i valori dei sensori per per inferire una particolare
+attivita':
 \begin{itemize}
 \item attivita' fisica: l'utente sta correndo?
 \item context detection: ci sono altre persone nell'ambiente?
 \end{itemize}
-\item mostrare i risultati di alto livello all'utente o usarli epr adattare il comportamento dell'applicazione
+\item mostrare i risultati di alto livello all'utente o usarli epr adattare il
+comportamento dell'applicazione
 \end{itemize}
 
-Lo scopo di un cellulare è supportare molte applicazioni, ma il sensing è un'attività estremamente intensiva dal punto delle risorse. seve pecio' equilibrio tra le risorse necessarie per operare e l'accuratezza della detection ottenuta.
+Lo scopo di un cellulare è supportare molte applicazioni, ma il sensing è
+un'attività estremamente intensiva dal punto delle risorse. seve pecio'
+equilibrio tra le risorse necessarie per operare e l'accuratezza della detection
+ottenuta.
 
 \section{SENSING}
 Esistono sostanzialmente due strategie di sensing: continua e a duty cycling.
-Nel caso della strategia continua, il dispositivo, in seguito alla percezione di un fenomeno, comincia a monitorare in maniera continua l'ambiente, ricavando anche informazioni superflue e duplicate: i dati sono estremamente precisi, ma è una metodologia estremamente costosa in termini di utilizzo della CPU e della batteria, con una possibile riduzione della durata della batteria (fino a 6 ore in stand-by); per tale ragione è usata su quei sensori più "economici", come l'accelerometro.
-Per quanto riguarda la strategia duty cicling, periodicamente il sensore si attiva, percependo l'ambiente circostante: si alternano fasi di attività a fasi di riposo. L'impatto sulla batteria è molto ridotto, ma a costo di misurazioni meno precise e senza tenere conto che durante la fase di sleeping si potrebbero avere degli eventi interessanti.
-Una strategia per migliorare questa tecnica è quella di adattare il periodo di sleeping sulla base degli eventi: se si ha percezione di venti interessanti, il periodo di riposo è ridotto in termini di durata, se invece non accade niente nella finestra di percezione, allora si aumenta il tempo di sleeping.
-Gli approci tipici possono prevedere un incremento lineare con decrescita e esponenziale o viceversa (dipende dall'evento). ottenendo un consumo di energia migliore dell'approccio a sensing continuo e accuratezza più elevata del duty cycling.
-Il problema è che richiesta una conoscenza molto approfondita del contesto di applicazione (ad esempio durante una conversazione, se si percepisce una nuova voce, probabilmente la voce continuerà a parlare per del tempo).
+Nel caso della strategia continua, il dispositivo, in seguito alla percezione di
+un fenomeno, comincia a monitorare in maniera continua l'ambiente, ricavando
+anche informazioni superflue e duplicate: i dati sono estremamente precisi, ma è
+una metodologia estremamente costosa in termini di utilizzo della CPU e della
+batteria, con una possibile riduzione della durata della batteria (fino a 6 ore
+in stand-by); per tale ragione è usata su quei sensori più "economici", come
+l'accelerometro.
+Per quanto riguarda la strategia duty cicling, periodicamente il sensore si
+attiva, percependo l'ambiente circostante: si alternano fasi di attività a fasi
+di riposo. L'impatto sulla batteria è molto ridotto, ma a costo di misurazioni
+meno precise e senza tenere conto che durante la fase di sleeping si potrebbero
+avere degli eventi interessanti.
+Una strategia per migliorare questa tecnica è quella di adattare il periodo di
+sleeping sulla base degli eventi: se si ha percezione di venti interessanti, il
+periodo di riposo è ridotto in termini di durata, se invece non accade niente
+nella finestra di percezione, allora si aumenta il tempo di sleeping.
+Gli approci tipici possono prevedere un incremento lineare con decrescita e
+esponenziale o viceversa (dipende dall'evento). ottenendo un consumo di energia
+migliore dell'approccio a sensing continuo e accuratezza più elevata del duty
+cycling.
+Il problema è che richiesta una conoscenza molto approfondita del contesto di
+applicazione (ad esempio durante una conversazione, se si percepisce una nuova
+voce, probabilmente la voce continuerà a parlare per del tempo).
 
 \section{INFERENZA}
-si chiama inferenza il processo di mappare i dati di basso livello a eventi di alto livello significativi.
-la pipeline di inferenza comprende tre fasi: sensing, feature extraction e classification.
+si chiama inferenza il processo di mappare i dati di basso livello a eventi di
+alto livello significativi.
+la pipeline di inferenza comprende tre fasi: sensing, feature extraction e
+classification.
 
-Il motore inferenziale tipicamente deve essere disegnato basandoci sulle seguenti fasi:
+Il motore inferenziale tipicamente deve essere disegnato basandoci sulle
+seguenti fasi:
 \begin{itemize}
 \item collezionare i dati raw e etichettarli con informazioni reali.
-\item il dataset tipicamente dovrebbe comprendere anche situazioni che non stiamo cercando di individuare, ma che sono simili (ad esempio se vogliamo individuare la camminata, dovremmo disporre di dati per la corsa e per lo stare in piedi).
+\item il dataset tipicamente dovrebbe comprendere anche situazioni che non
+stiamo cercando di individuare, ma che sono simili (ad esempio se vogliamo
+individuare la camminata, dovremmo disporre di dati per la corsa e per lo stare
+in piedi).
 \item allenare il motore inferenziale con i dati collezionati
 \item applicare il motore inferenziale all'applicazione target.
 \end{itemize}
 
 \section{FEATURE EXTRACTION}
-questa fase prevede di identificare le features in un dataset che possono essere usate per inferire un particolare tipo di attivita'.
-L'insieme delle features selezionate dipende dal tipo d idsensori e di attivita' che si deve individuare. Il processo di design tipicamente include anche analisi offline del training set per identificare le features corrette per il particolare motore infereniziale. in genere questo tipo di analisi è fatta mediante un processo iterativo, in cui vengono testate features diverse.
-Un possibile esempio è quello dell'individuazione della conversazione: si può applicare FFT (trasformata di Fourier) ai samples audio, e comparare i training data che sono etichettati come "conversazione" e come "rumore non conversazione". Si seleziona come features la media e la standard deviation sulla potenza dell'FFT. A questo punto anche una semplice linea come trashold può fornire risultati relativamente accurati (anche se con un alto numero di falsi positivi).
-Nel caso di attivita' fisica ci si può basare sui dati dell'accelerometro, confrontando l'essere seduti, con l'essere in piedi, il camminare e il correre: le features possono essere la media, la deviazione standard e il numero di picchi.
+questa fase prevede di identificare le features in un dataset che possono essere
+usate per inferire un particolare tipo di attivita'.
+L'insieme delle features selezionate dipende dal tipo d idsensori e di attivita'
+che si deve individuare. Il processo di design tipicamente include anche analisi
+offline del training set per identificare le features corrette per il
+particolare motore infereniziale. in genere questo tipo di analisi è fatta
+mediante un processo iterativo, in cui vengono testate features diverse.
+Un possibile esempio è quello dell'individuazione della conversazione: si può
+applicare FFT (trasformata di Fourier) ai samples audio, e comparare i training
+data che sono etichettati come "conversazione" e come "rumore non
+conversazione". Si seleziona come features la media e la standard deviation
+sulla potenza dell'FFT. A questo punto anche una semplice linea come trashold
+può fornire risultati relativamente accurati (anche se con un alto numero di
+falsi positivi).
+Nel caso di attivita' fisica ci si può basare sui dati dell'accelerometro,
+confrontando l'essere seduti, con l'essere in piedi, il camminare e il correre:
+le features possono essere la media, la deviazione standard e il numero di
+picchi.
 
 \section{CLASSIFICATION}
-Dopo la fase di feature extraction, abbiamo a nostra disposizione un vettore di features: la classificazione compara il vettore di features con un insieme predefinito di classi di alto livello. In genere il motore di classificazione si basa su tecniche di machine learning e è allenato a partire dai dati di training etichettati. Tra i piu comuni algoritmi di classificazione rientrano il Naive Bayes, l'albero di decisione....
+Dopo la fase di feature extraction, abbiamo a nostra disposizione un vettore di
+features: la classificazione compara il vettore di features con un insieme
+predefinito di classi di alto livello. In genere il motore di classificazione si
+basa su tecniche di machine learning e è allenato a partire dai dati di training
+etichettati. Tra i piu comuni algoritmi di classificazione rientrano il Naive
+Bayes, l'albero di decisione....
 \bigbreak
-Dato un insieme delle features $F_1, ..., F_n$e un classificatore C, si stima la probabilità di:
+Dato un insieme delle features $F_1, ..., F_n$e un classificatore C, si stima la
+probabilità di:
 \begin{equation}
 p(C|F_1, ...F_n)
 \end{equation}
-che può essere approssimata da 
+che può essere approssimata da
 \begin{equation}
 p(C|F_1,...,F_n)=\frac{1}{Z}p(C)\prod_{i=1}^{n}p(F_i|C)
 \end{equation}
-dove Z è una costante e può essere ignorata durante la comparazione. Usando il training set stimiamo $p(F_i|C)$ e nel runtime, dato un insieme di valori per le features $f_1, ..., f_n$, selezioniamo il classificatore che massimizza
+dove Z è una costante e può essere ignorata durante la comparazione. Usando il
+training set stimiamo $p(F_i|C)$ e nel runtime, dato un insieme di valori per le
+features $f_1, ..., f_n$, selezioniamo il classificatore che massimizza
 \begin{equation}
 p(C=c)\prod_{i=1}^{n}p(F_i=f_i|C=c)
 \end{equation}
 
-\section{OTTIMIZZAZIONI DELL'INFERENZA}
-il sampling adattivo può decrementare il costo energetico, ma anche l'inferenza puo' essere costosa (un esempio di attività estremamente costosa è la rilevazione del parlato). Un altro aspetto chiave è il tempo di computazione. Spesso conviene scaricare parte del costo energetico da altre parti, ad esempio in un cloud. 
-Le sfide principali sono relative al bilanciare l'energia computazionale contro il traffico di rete e bilanciare il tempo di attesa locale con quello remoto. 
-Mandare i dati raw dei sensori può essere piu' costoso in termini di network energy, di quanto non venga risparmiato. La soluzione è quella di suddividere la computazione: estrarre le features sul telefono e eseguire la classificazione nel cloud. Tecniche più moderne e avanzate prevedono di distribuire il carico computazionale adattivamente: decidere il miglior posto per eseguire la computazone in maniera dinamica, stimando il costo di questa operazione in tempo reale
-
-\end{document}
+\section{Ottimizzazioni dell'inferenza}
+il sampling adattivo può decrementare il costo energetico, ma anche l'inferenza
+puo' essere costosa (un esempio di attività estremamente costosa è la
+rilevazione del parlato). Un altro aspetto chiave è il tempo di computazione.
+Spesso conviene scaricare parte del costo energetico da altre parti, ad esempio
+in un cloud.
+Le sfide principali sono relative al bilanciare l'energia computazionale contro
+il traffico di rete e bilanciare il tempo di attesa locale con quello remoto.
+Mandare i dati raw dei sensori può essere piu' costoso in termini di network
+energy, di quanto non venga risparmiato. La soluzione è quella di suddividere la
+computazione: estrarre le features sul telefono e eseguire la classificazione
+nel cloud. Tecniche più moderne e avanzate prevedono di distribuire il carico
+computazionale adattivamente: decidere il miglior posto per eseguire la
+computazone in maniera dinamica, stimando il costo di questa operazione in tempo
+reale

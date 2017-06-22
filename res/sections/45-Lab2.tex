@@ -17,7 +17,7 @@ dei dispositivi (es. lingua);
 \item Ricompilare solo quando è strettamente necessario.
 \end{itemize}
 
-\subsection{Etereogeneità dei dispositivi}
+\subsection{Eterogeneità dei dispositivi}
 
 Un'applicazione Android può essere eseguita su dispositivi eterogenei con
 caratteristiche differenti (es. dimensioni dello schermo, lingua, tipo di
@@ -59,7 +59,7 @@ dispositivi;
 \item A run-time, il \textit{sistema Android} rileva la configurazione del
 dispositivo (\textit{locale}) e carica le risorse appropriate (in questo modo
 non è necessario ricompilare);
-\item Aggiungere nuovi file XML per supportare nuovi dispotivi.
+\item Aggiungere nuovi file XML per supportare nuovi dispositivi.
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -272,8 +272,8 @@ mostrare un singolo elemento.
 \subsection{Caricare XML}
 
 Quando un'applicazione viene compilata ogni file \texttt{XML} del layout viene
-compilato diventanto una risorsa \texttt{View}, la quale è accessibile tramite
-il suo identificatore tramite la classe \texttt{R}.
+compilato diventando una risorsa \texttt{View}, la quale è accessibile tramite
+il suo identificatore attraverso la classe \texttt{R}.
 
 \begin{figure*}[htbp]
         \centering
@@ -361,7 +361,7 @@ Gli step sono:
 \item legare l'adapter alla \texttt{ListView};
 \item ottenere un riferimento alla \texttt{ListView} (n.b. visto che estendiamo
 una \texttt{ListActivity} abbiamo una \texttt{ListView}, non ci serve trovare un
-riferimento a quest'ultima nella gerarchia, basta il methodo
+riferimento a quest'ultima nella gerarchia, basta il metodo
 \texttt{getListView()});
 \item settare \texttt{onClickListener} sulla \texttt{ListView}.
 \end{enumerate}
@@ -621,7 +621,7 @@ recuperare dati sulla rete - 2}
         \label{img:lab2-fig20}
 \end{figure}
 
-\subsection{Libreria alternative per il networking}
+\subsection{Librerie alternative per il networking}
 
 \begin{itemize}
 \item \texttt{OkHttp}: un client Java efficiente che supporta chiamate sincrone

@@ -198,13 +198,29 @@ computing}) possono essere organizzate secondo la tassonomia SCALE:
 \label{use-casesmust-know}
 
 \paragraph*{Internet of Things} è il termine principalmente utilizzato dalla
-stampa per parlare di ubiquitous computing.
+stampa per parlare di ubiquitous computing. Ci si riferisce spesso anche con il 
+termine \textit{smart devices}. I device IoT permettono agli oggetti di avere 
+sensori o di essere controllati in maniera remota, attraverso strutture di rete 
+già esistenti. Questo crea delle opportunità di integrazione tra il mondo 
+fisico e quello dei compute, con il beneficio di una migliore efficenza, 
+accuratezza e risparmio economico, in aggiunta ad un ridotto intervento umano.
 
 \paragraph*{AutoID} standard per la definizione di etichette identificative
 tramite RFID inizialmente sviluppato al MIT.
 
 \paragraph*{OSGi} standard per la distribuzione/revisione di codice o
-servizi attraverso internet per i sistemi embedded/smart.
+servizi attraverso internet per i sistemi embedded/smart. Il framework OSGi si 
+propone di implementare un modello a componenti completo e dinamico cioè quello 
+che manca all'ambiente Java. OSGi è organizzato in quattro \textit{layer}:
+\begin{enumerate}
+ \item Execution Environment (ambiente di esecuzione): è la specificazione 
+dell'ambiente Java (J2SE, CDC, CLDC, MIDP, ecc.).
+ \item Modules: realizza il concetto di moduli (bundle) e controlla il 
+collegamento tra di loro.
+ \item Life Cicle Management (Gestione del ciclo di vita): gestisce il ciclo di 
+vita di un bundle senza richiedere il riavvio della VM.
+ \item Service Registry: fornisce un modello di cooperazione per i bundle.
+\end{enumerate}
 
 \paragraph*{Edge Network Integration} sistema di reti ponte che
 permettono di collegare reti esistenti ma basate su stack diversi.
@@ -213,19 +229,32 @@ permettono di collegare reti esistenti ma basate su stack diversi.
 intelligente, inserendo attuatori e sensori nei vari oggetti per
 automatizzare/risparmiare energia. Sembra più probabile
 l'implementazione solo in ambito business perché ci sono investimenti
-maggiori
+maggiori. Svolge un ruolo importante nel rendere ``intelligenti'' 
+apparecchiature, impianti e sistemi.
+Con \textbf{Smart home} quindi si indica un ambiente - opportunamente 
+progettato e tecnologicamente attrezzato - il quale mette a disposizione 
+dell'utente impianti che vanno oltre il "tradizionale", dove apparecchiature e 
+sistemi sono in grado di svolgere funzioni parzialmente autonome (secondo 
+reazioni a parametri ambientali di natura fissa e prestabilita) o programmate 
+dall'utente o, recentemente, completamente autonome
 
 \paragraph*{Smart item} dispositivi con risorse limitate specifici per
-determinate applicazioni.
+determinate applicazioni, ad esempio come delle smart card.
 
 \paragraph*{LAURA} sistema di localizzazione/monitoraggio dei pazienti nelle
 strutture sanitarie.
 
 \paragraph*{DrivingStyles} progetto che studia la correlazione tra il
-comportamento dell'utente nel traffico e il suo battito cardiaco.
+comportamento dell'utente nel traffico e il suo battito cardiaco. Si è infatti 
+notato come uno stile di guida ``aggressivo'' porti ad avere un frequenza 
+cardiaca più alta. Questo sistema riesce a capire in base allo stato 
+dell'utente quanto la sua guida è pericolosa in quel momento, notificandolo in 
+maniera non intrusiva. 
 
 \paragraph*{SmartParking} occupazione e prenotazione dei parcheggi mediante
 app.
 
 \paragraph*{WaterBot} monitoraggio dei consumi di acqua in casa con aspetti
-di gamification per incentivare il risparmio.
+di gamification (rinforzo positivo) per incentivare il risparmio. È un modulo 
+hardware che necessita di installazione e permette di dare feedback 
+\textit{just-in-time} all'utente.

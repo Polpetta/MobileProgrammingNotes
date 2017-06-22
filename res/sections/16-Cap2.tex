@@ -15,10 +15,10 @@ There's a new class of objects that is about to come into our houses:
 augmented with one or more of the following:
 
 \begin{itemize}
-    \item Sensors (temperature, light, motion, etc.)
-    \item Actuators (displays, sound, motors, etc.)
-    \item Computation (can run programs and logic)
-    \item Communication interfaces (wired or wireless)
+  \item Sensors (temperature, light, motion, etc.)
+  \item Actuators (displays, sound, motors, etc.)
+  \item Computation (can run programs and logic)
+  \item Communication interfaces (wired or wireless)
 \end{itemize}
 
 \begin{figure}[H]
@@ -128,32 +128,32 @@ delivery with grades of service.\\
 \textbf{Properties:}
 
 \begin{itemize}
-    \item client/server model, where every sensor is a client and connects to a
+  \item client/server model, where every sensor is a client and connects to a
 server (a.k.a. broker)
-    \item clients subscribe to topic channels of interest
-    \item topic channels are hierarchical (e.g., room2BC/heating)
-    \item 3 QoS Levels: ``Fire and forget'',  ``delivered at least once'' and
+  \item clients subscribe to topic channels of interest
+  \item topic channels are hierarchical (e.g., room2BC/heating)
+  \item 3 QoS Levels: ``Fire and forget'',  ``delivered at least once'' and
  ``delivered exactly once''.
-    \item username/password authentication
-    \item TCP over SSL/TLS
+  \item username/password authentication
+  \item TCP over SSL/TLS
 \end{itemize}
 
 \textbf{CoAP}\\
 
 The Constrained Application Protocol (CoAP) was designed for use with low-power
-and constrained networks. CoAP is a RESTful protocol. It is semantically aligned
-with HTTP, and even has a one-to-one mapping to and from HTTP.\\
+and constrained networks. CoAP is a RESTful protocol. It is semantically
+aligned with HTTP, and even has a one-to-one mapping to and from HTTP.\\
 
 \textbf{Properties:}
 
 \begin{itemize}
-    \item packets are much smaller than HTTP TCP flows
-    \item simpler and faster to parse with small memory footprint
-    \item over UDP, interoperates with HTTP and the RESTful web through simple
+  \item packets are much smaller than HTTP TCP flows
+  \item simpler and faster to parse with small memory footprint
+  \item over UDP, interoperates with HTTP and the RESTful web through simple
 proxies
-    \item client/server model where clients may GET, PUT, POST and DELETE
+  \item client/server model where clients may GET, PUT, POST and DELETE
 resources
-    \item DTLS capable CoAP devices support RSA and AES or ECC and AES
+  \item DTLS capable CoAP devices support RSA and AES or ECC and AES
 \end{itemize}
 
 \begin{figure}[H]
@@ -184,7 +184,9 @@ networks.
 
 \textbf{Gateway}
 
-Gateway-based connectivity is used when a Thing cannot offer a Web API directly.
+Gateway-based connectivity is used when a Thing cannot offer a Web API
+directly.
+
 In this case an intermediate Web Thing - the gateway - exposes a Web API on the
 Thing's behalf (per conto di).
 The Web Thing therefore acts as a proxy for the Thing (or gateway depending on
@@ -245,8 +247,8 @@ The approach here is to reuse web semantic standards to describe things and
 their services.
 
 This enables searching for things through search engines and other web indexes
-as well as the automatic generation of user interfaces or tools to interact with
-Things.\\
+as well as the automatic generation of user interfaces or tools to interact
+with Things.\\
 
 \textbf{Sharing layer}\\
 
@@ -261,7 +263,8 @@ At this level, another batch of Web protocols help.
 First, TLS, the protocol that makes transactions on the Web secure.
 Then, techniques such as delegated web authentication mechanisms like OAuth
 which can be integrated to our Things' APIs. Finally, we can also use social
-networks to share Things and their resources to create a Social Web of Things.\\
+networks to share Things and their resources to create a Social Web of
+Things.\\
 
 \textbf{Composition layer}\\
 
@@ -271,9 +274,10 @@ and machines (layer 2) and their resources can be shared securely with others
 applications for the Web of Things. In other words, we need to understand the
 integration of data and services from heterogeneous Things into an immense
 ecosystem of web tools such as analytics software and mashup platforms.
-Web tools at the Compose layer range from web toolkits - for example, JavaScript
-SDKs offering higher-level abstractions - to dashboards with programmable
-widgets, and finally to physical mashup tools such as Node-RED as shown below.
+Web tools at the Compose layer range from web toolkits - for example,
+JavaScript SDKs offering higher-level abstractions - to dashboards with
+programmable widgets, and finally to physical mashup tools such as Node-RED as
+shown below.
 
 \begin{figure}[H]
   \centering
@@ -288,17 +292,17 @@ Automatic control of heating system;}
 
 The Web of Things is a high-level application protocol designed to maximize
 interoperability in the IoT. Web technologies are widely popular and offer all
-the flexibility and features needed for the majority of future IoT applications,
-including discovery, security, and real-time messaging.\\
+the flexibility and features needed for the majority of future IoT
+applications, including discovery, security, and real-time messaging.\\
 
 \textbf{Sources:}\\
 
 A mix of:
 
 \begin{itemize}
-\item Course slides
-\item \url{http://webofthings.org/2016/01/23/wot-vs-iot-12/}
-\item \url{http://webofthings.org/2017/04/08/what-is-the-web-of-things/}
-\item \url{https://www.micrium.com/iot/internet-protocols/}
-\item \url{https://www.w3.org/blog/wotig/}
+  \item Course slides
+  \item \url{http://webofthings.org/2016/01/23/wot-vs-iot-12/}
+  \item \url{http://webofthings.org/2017/04/08/what-is-the-web-of-things/}
+  \item \url{https://www.micrium.com/iot/internet-protocols/}
+  \item \url{https://www.w3.org/blog/wotig/}
 \end{itemize}

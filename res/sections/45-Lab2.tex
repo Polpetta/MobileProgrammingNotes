@@ -21,7 +21,7 @@ dei dispositivi (es. lingua);
 
 Un'applicazione Android può essere eseguita su dispositivi eterogenei con
 caratteristiche differenti (es. dimensioni dello schermo, lingua, tipo di
-tastieta, ecc). Ci sono due differenti approcci a questo problema, quello
+tastiera, ecc). Ci sono due differenti approcci a questo problema, quello
 tradizionale e quello implementato in Android.
 L'approccio tradizionale prevede di inserire tutte le possibilità nel codice,
 per cui sarà pieno di casi \emph{if-then-else}. Per questo motivo,
@@ -136,7 +136,7 @@ l'applicazione. Per specificare le risorse alternative:
 
 \begin{itemize}
 \item creare una nuova cartella in \texttt{res/}, scegliendo il nome con il
-formato \texttt{<resource\_name>-<config\_qualifier>},dove:
+formato \\ \texttt{<resource\_name>-<config\_qualifier>},dove:
 \begin{itemize}
 \item \texttt{<resource\_name>} è il nome della cartella corrispondente alle
 risorse di default;
@@ -325,7 +325,7 @@ generalizzate:
 \subsubsection{Supportare più schermi}
 
 Bisogna specificare nel manifest quali dimensioni di schermo sono supportate
-dall'applicazioni, tramite l'attributo \texttt{<supporst-screens>} che
+dall'applicazioni, tramite l'attributo \texttt{<support-screens>} che
 sovrascrive e ridefinisce alcuni comportamenti dell'algoritmo di matching di
 default.
 Inoltre, è necessario fornire layout differenti a seconda della dimesione dello
@@ -359,7 +359,7 @@ Gli step sono:
 \item ottenere un riferimento alla \texttt{ListView} (n.b. visto che estendiamo
 una \texttt{ListActivity} abbiamo una \texttt{ListView}, non ci serve trovare un
 riferimento a quest'ultima nella gerarchia, basta il methodo
-\texttt{getListView()}
+\texttt{getListView()})
 \item settare \texttt{onClickListener} sulla \texttt{ListView}
 \end{enumerate}
 

@@ -671,6 +671,7 @@ Dichiariamolo nel manifest:
 \end{lstlisting}
 
 Nel metodo \lstinline|onCreate()| dell'\lstinline|Activity| settiamo due listener ai pulsanti per avviare e fermare il \lstinline|Service|.
+
 \begin{lstlisting}[language=Java]
 Button buttonStartService = 
 	(Button)findViewById(R.id.startservice);
@@ -700,7 +701,7 @@ buttonStopService.setOnClickListener(
 );
 \end{lstlisting}
 
-Di seguito una implementazioe di un \lstinline|BroadcastReceiver| che serve per comunicare con l'\lstinline|Service| dall'\lstinline|Activity| (vale anche il contrario).
+Di seguito un'implementazione di un \lstinline|BroadcastReceiver| che serve per comunicare con l'\lstinline|Service| dall'\lstinline|Activity| (vale anche il contrario).
 \begin{lstlisting}[language=Java]
 public class NotifyServiceReceiver extends BroadcastReceiver {
 	public void onReceive(Context arg0, Intent arg1) {

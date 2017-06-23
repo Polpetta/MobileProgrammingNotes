@@ -24,7 +24,7 @@ Il riferimento lo troviamo in \texttt{android:configChange}.\\
 Chiaramente questo fenomeno, se non gestito, ha conseguenze catastrofiche: tutte
 le variabili delle nostre attività e frammenti verranno distrutte e ricaricate,
 perdendo di conseguenza le informazioni su cui si stava lavorando. È necessario
-cosi' salvare lo stato del processo prima che le attività (o frammenti) vengano
+così salvare lo stato del processo prima che le attività (o frammenti) vengano
 ditrutte e caricare tale stato al verificarsi di
 \texttt{(onSave(Restore)InstanceState())}; tuttavia interrompere un processo in
 esecuzione può essere indesiderato o costoso.\\

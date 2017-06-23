@@ -2,7 +2,7 @@
 Una delle tecniche proposte per risolvere il problema della localizzazione
 indoor è \textbf{Active badge}: sviluppata nei prima anni novanta dalla
 Olivetti, prevede un badge attivo e dei sensori; ogni 15 minuti il badge
-trasmette un segale infrarossi. Il meccanismo di telemetia prevede di utilizzare
+trasmette un segale infrarossi. Il meccanismo di telemetria prevede di utilizzare
 un computer, collegato ad un'unica rete di 128 sensori; ogni sensore ha una coda
 FIFO per mantenere in un buffer informazioni su 20 badges.
 \bigbreak
@@ -27,7 +27,7 @@ maggior privacy è pagata con la necessità di avere dispositivi più intelligen
 e di conseguenza più costosi.
 \bigbreak
 \textbf{RADAR} rappresenta una tecnologia basata su RF di localizzazione indoor:
-prevede di usare la struttura wifi esistente. Si basa sul concetto di location
+prevede di usare la struttura WiFi esistente. Si basa sul concetto di location
 fingerprinting. È di tipo RSS empirico. Il principale vantaggio è che non è
 necessaria una nuova infrastruttura.
 \bigbreak
@@ -37,7 +37,7 @@ circostante, è in grado di determinare la posizione degli utenti. In questo mod
 si può risolvere sia il problema dell'hardware dedicato per i sistemi di
 positioning che quello della calibrazione dei componenti.
 Naturalmente placelab fornisce risultati molto diversi a seconda che si basi sul
-wifi o sulla rete cellulare, sia in termini di precisione che di copertura.
+WiFi o sulla rete cellulare, sia in termini di precisione che di copertura.
 Essendo basato sulla quantità di dispositivi nell'ambiente circostante inoltre
 presenta prestazioni molto diverse a seconda che sia applicato in contesto
 urbano, residenziale o suburbano.
@@ -45,7 +45,7 @@ Permette però di garantire un sistema di localizzazione che non richieda
 all'utente di imparare ad usarlo e basato su beacons già disponibili.
 
 \chapter{Mobile Sensing}
-Dal concetto di ``strumentare l'ambiente' con sensori e dispositivi, si passati a
+Dal concetto di ``strumentare l'ambiente'? con sensori e dispositivi, si passati a
 strumentare le persone (accelerometri sul corpo o dispositivi come nel active
 bat). Ad oggi però la tecnologia spinge sul dotare dispositivi general purpose,
 come i telefoni cellulari, di sensori: sensori nati con scopi ludici, come il
@@ -173,20 +173,20 @@ features: la classificazione compara il vettore di features con un insieme
 predefinito di classi di alto livello. In genere il motore di classificazione si
 basa su tecniche di machine learning e è allenato a partire dai dati di training
 etichettati. Tra i più comuni algoritmi di classificazione rientrano il Naive
-Bayes, l'albero di decisione....
+Bayes, l'albero di decisione$\ldots$
 \bigbreak
-Dato un insieme delle features $F_1, ..., F_n$e un classificatore C, si stima la
+Dato un insieme delle features $F_1, \ldots, F_n$e un classificatore C, si stima la
 probabilità di:
 \begin{equation}
-p(C|F_1, ...F_n)
+p(C|F_1, \ldots, F_n)
 \end{equation}
 che può essere approssimata da
 \begin{equation}
-p(C|F_1,...,F_n)=\frac{1}{Z}p(C)\prod_{i=1}^{n}p(F_i|C)
+p(C|F_1,\ldots,F_n)=\frac{1}{Z}p(C)\prod_{i=1}^{n}p(F_i|C)
 \end{equation}
 dove Z è una costante e può essere ignorata durante la comparazione. Usando il
 training set stimiamo $p(F_i|C)$ e nel runtime, dato un insieme di valori per le
-features $f_1, ..., f_n$, selezioniamo il classificatore che massimizza
+features $f_1, \ldots, f_n$, selezioniamo il classificatore che massimizza
 \begin{equation}
 p(C=c)\prod_{i=1}^{n}p(F_i=f_i|C=c)
 \end{equation}

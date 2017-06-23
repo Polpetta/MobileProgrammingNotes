@@ -53,7 +53,7 @@ giroscopio, o per attività quotidiane, come il microfono o l'accelerometro per
 la rotazione, sono diventati presto la base per percepire l'ambiente
 circostante.
 
-All'inizio si strumentava l'ambiente, poi si è passsato a strumentare le persone,
+All'inizio si strumentava l'ambiente, poi si è passato a strumentare le persone,
 poi con i cellulari abbiamo general purpose machine che permettono di sentire le
 cose. Inizialmente l'accelerometro era usato per la rotazione, il giroscopio per
 i giochi e il microfono per le cose normali.
@@ -94,7 +94,7 @@ attività:
 \item attività fisica: l'utente sta correndo?
 \item context detection: ci sono altre persone nell'ambiente?
 \end{itemize}
-\item mostrare i risultati di alto livello all'utente o usarli epr adattare il
+\item mostrare i risultati di alto livello all'utente o usarli per adattare il
 comportamento dell'applicazione
 \end{itemize}
 
@@ -121,7 +121,7 @@ Una strategia per migliorare questa tecnica è quella di adattare il periodo di
 sleeping sulla base degli eventi: se si ha percezione di eventi interessanti, il
 periodo di riposo è ridotto in termini di durata, se invece non accade niente
 nella finestra di percezione, allora si aumenta il tempo di sleeping.
-Gli approci tipici possono prevedere un incremento lineare con decrescita e
+Gli approcci tipici possono prevedere un incremento lineare con decrescita e
 esponenziale o viceversa (dipende dall'evento). ottenendo un consumo di energia
 migliore dell'approccio a sensing continuo e accuratezza più elevata del duty
 cycling.
@@ -153,13 +153,13 @@ usate per inferire un particolare tipo di attività.
 L'insieme delle features selezionate dipende dal tipo di sensori e di attività
 che si deve individuare. Il processo di design tipicamente include anche analisi
 offline del training set per identificare le features corrette per il
-particolare motore infereniziale. in genere questo tipo di analisi è fatta
+particolare motore inferenziale in genere questo tipo di analisi è fatta
 mediante un processo iterativo, in cui vengono testate features diverse.
 Un possibile esempio è quello dell'individuazione della conversazione: si può
 applicare FFT (trasformata di Fourier) ai samples audio, e comparare i training
-data che sono etichettati come "conversazione" e come "rumore non
-conversazione". Si seleziona come features la media e la standard deviation
-sulla potenza dell'FFT. A questo punto anche una semplice linea come trashold
+data che sono etichettati come "conversazione" e come ``rumore non
+conversazione''. Si seleziona come features la media e la standard deviation
+sulla potenza dell'FFT. A questo punto anche una semplice linea come treshold
 può fornire risultati relativamente accurati (anche se con un alto numero di
 falsi positivi).
 Nel caso di attività fisica ci si può basare sui dati dell'accelerometro,
@@ -172,7 +172,7 @@ Dopo la fase di feature extraction, abbiamo a nostra disposizione un vettore di
 features: la classificazione compara il vettore di features con un insieme
 predefinito di classi di alto livello. In genere il motore di classificazione si
 basa su tecniche di machine learning e è allenato a partire dai dati di training
-etichettati. Tra i piu comuni algoritmi di classificazione rientrano il Naive
+etichettati. Tra i più comuni algoritmi di classificazione rientrano il Naive
 Bayes, l'albero di decisione....
 \bigbreak
 Dato un insieme delle features $F_1, ..., F_n$e un classificatore C, si stima la
@@ -204,5 +204,5 @@ energy, di quanto non venga risparmiato. La soluzione è quella di suddividere l
 computazione: estrarre le features sul telefono e eseguire la classificazione
 nel cloud. Tecniche più moderne e avanzate prevedono di distribuire il carico
 computazionale adattivamente: decidere il miglior posto per eseguire la
-computazone in maniera dinamica, stimando il costo di questa operazione in tempo
+computazione in maniera dinamica, stimando il costo di questa operazione in tempo
 reale.

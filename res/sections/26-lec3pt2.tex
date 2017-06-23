@@ -43,7 +43,7 @@ urbano, residenziale o suburbano.
 Permette però di garantire un sistema di localizzazione che non richieda
 all'utente di imparare ad usarlo e basato su beacons già disponibili.
 
-\section{MOBILE SENSING}
+\section{Mobile Sensing}
 Dal concetto di "strumentare l'ambiente" con sensori e dispositivi, si passati a
 strumentare le persone (accelerometri sul corpo o dispositivi come nel active
 bat). Ad oggi però la tecnologia spinge sul dotare dispositivi general purpose,
@@ -102,7 +102,7 @@ un'attività estremamente intensiva dal punto delle risorse. Serve perciò
 equilibrio tra le risorse necessarie per operare e l'accuratezza della detection
 ottenuta.
 
-\section{SENSING}
+\section{Sensing}
 Esistono sostanzialmente due strategie di sensing: continua e a duty cycling.
 Nel caso della strategia continua, il dispositivo, in seguito alla percezione di
 un fenomeno, comincia a monitorare in maniera continua l'ambiente, ricavando
@@ -128,7 +128,7 @@ Il problema è che richiesta una conoscenza molto approfondita del contesto di
 applicazione (ad esempio durante una conversazione, se si percepisce una nuova
 voce, probabilmente la voce continuerà a parlare per del tempo).
 
-\section{INFERENZA}
+\section{Inferenza}
 Si chiama inferenza il processo di mappatura dei dati di basso livello a eventi 
 significativi di alto livello.
 la pipeline di inferenza comprende tre fasi: sensing, feature extraction e
@@ -146,7 +146,7 @@ in piedi).
 \item applicare il motore inferenziale all'applicazione target.
 \end{itemize}
 
-\section{FEATURE EXTRACTION}
+\section{Feature Extraction}
 Questa fase prevede di identificare le features in un dataset che possono essere
 usate per inferire un particolare tipo di attività.
 L'insieme delle features selezionate dipende dal tipo di sensori e di attività
@@ -166,7 +166,7 @@ confrontando l'essere seduti, con l'essere in piedi, il camminare e il correre:
 le features possono essere la media, la deviazione standard e il numero di
 picchi.
 
-\section{CLASSIFICATION}
+\section{Classification}
 Dopo la fase di feature extraction, abbiamo a nostra disposizione un vettore di
 features: la classificazione compara il vettore di features con un insieme
 predefinito di classi di alto livello. In genere il motore di classificazione si

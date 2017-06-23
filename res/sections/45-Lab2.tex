@@ -4,7 +4,7 @@
 
 \section{Risorse}
 
-Un applicazione è composta dal codice e dalle \textbf{risorse}, ossia tutto ciò
+Un'applicazione è composta dal codice e dalle \textbf{risorse}, ossia tutto ciò
 che non è codice (es. file del layout in XML, pacchetti delle lingue, immagini,
 audio, video, ecc).
 Ci sono degli ottimi motivi per utilizzare le risorse:
@@ -72,7 +72,7 @@ forma di file XML.}\label{img:lab2-fig2}
 Le risorse vengono definite con un approccio dichiarativo attraverso
 \texttt{XML}: ogni risorsa ha un \textit{nome/identificatore}.
 
-\lstinputlisting{res/code/lab2-es1.xml}
+\lstinputlisting[language=XML]{res/code/lab2-es1.xml}
 
 Le risorse possono essere accedute dal codice \texttt{Java} tramite la classe
 \texttt{R} (Risorse), che funge da collegamento tra il mondo di \texttt{Java} e
@@ -95,7 +95,7 @@ codice \texttt{Java}.
 \myparagraph{Accesso tramite XML}
 
 
-\begin{lstlisting}[language=XML, basicstyle=\footnotesize]
+\begin{lstlisting}[language=XML]
 @[<package_name>:]<resource_type>-<resource_name>
 \end{lstlisting}
 
@@ -109,14 +109,14 @@ estensione) o il valore dell'attributo \texttt{android:name}
 
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.5\textwidth]{lab2-fig3}
+        \includegraphics[width=0.7\textwidth]{lab2-fig3}
         \caption[Accesso Risorse XML]{Esempio di accesso a risorse tramite
 codice XML}\label{img:lab2-fig3}
 \end{figure}
 
 \myparagraph{Accesso tramite Java}
 
-\begin{lstlisting}[language=XML, basicstyle=\footnotesize]
+\begin{lstlisting}[language=Java]
 [<package_name>.]R.<resource_type>.<resource_name>
 \end{lstlisting}
 
@@ -237,20 +237,23 @@ esigenze;
         \label{img:lab2-fig9}
 \end{figure*}
 
-Il \texttt{LinearLayout} è una \texttt{ViewGroup che specifica} come gli
+Il \texttt{LinearLayout} è una \texttt{ViewGroup} che specifica come gli
 elementi della UI sono posizionati a run-time. \texttt{TextView} e
 \texttt{Button} sono \texttt{View} particolari chiamate \texttt{Widget}, ossia
 delle \texttt{View} in miniatura che possono essere incorporate dentro ad altre
 applicazioni.
 
 Tutti i layout devono estendere la classe \texttt{ViewGroup}. Ogni \texttt{View}
-deve specificare:
+deve specificare le sue dimensioni attraverso gli attributi 
+\texttt{android:layout\_height} e \texttt{android:layout\_width}, che possono
+essere valorizzati con:
 \begin{itemize}
-\item \texttt{android:layout\_height} e \texttt{android:layout\_width};
-\item \texttt{value:macth\_parent} dice alle \texttt{View} di diventare grandi
-quanto il loro contenitore gli permette di espandersi;
-\item \texttt{value:wrap\_content} dice alla \texttt{View} di impostare la
-propria dimensione in base al contenuto.
+\item un valore numerico espresso in \texttt{dp} (o \texttt{px}), ad esempio 
+\texttt{20dp};
+\item \texttt{match\_parent} la \texttt{View} diventa grande
+quanto il suo contenitore gli permette di espandersi;
+\item \texttt{wrap\_content} la \texttt{View} imposta la
+propria dimensione in base alla dimensione del suo contenuto.
 \end{itemize}
 
 I layout possono essere posizionati dentro ad altri layout. Alcuni sono
@@ -274,7 +277,7 @@ il suo identificatore tramite la classe \texttt{R}.
 
 \begin{figure*}[htbp]
         \centering
-        \includegraphics[width=0.7\textwidth]{lab2-fig10}
+        \includegraphics[width=0.75\textwidth]{lab2-fig10}
         \caption[Accesso risorse R]{Accesso delle risorse tramite la classe
 \texttt{R}}
         \label{img:lab2-fig10}
@@ -291,9 +294,9 @@ durante lo sviluppo dell'app: material (versione dark), material light (versione
 light) e material light con la action bar dark. Il tema viene specificato in
 \texttt{res/style}
 
-\begin{lstlisting}[language=XML, basicstyle=\footnotesize]
+\begin{lstlisting}[language=XML]
 <resources>
-        <style name="AppTheme" parent="android:Theme.Material" />
+    <style name="AppTheme" parent="android:Theme.Material" />
 </resources>
 \end{lstlisting}
 
@@ -305,7 +308,7 @@ Unità da conoscere:
 \textit{density-independent pixels};
 \item \texttt{dpi} o \texttt{ppi} significa punti (\textit{dots}) o pixel per
 pollice (\textit{inch});
-\item px significa pixels. Un pixel occupa un quantitativo arbitrario di spazio
+\item \texttt{px} significa pixels. Un pixel occupa un quantitativo arbitrario di spazio
 sullo schermo a seconda della densità;
 \item la relazione è data dalla formula: $px = dp * (dpi/160)$
 \end{itemize}
@@ -314,22 +317,22 @@ Android raggruppa tutte le effettive densità degli schermi in 6 densità
 generalizzate:
 
 \begin{enumerate}
-\item bassa densità (ldpi) \~ 120 dpi
-\item media densità (mdpi) \~ 160 dpi
-\item alta densità (hdpi) \~ 240 dpi
-\item extra alta densità (xdpi) \~ 320 dpi
-\item densità extra extra alta (xxhdpi) \~ 480dpi
-\item densità extra extra extra alta (xxxhdpi) \~ 640 dpi
+\item bassa densità (ldpi) $\approx$ 120 dpi
+\item media densità (mdpi) $\approx$ 160 dpi
+\item alta densità (hdpi) $\approx$ 240 dpi
+\item extra alta densità (xdpi) $\approx$ 320 dpi
+\item densità extra extra alta (xxhdpi) $\approx$ 480dpi
+\item densità extra extra extra alta (xxxhdpi) $\approx$ 640 dpi
 \end{enumerate}
 
 \subsubsection{Supportare più schermi}
 
 Bisogna specificare nel manifest quali dimensioni di schermo sono supportate
-dall'applicazioni, tramite l'attributo \texttt{<support-screens>} che
+dall'applicazione, tramite l'attributo \texttt{<support-screens>} che
 sovrascrive e ridefinisce alcuni comportamenti dell'algoritmo di matching di
 default.
-Inoltre, è necessario fornire layout differenti a seconda della dimesione dello
-schermo (usando i qualificatori per specificare qualde deve essere utilizzato).
+Inoltre, è necessario fornire layout differenti a seconda della dimensione dello
+schermo (usando i qualificatori per specificare quale deve essere utilizzato).
 Da Android 3.2 per specificare la minima larghezza disponibile si utilizza
 \texttt{sw<N>dp}.
 Infine, devono essere forniti bitmap differenti a seconda della densità dello
@@ -354,16 +357,16 @@ I più comuni layout supportati dagli \texttt{Adapter} sono: \texttt{ListView} e
 Gli step sono:
 
 \begin{enumerate}
-\item inizializzare l'\texttt{Adapter}
-\item legare l'adapter alla \texttt{ListView}
+\item inizializzare l'\texttt{Adapter};
+\item legare l'adapter alla \texttt{ListView};
 \item ottenere un riferimento alla \texttt{ListView} (n.b. visto che estendiamo
 una \texttt{ListActivity} abbiamo una \texttt{ListView}, non ci serve trovare un
 riferimento a quest'ultima nella gerarchia, basta il methodo
-\texttt{getListView()})
-\item settare \texttt{onClickListener} sulla \texttt{ListView}
+\texttt{getListView()});
+\item settare \texttt{onClickListener} sulla \texttt{ListView}.
 \end{enumerate}
 
-\begin{lstlisting}[language=Java, basicstyle=\footnotesize]
+\begin{lstlisting}[language=Java]
 ArrayAdapter<String> mAdapter = new ArraryAdapter<>(this,
 R.layout.listview_layout, FACULTY); //inizializzare
 setListAdapter(mAdapter); //collegare
@@ -379,9 +382,9 @@ Ci sono differenti opzioni: usare le \texttt{SharedPreferences} per dati
 semplici come \texttt{int}, \texttt{String}, ecc; usare la memoria
 interna/esterna del dispositivo o usare un database \texttt{SQLite} per salvare
 dati strutturati.
-Vengono quindi utilizzate per salvare dati di \textit{piccole dimensioni} in un
-file come coppie \textit{chiave-valore}. Questi dati possono essere condivisi
-con altre app.
+Le \texttt{SharedPreferences} vengono quindi utilizzate per salvare dati di 
+\textit{piccole dimensioni} in un file come coppie \textit{chiave-valore}. 
+Questi dati possono essere condivisi con altre app.
 
 \subsection{Fragments}
 
@@ -436,11 +439,11 @@ avviato o messo in pausa e poi richiamato.
 una UI per il \texttt{Fragment}, bisogna ritornare da questo metodo una
 \texttt{View} che è la radice del layout del \texttt{Fragment}. Si può ritornare
 \texttt{null} se il \texttt{Fragment} non possiede una UI;
-\item \texttt{onStart()} viene chiamato all'inzio del tempo di vita in cui è
+\item \texttt{onStart()} viene chiamato all'inizio del tempo di vita in cui è
 visibile. Qualsiasi modifica alla UI può essere eseguita prima che il
 \texttt{Fragment} sia visibile;
 \item \texttt{onResume()} viene chiamato all'inizio del ciclo di vita attivo, in
-modo da invocare ogni aggiornamento all'UI che era in pausa e sospeso da quando
+modo da riprendere ogni aggiornamento all'UI che era in pausa e sospeso da quando
 è diventato inattivo;
 \item \texttt{onPause()} è la prima indicazione che l'utente sta abbandonando il
 \texttt{Fragment}, anche se questo non significa che stia per essere distrutto.
@@ -456,7 +459,7 @@ lanciato sul thread dell'UI, i metodi del ciclo di vita della \texttt{Activity}
 hanno una transizione rapida e non possono contenere operazioni pesanti che
 blocchino la UI; questo genere di task devono essere tenuti fuori dal thread
 della UI.
-Gli \texttt{AsyncTask} permettono un uso appropriato e simplificato dei thread
+Gli \texttt{AsyncTask} permettono un uso appropriato e semplificato dei thread
 dell'interfaccia utente: permettono di effettuare operazioni in background e
 pubblicare i risultati sul thread della UI senza dover manipolare direttamente i
 thread; non costituiscono un framework generico per la gestione dei thread e
@@ -495,7 +498,7 @@ aggiornando la UI ad ogni cambiamento.
         \centering
         \includegraphics[width=0.7\textwidth]{lab2-fig15}
         \caption[AsyncTask per aggiornare Fragment - 1]{Esempio di utilizzo di
-un \texttt{AsyncTask} per aggiornare un fragment - Parte 1}
+un \texttt{AsyncTask} per aggiornare un Fragment - Parte 1}
         \label{img:lab2-fig15}
 \end{figure*}
 
@@ -512,13 +515,13 @@ computazione in background;
         \centering
         \includegraphics[width=0.7\textwidth]{lab2-fig16}
         \caption[AsyncTask per aggiornare Fragment - 2]{Esempio di utilizzo di
-un \texttt{AsyncTask} per aggiornare un fragment - Parte 2}
+un \texttt{AsyncTask} per aggiornare un Fragment - Parte 2}
         \label{img:lab2-fig16}
 \end{figure*}
 
 \section{Networking in Android}
 
-Android include diverese librerie per la programmazione della navigazione:
+Android include diverse librerie per la programmazione della navigazione:
 \begin{itemize}
 \item \texttt{java.net} (\texttt{Socket} e \texttt{URL});
 \item \texttt{org.apache} per richieste http (\texttt{HttpRequest},
@@ -532,9 +535,9 @@ sono necessari all'applicazione nel file \texttt{AndroidManifest.xml}. Se i
 permessi necessari non sono concessi, viene lanciata un'eccezione a runtime dal
 sistema.
 
-\begin{lstlisting}[language=XML, basicstyle=\footnotesize]
-<uses:permission android:name="android.permission.INTERNET" />
-<uses:permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+\begin{lstlisting}[language=XML]
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 \end{lstlisting}
 
 \subsection{Socket}
@@ -571,7 +574,7 @@ loop.
 Possiamo attivare il WiFi in maniera programmatica (senza richiedere alcun
 permesso in più rispetto a prima).
 
-\begin{lstlisting}[language=Java, basicstyle=\footnotesize]
+\begin{lstlisting}[language=Java]
 WifiManager manager = (WifiManager)
 this.context.getSystemService(Context.WIFI_SERVICE);
 manager.setWifiEnabled(true);

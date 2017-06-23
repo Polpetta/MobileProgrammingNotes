@@ -1,0 +1,441 @@
+\part{Laboratorio}
+
+\chapter{Esempi applicazioni Android}
+
+
+\section{Lab 1}
+\subsection{MyFirstApp}
+L'applicazione descrive l'apertura di un'Activity passando un oggetto String tramite Intent.
+
+Invio:
+\begin{lstlisting}
+Intent intent = new Intent(this, DisplayMessageActivity.class);
+String message = mEditText.getText().toString();
+intent.putExtra(EXTRA\_MESSAGE, message);
+startActivity(intent);
+\end{lstlisting}
+
+Dove \lstinline|EXTRA\_MESSAGE| è:
+\lstinline|public final static String EXTRA\_MESSAGE = "com.example.myfirstapp.MESSAGE";|
+
+Ricezione dalla nuova Activity:
+\begin{lstlisting}
+Intent intent = getIntent();
+String message = intent.getStringExtra(MainActivity.EXTRA\_MESSAGE);
+\end{lstlisting}
+
+
+Implementa il menu nell'Activity.
+\begin{lstlisting}
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+getMenuInflater().inflate(R.menu.menu\_main, menu);
+return true;
+}
+\end{lstlisting}
+
+
+Descrive i due diversi modi per l'uso dei widget grafici: XML o Java.
+\begin{lstlisting}
+mTextView = new TextView(this);
+// mTextView.setLayoutWidth ... etc.
+setContentView(mTextView)
+
+Equivale all'uso dell'xml e java:
+
+<TextView
+android:id="@+id/show\_message"
+android:layout\_width="wrap\_content"
+android:layout\_heigh\t="wrap\_content"
+android:layout\_centerHorizontal="true"
+android:layout\_centerVertical="true"
+android:text="@string/hello\_world" />
+
+setContentView(R.layout.activity\_display\_message);
+// Per recuperare il widget
+TextView textView = (TextView) findViewById(R.id.show\_message);
+\end{lstlisting}
+
+\subsection{ActivityLifeCycle}
+L'applicazione mostra come funziona il lifecycle di una Activity in relazione ad altre Activity. Si veda la sezione che ne parla. Nessun codice risulta rilevante.
+
+
+\section{Lab 2}
+
+\subsection{ResourceAlgo}
+L'applicazione descrive come sfruttare il sistema di Resource di Android per poter gestire diverse dimensioni dello schermo degli smartphone.
+
+Si costruiscono due layout XML con lo stesso nome \lstinline|activity\_main| e nella creazione del file si specifica la proprietà size (small, normal, large or xlarge).
+
+Su ogni layout sono specificati dei pulsanti con diverso id associato: button e button-large.
+\begin{lstlisting}
+<Button
+android:id="@+id/button"
+android:text="Press me"
+android:layout\_width="wrap\_content"
+android:layout\_height="wrap\_content"
+android:onClick="handleClick"/>
+\end{lstlisting}
+
+Per sapere quale è stato cliccato nell'activity si usa il seguente codice:
+\begin{lstlisting}
+// funzione con stesso nome nell'onClick XML
+public void handleClick(View v) {
+
+TextView textField = (TextView) findViewById(R.id.textView1);
+switch(v.getId()) {
+	case R.id.button: 
+		Log.d(TAG, "button on normal screen pressed")
+		break;
+// other cases
+default: 
+	switch(v.getId()) {
+		case R.id.button-large: 
+			Log.d(TAG, "Button in large screen pressed");
+			break;
+	}
+}
+\end{lstlisting}
+
+\textbf{Nota bene}: l'uso dell'attributo onClick è considerata una cattiva pratica dalla community Android. Si preferisce settare il listener all'oggetto garantendo così codice più manutenibile e leggibile.
+
+\subsection{Layouts}
+L'applicazione implementa alcune ViewGroup, ossia View che posono contenere altre View, disponibili nell'SDK android. Essi sono:
+\begin{itemize}
+	\item LinearLayout: layout che posiziona le view in modo sequenziale (verticale o orizzontale);
+	\item RelativeLayout: layout per posizionare le view relativamente;
+	\item ScrollView: fornisce lo scroll di view se queste sforano la dimensione dello schermo;
+	\item ListView: fornisce una lista ordinata di view che rispecchiano un array di elementi.
+\end{itemize}
+
+L'esempio fornisce anche un semplice utilizzo delle SharedPreferences ossia uno storage xml privato ad uso esclusivo dell'applicazione.
+
+Salvataggio:
+\begin{lstlisting}
+String mKey = "my-shared-preferences-key";	// tag dell'xml
+SharedPreferences mPrefs = getSharedPreferences(mKey, MODE\_PRIVATE);
+SharedPreferences.Editor mEditor = mPrefs.edit();
+mEditor.clear();	// cancello il contenuto
+
+mKey = "my-value-key";					// tag interno all'altro
+String mValue = "value get from UI";	// valore da salvare (stringa in questo caso)
+mEditor.putString(mKey, mValue);
+
+mEditor.commit();
+\end{lstlisting}
+
+Caricamento:
+\begin{lstlisting}
+String mKey = "my-shared-preferences-key";	// tag dell'xml
+SharedPreferences mPrefs = getSharedPreferences(mKey, MODE\_PRIVATE);
+
+mKey = "my-value-key";										// tag interno all'altro
+String mValue = mPrefs.getString(mKey, "Default string");	// recupero di stringa
+// use mValue for something
+\end{lstlisting}
+
+
+\subsection{FragmentWorkout}
+L'applicazione implementa un esempio di come usare i Fragment per differenziare la gestione dell'interfaccia sulla base della dimensione dello schermo.
+La MainActivity dichiara due layout, uno per schermi normali, e uno per schermi xlarge. Il primo è costituito da un ListFragment che gestisce una ListView mentre nel secondo a questo si aggiunge un FrameLayout in cui è possibile inserire un altro Fragment. Di seguito si presenta il layout main\_activity.xml (xlarge).
+
+\begin{lstlisting}
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="horizontal"
+android:layout\_width="match\_parent"
+android:layout\_height="match\_parent">
+<fragment
+class="math.unipd.it.mp.workout.WorkoutListFragment"
+android:id="@+id/list\_frag"
+android:layout\_width="0dp"
+android:layout\_weight="2"
+android:layout\_height="match\_parent"/>
+
+<FrameLayout
+android:id="@+id/fragment\_container"
+android:layout\_width="0dp"
+android:layout\_weight="3"
+android:layout\_height="match\_parent" />
+</LinearLayout>
+\end{lstlisting}
+
+La MainActivity è un listener del Fragment WorkoutListFragment. Quando un elemento della lista è selezionato in base al layout scelto dal sistema la MainActivity passa ad una Activity o apre un Fragment che affianca quello già esistente.
+
+Di seguito il metodo listener invocato dalla selezione di un elemento nella lista di WorkoutListFragment.
+
+\begin{lstlisting}
+@Override
+public void itemClicked(long id) {
+	View fragmentContainer = findViewById(R.id.fragment\_container);
+	if (fragmentContainer != null) {	// se il layout è xlarge
+		WorkoutDetailFragment details = new WorkoutDetailFragment();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		details.setWorkout(id);
+		ft.replace(R.id.fragment\_container, details);
+		ft.addToBackStack(null);
+		ft.setTransition(FragmentTransaction.TRANSIT\_FRAGMENT\_FADE);
+		ft.commit();
+	} else {	// altrimenti uso un'altra activity
+		Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra(DetailActivity.EXTRA\_WORKOUT\_ID, (int)id);
+		startActivity(intent);
+	}
+}
+\end{lstlisting}
+
+Nel WorkoutDetailFragment viene implementato un esempio di Fragment innestato. Si differenzia dal codice precedentemente solo nella chiamata al metodo \lstinline|getChildFragmentManager()|.
+
+
+\subsection{AsyncTaskCountDownDemo}
+L'applicazione implementa l'uso di un AsyncTask per l'esecuzione di operazioni su un Thread diverso dal Main Thread (UI Thread).
+
+La classe è implementata come interna della MainActivity (attenzione che sia static altrimenti memory leak assicurato).
+
+\begin{lstlisting}
+static private class CountDownTask extends AsyncTask<Void, Integer, Void>{
+
+	protected void onPreExecute() {
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		tvCounter.setText("*START*");
+	}
+	
+	protected Void doInBackground(Void... params) {
+		for(int i=15;i>=0;i--){
+			try {
+				Thread.sleep(1000);
+				publishProgress(i); // Invokes onProgressUpdate()
+			} catch (InterruptedException e) {}
+		}
+		return null;
+	}
+	
+	protected void onProgressUpdate(Integer... values) {
+		// Getting reference to the TextView tv\_counter of the layout activity\_main
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		
+		// Updating the TextView
+		tvCounter.setText( Integer.toString(values[0].intValue()));
+	}
+	
+	protected void onPostExecute(Void result) {
+		// Getting reference to the TextView tv\_counter of the layout activity\_main
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		tvCounter.setText("*DONE*");
+	}
+}
+\end{lstlisting}
+
+Evengono eseguiti in ordine i seguenti metodi nel thread specificato:
+\begin{itemize}
+	\item onPreExecute() - UI Thread;
+	\item doInBackground() - BackgroundThread;
+	\item onProgressUpdate() - UI Thread (non necessario);
+	\item onPostExecute() - UI Thread.
+
+\end{itemize}
+
+	\subsection{RepoSearch}
+	Questa applicazione implementa un esempio di comunicazione REST tra App
+e network. Qui il tutorial online di come costruirla
+\url{
+https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
+}
+
+	L'app descrive come implementare la comunicazione attraverso:
+	\begin{itemize}
+		\item AsyncTask
+		\item OkHttp Library
+		\item Volley Library
+		\item Retrofit Library
+	\end{itemize}
+
+
+	\section{Lab 3}
+
+	\subsection{NotHandlingOrientation e HandlingOrientation}
+	La prima applicazione mostra come la semplice rotazione dello schermo provochi una ricostruzione dell'activity perdendo quindi tutti i riferimenti agli oggetti contenuti, anche l'AsyncTask che nel frattempo stava eseguendo il background Thread per un caricamento fittizio con report del progresso alla View. Dopo la rotazione l'interfaccia grafica non riporterà più il progresso del caricamento nel background Thread poiché l'AsyncTask si riferisce all'Activity vecchia.
+
+	La seconda applicazione mostra una soluzione a questo problema attraverso l'uso di un Fragment privo di interfaccia grafica.
+
+	Inizializzazione del Fragment:
+
+	\begin{lstlisting}
+	mFragment = (HeadlessFragment) getFragmentManager()
+	.findFragmentByTag(HeadlessFragment.TAG\_HEADLESS\_FRAGMENT);
+
+	if (mFragment == null) {	// se il Fragment non è mai stato creato
+		mFragment = new HeadlessFragment();
+		getFragmentManager().beginTransaction()
+		.add(mFragment, HeadlessFragment.TAG\_HEADLESS\_FRAGMENT)
+		.commit();
+	}
+	\end{lstlisting}
+
+	L'activity quando recupera il fragment automaticamente chiama il metodo onAttach(), in esso settiamo la nostra activity (\lstinline|context|) come listener del Fragment:
+
+	\begin{lstlisting}
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		mStatusCallback = (TaskStatusCallback)context;
+		Log.d(TAG\_HEADLESS\_FRAGMENT, "onAttach!!");
+	}
+	\end{lstlisting}
+
+
+
+	\subsection{DatabaseDemo}
+	L'applicazione implementa un semplice uso di un database SQLite tramite l'uso di classi d'appoggio fornite dall'SDK. Esse sono:
+	\begin{itemize}
+		\item SQLiteDatabase;
+		\item SQLiteOpenHelper;
+		\item Cursor (per recuperare i dati dal database).
+	\end{itemize}
+
+	Il primo passo è costruire una classe POJO che rappresenta i nostri dati da inserire in una tabella. Successivamente si estende la classe \lstinline|SQLiteOpenHelper|. Qui per comodità è bene inserire stringhe statiche che rappresentano il nome del database e della tabella, i nomi delle colonne, i comandi e le query possibili (in SQL).
+
+	Nell'\lstinline|onCreate()| creaiamo il database facendo uso dei comandi definiti in precedenza:
+	\begin{lstlisting}
+	database.execSQL(DROP\_TABLE);		// esegue l'SQL nella stringa
+	database.execSQL(DATABASE\_CREATE);
+	\end{lstlisting}
+
+	\textbf{Nota:} la classe \lstinline|SQLiteOpenHelper| permette anche la gestione della versione del database. Nella nostra estensione ricordiamoci di inizializzare una stringa statica \lstinline|private static final int DATABASE\_VERSION = 1;| e facciamo l'override del metodo \lstinline|onUpgrade()| implementando l'esecuzione delle query necessarie affinché un database possa aggiornarsi alla versione successiva.
+
+	Di seguito vediamo come creare un oggetto compatibile con il \lstinline|ContentResolver|, nel nostro caso un contatto telefonico con nome e numero e ritorniamo l'id dell'oggetto appena inserito.
+	\begin{lstlisting}
+	public long insert(String[] infoContact) {
+		ContentValues values = new ContentValues();
+		values.put(MySQLiteHelper.COLUMN\_NAME, infoContact[0]);
+		values.put(MySQLiteHelper.COLUMN\_NUMBER, infoContact[1]);
+		long insertId = sqliteDatabase.insert(MySQLiteHelper.TABLE\_CONTACTS, null, values);
+		return insertId;
+	}
+	\end{lstlisting}
+
+	Come recuperare tutti gli oggetti. Si fa notare che il \lstinline|Cursor| non è altro che un puntatore sulla tabella SQLite.
+	\begin{lstlisting}
+	public List<Contact> getAllContacts() {
+		List<Contact> contacts = new ArrayList<Contact>();
+	
+		Cursor cursor = database.query(MySQLiteHelper.TABLE\_CONTACTS,
+		allColumns, null, null, null, null, null);
+	
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Contact comment = cursorToContact(cursor);
+			contacts.add(comment);
+			cursor.moveToNext();
+		}
+		cursor.close();
+	
+		return contacts;
+	}
+	\end{lstlisting}
+
+	E la trasformarzione da Cursor in Contact.
+	\begin{lstlisting}
+	private Contact cursorToContact(Cursor cursor) {
+		Contact contact = new Contact();
+		contact.setId(cursor.getLong(0));
+		contact.setName(cursor.getString(1));
+		contact.setSurname(cursor.getString(2));
+		contact.setEmail(cursor.getString(3));
+		contact.setComment(cursor.getString(4));
+		return contact;
+	}
+	\end{lstlisting}
+
+
+	\subsection{Todos}
+	L'applicazione implementa un esempio di semplice utilizzo di un \lstinline|ContentProvider|. Di seguito vediamo i punti importanti per l'implementazione di esso. Inanzittuto nel metodo \lstinline|onCreate()| è necessario creare l'oggetto \lstinline|SQLiteOpenHelper| dopodiché è necessario fare l'override dei metodi che gestiscono le operazioni sui dati:
+	\begin{itemize}
+		\item insert;
+		\item delete;
+		\item update;
+	\end{itemize}
+
+	Per gestire le operazioni si utilizzano gli uri come se si usufruisse di una Web API. Quindi per esempio, per recuperare l'oggetto con un id costriremo un \lstinline|Uri|.
+	\begin{lstlisting}
+	Uri todoUri = Uri.parse(MyTodoContentProvider.CONTENT\_URI + "/" + id);
+	\end{lstlisting}
+
+	Dove il \lstinline|CONTENT\_URI| è definito all'interno di \lstinline|MyTodoContentProvider| come:
+	\begin{lstlisting}
+	private static final String AUTHORITY = "math.unipd.it.mp.todos.contentprovider";
+	private static final String BASE\_PATH = "todos";
+	public static final Uri CONTENT\_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE\_PATH);
+	\end{lstlisting}
+
+	Per la gestione degli \lstinline|Uri| sfruttiamo la classe \lstinline|UriMatcher|:
+	\begin{lstlisting}
+	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO\_MATCH);
+	static {
+		// possibili uri accettati
+		sURIMatcher.addURI(AUTHORITY, BASE\_PATH, TODOS);			// per lista oggetti
+		sURIMatcher.addURI(AUTHORITY, BASE\_PATH + "/#", TODO\_ID);	// per singolo oggetto
+	}
+	\end{lstlisting}
+
+	Ora mostriamo un esempio di implementazione del metodo \lstinline|query()| a parte il check sull'uri tutto il resto del codice è semplice uso del database \lstinline|SQLiteOpenHelper|.
+	\begin{lstlisting}
+	public Cursor query(Uri uri, String[] projection, String selection,
+	String[] selectionArgs, String sortOrder) {
+
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		queryBuilder.setTables(TodoTable.TABLE\_TODO);
+	
+		// dall'uri capisco quale query è stata fatta
+		int uriType = sURIMatcher.match(uri);
+		switch (uriType) {
+		case TODOS:
+		break;
+		case TODO\_ID:
+		queryBuilder.appendWhere(TodoTable.COLUMN\_ID + "="
+		+ uri.getLastPathSegment());
+		break;
+		default:
+		throw new IllegalArgumentException("Unknown URI: " + uri);
+	}
+
+	SQLiteDatabase db = database.getWritableDatabase();
+	Cursor cursor = queryBuilder.query(db, projection, selection,
+	selectionArgs, null, null, sortOrder);
+
+	// Assicurarsi che i listener degli oggetti siano notificati dell'evento
+	cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+	return cursor;
+	}
+	\end{lstlisting}
+
+	Per poter usufruire del ContentProvider si possono sfruttare altre classe offerte dall'SDK. Il \lstinline|CursorLoader| è una di queste. Esso è supportato dalle tipiche classi UI dell'SDK, per cui usando un \lstinline|CursorLoader| in una \lstinline|ListActivity| automaticamente essa popola la \lstinline|ListView| associata.
+	\begin{lstlisting}
+	String[] projection = { TodoTable.COLUMN\_ID, TodoTable.COLUMN\_SUMMARY };
+	CursorLoader cursorLoader = new CursorLoader(this,
+	MyTodoContentProvider.CONTENT\_URI, projection, null, null, null);
+	\end{lstlisting}
+
+
+	\subsection{ContentView}
+	L'applicazione mostra come sia possibile accedere ad un
+\lstinline|ContentProvider| pubblico di un'altra app (TodosApp) e usufruire dei
+dati di esso. Per il recupero dei dati si usufruisce sempre delle classi
+\lstinline|Cursor| e \lstinline|CursorLoader|.
+	L'applicazione deve inanzitutto conoscere l'uri del \lstinline|ContentProvider|.
+	\begin{lstlisting}
+	Uri CONTENT\_URI = Uri.parse("content://math.unipd.it.mp.todos.contentprovider/todos");
+	\end{lstlisting}
+	Il recupero dei dati è uguale al precedente esempio con l'uso del
+\lstinline|CursorLoader| insieme ad una \lstinline|ListActivity|.
+
+	\section{Lab 4}
+
+	\subsection{WhereAmI}
+
+	\subsection{IAmHere}
+
+	\subsection{PratoValle}
+
+	\subsection{NotifyDemo}
+
+	\subsection{BindDemo}

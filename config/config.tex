@@ -135,14 +135,22 @@
 \lstdefinelanguage{XML}
 {
 	% list of keywords
-	morekeywords={application, uses-permission, uses, permission, xml, version, encoding, service, activity, intent -filter, manifest},
+	morekeywords={application, uses-permission, uses, permission, xml, version, encoding, service, activity, intent -filter, manifest, fragment, LinearLayout, FrameLayout},
 	morecomment=[s]{<!--}{-->}, % s is for start and end delimiter
 	morestring=[b]" % defines that strings are enclosed in double quotes
 }
 
 \lstdefinelanguage{Java}
 {
-	morekeywords={ListView, ArrayAdapter, Context, R, String, WifiManager}
+	morekeywords={ListView, ArrayAdapter, Context, R, String, WifiManager, Intent, 
+		String, public, private, List, while, null, if, return, Cursor, Fragment, Uri, 
+		static, final, int, case, break, CursorLoader, ContentValues, HeadlessFragment, 
+		protected, @Override, boolean, TextView, switch, SharedPreferences, void, 
+		View, for, extends, class, FragmentTransaction, WorkoutDetailFragment, long, 
+		throw, new},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]"
 }
 
 

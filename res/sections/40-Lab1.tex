@@ -1,4 +1,4 @@
-\part{Laboratorio}
+\part{Teoria Android}
 
 \chapter{Introduzione ad Android}
 
@@ -13,7 +13,7 @@ dispositivi.
 Questo però comporta un problema a livello di frammentazione:
 
 \begin{itemize}
-	\item tanti dispositivi diversi con caratteristiche diverse (schermo, CPU, ecc.)
+	\item tanti dispositivi diversi con caratteristiche diverse (schermo, CPU, ecc.);
 	\item più versioni del sistema operativo sul mercato in contemporanea in quanto i dispositivi più datati non possono essere aggiornati.
 \end{itemize}
 
@@ -40,20 +40,21 @@ L'utilizzo principale degli smartphone riguarda l'intrattenimento e la comunicaz
 \end{figure}
 
 
-Per quanto riguarda il come vengono scoperte nuove applicazioni, si ha che iniziano ad essere più efficaci i canali in \textit{push}, in particolare quelli quelli legati alle pubblicità \textit{in-app} e sui social network, anche se la ricerca tramite App Store risulta essere ancora il sistema di scoperta più utilizzato.
+Per quanto riguarda il come vengono scoperte nuove applicazioni, si ha che iniziano ad essere più efficaci i canali in \textit{push}, in particolare quelli quelli legati alle pubblicità \textit{in-app} e ai social network, anche se la ricerca tramite App Store risulta essere ancora il sistema di scoperta più utilizzato.
 
-Infine, un altro trend importante per le applicazioni mobile riguarda l'accettazione delle notifiche push da parte dell'utente: nell'ultimo anno la percentuale di utenti che non ha concesso il permesso di inviare notifiche ad un'applicazione è passata dal 31\% al 38\%.
+Infine, un altro trend importante per le applicazioni mobile riguarda l'accettazione delle notifiche push da parte dell'utente: nell'ultimo anno la percentuale di utenti che \textbf{non} ha concesso il permesso di inviare notifiche ad un'applicazione è passata dal 31\% al 38\%.
 Questo aumento può essere dovuto al fatto che è aumentato il numero di applicazioni scaricate da parte dell'utente e che di conseguenza vengano accettate solo le notifiche per le applicazioni che l'utente ritiene importanti.
 
+\FloatBarrier
 \section{Architettura di Android}\label{architettura-di-android}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{lab1-fig-3}
-	\caption{Architettura a stack di Android.}
+	\caption{Architettura a stack di Android.}\label{fig:android-stack}
 \end{figure}
 
-Android si basa su un'architettura a stack:
+Android si basa su un'architettura a stack (figura \ref{fig:android-stack}):
 
 \begin{itemize}
 	\item \textbf{Linux Kernel:} si occupa di gestire la parte di basso livello
@@ -200,14 +201,13 @@ I componenti principali di un'applicazione Android sono:
 \end{itemize}
 
 L'architettura standard di un'applicazione Android ricorda il pattern
-MVC in quanto un \texttt{Activity} funziona sia da \textit{view}, in quanto definisce
-l'interfaccia grafica, che da \textit{controller}, in quando incorpora la logica
-di gestione degli eventi e di interazione con il Model.
+MVC in quanto un \texttt{Activity} funziona sia da \textit{view}, dato che definisce
+l'interfaccia grafica, che da \textit{controller}, perché incorpora la logica
+di gestione degli eventi e di interazione con il \textit{model}.
 
 Ogni applicazione viene poi eseguita in un processo Linux appositamente
 creato dal sistema operativo quando una porzione di codice
 dell'applicazione deve eseguire.
-
 Si ha quindi che il ciclo di vita del processo dell'applicazione è
 controllato dal sistema operativo e non dall'applicazione, il quale può
 scegliere di terminare o sospendere il processo in base alle sue
@@ -221,7 +221,7 @@ d'esecuzione/risorse sono:
 		dell'applicazione con la quale sta interagendo l'utente
 	\item \textbf{Visible process} è un processo che sta eseguendo del codice il
 		cui risultato è visibile all'utente (applicazione attiva ma con
-		l'activity in pausa).
+		l'\texttt{Activity} in pausa).
 	\item \textbf{Service process} è un processo che sta eseguendo un service in
 		background.
 	\item \textbf{Cached process} è un processo che al momento non è necessario,
@@ -239,7 +239,7 @@ Tali eventi sono:
 	\item \texttt{onCreate()} viene sollevato alla creazione dell'\texttt{Activity} e
 		viene invocato solamente una volta per tutto il ciclo di vita
 		dell'\texttt{Activity}. Tipicamente viene utilizzato per avviare operazioni in
-		background e per inizializzare l'interfaccia grafica. Quando
+		background e inizializzare l'interfaccia grafica. Quando
 		l'esecuzione è completata, l'\texttt{Activity} non è ancora visibile
 		all'utente.
 	\item \texttt{onStart()} viene sollevato quando l'\texttt{Activity} sta per diventare
@@ -253,7 +253,7 @@ Tali eventi sono:
 		a quando non verrà visualizzata una nuova \texttt{Activity}. Il gestore
 		dovrebbe ri-inizializzare tutte le attività che vengono fermate quando
 		l'activity viene messa in pausa.
-	\item \texttt{onPause()} viene sollevato quando l'activity ha perso il
+	\item \texttt{onPause()} viene sollevato quando l'\texttt{Activity} ha perso il
 		focus, magari a causa della comparsa di una finestra di dialogo, o sta
 		per essere nascosta all'utente perché è stata avviata un'altra
 		\texttt{Activity}. Il gestore dell'evento dovrebbe essere veloce e dovrebbe

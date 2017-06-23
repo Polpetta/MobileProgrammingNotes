@@ -83,23 +83,17 @@ Per sapere quale è stato cliccato nell'activity si usa il seguente codice:
 public void handleClick(View v) {
 
 TextView textField = (TextView) findViewById(R.id.textView1);
-switch(v.getId())
-{
-case R.id.button: {
-Log.d(TAG, "button on normal screen pressed")
-break;
-}
+switch(v.getId()) {
+	case R.id.button: 
+		Log.d(TAG, "button on normal screen pressed")
+		break;
 // other cases
-default: {
-switch(v.getId())
-{
-case R.id.button-large: {
-Log.d(TAG, "Button in large screen pressed");
-break;
-}
-// other cases
-}
-}
+default: 
+	switch(v.getId()) {
+		case R.id.button-large: 
+			Log.d(TAG, "Button in large screen pressed");
+			break;
+	}
 }
 \end{lstlisting}
 
@@ -172,20 +166,20 @@ Di seguito il metodo listener invocato dalla selezione di un elemento nella list
 \begin{lstlisting}
 @Override
 public void itemClicked(long id) {
-View fragmentContainer = findViewById(R.id.fragment\_container);
-if (fragmentContainer != null) {	// se il layout è xlarge
-WorkoutDetailFragment details = new WorkoutDetailFragment();
-FragmentTransaction ft = getFragmentManager().beginTransaction();
-details.setWorkout(id);
-ft.replace(R.id.fragment\_container, details);
-ft.addToBackStack(null);
-ft.setTransition(FragmentTransaction.TRANSIT\_FRAGMENT\_FADE);
-ft.commit();
-} else {	// altrimenti uso un'altra activity
-Intent intent = new Intent(this, DetailActivity.class);
-intent.putExtra(DetailActivity.EXTRA\_WORKOUT\_ID, (int)id);
-startActivity(intent);
-}
+	View fragmentContainer = findViewById(R.id.fragment\_container);
+	if (fragmentContainer != null) {	// se il layout è xlarge
+		WorkoutDetailFragment details = new WorkoutDetailFragment();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		details.setWorkout(id);
+		ft.replace(R.id.fragment\_container, details);
+		ft.addToBackStack(null);
+		ft.setTransition(FragmentTransaction.TRANSIT\_FRAGMENT\_FADE);
+		ft.commit();
+	} else {	// altrimenti uso un'altra activity
+		Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra(DetailActivity.EXTRA\_WORKOUT\_ID, (int)id);
+		startActivity(intent);
+	}
 }
 \end{lstlisting}
 
@@ -200,35 +194,34 @@ La classe è implementata come interna della MainActivity (attenzione che sia st
 \begin{lstlisting}
 static private class CountDownTask extends AsyncTask<Void, Integer, Void>{
 
-protected void onPreExecute() {
-TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
-tvCounter.setText("*START*");
-}
-
-protected Void doInBackground(Void... params) {
-for(int i=15;i>=0;i--){
-try {
-Thread.sleep(1000);
-publishProgress(i); // Invokes onProgressUpdate()
-} catch (InterruptedException e) {
-}
-}
-return null;
-}
-
-protected void onProgressUpdate(Integer... values) {
-// Getting reference to the TextView tv\_counter of the layout activity\_main
-TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
-
-// Updating the TextView
-tvCounter.setText( Integer.toString(values[0].intValue()));
-}
-
-protected void onPostExecute(Void result) {
-// Getting reference to the TextView tv\_counter of the layout activity\_main
-TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
-tvCounter.setText("*DONE*");
-}
+	protected void onPreExecute() {
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		tvCounter.setText("*START*");
+	}
+	
+	protected Void doInBackground(Void... params) {
+		for(int i=15;i>=0;i--){
+			try {
+				Thread.sleep(1000);
+				publishProgress(i); // Invokes onProgressUpdate()
+			} catch (InterruptedException e) {}
+		}
+		return null;
+	}
+	
+	protected void onProgressUpdate(Integer... values) {
+		// Getting reference to the TextView tv\_counter of the layout activity\_main
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		
+		// Updating the TextView
+		tvCounter.setText( Integer.toString(values[0].intValue()));
+	}
+	
+	protected void onPostExecute(Void result) {
+		// Getting reference to the TextView tv\_counter of the layout activity\_main
+		TextView tvCounter = (TextView) findViewById(R.id.tv\_counter);
+		tvCounter.setText("*DONE*");
+	}
 }
 \end{lstlisting}
 
@@ -260,7 +253,7 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 	\section{Lab 3}
 
 	\subsection{NotHandlingOrientation e HandlingOrientation}
-	La prima applicazione mostra come la semplice rotazione dello schermo provochi una ricostruzione dell'activity perdendo quindi tutti i riferimenti agli oggetti contenuti, anche l'AsyncTask che nel frattempo stava eseguendo il background Thread per un caricamento fittizio con report del progresso alla View. Dopo la rotazione l'interfaccia grafica non riporterà più il progreso del caricamento nel background Thread poiché l'AsyncTask si riferisce all'Activity vecchia.
+	La prima applicazione mostra come la semplice rotazione dello schermo provochi una ricostruzione dell'activity perdendo quindi tutti i riferimenti agli oggetti contenuti, anche l'AsyncTask che nel frattempo stava eseguendo il background Thread per un caricamento fittizio con report del progresso alla View. Dopo la rotazione l'interfaccia grafica non riporterà più il progresso del caricamento nel background Thread poiché l'AsyncTask si riferisce all'Activity vecchia.
 
 	La seconda applicazione mostra una soluzione a questo problema attraverso l'uso di un Fragment privo di interfaccia grafica.
 
@@ -271,10 +264,10 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 	.findFragmentByTag(HeadlessFragment.TAG\_HEADLESS\_FRAGMENT);
 
 	if (mFragment == null) {	// se il Fragment non è mai stato creato
-	mFragment = new HeadlessFragment();
-	getFragmentManager().beginTransaction()
-	.add(mFragment, HeadlessFragment.TAG\_HEADLESS\_FRAGMENT)
-	.commit();
+		mFragment = new HeadlessFragment();
+		getFragmentManager().beginTransaction()
+		.add(mFragment, HeadlessFragment.TAG\_HEADLESS\_FRAGMENT)
+		.commit();
 	}
 	\end{lstlisting}
 
@@ -282,9 +275,9 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 
 	\begin{lstlisting}
 	public void onAttach(Context context) {
-	super.onAttach(context);
-	mStatusCallback = (TaskStatusCallback)context;
-	Log.d(TAG\_HEADLESS\_FRAGMENT, "onAttach!!");
+		super.onAttach(context);
+		mStatusCallback = (TaskStatusCallback)context;
+		Log.d(TAG\_HEADLESS\_FRAGMENT, "onAttach!!");
 	}
 	\end{lstlisting}
 
@@ -311,44 +304,44 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 	Di seguito vediamo come creare un oggetto compatibile con il \lstinline|ContentResolver|, nel nostro caso un contatto telefonico con nome e numero e ritorniamo l'id dell'oggetto appena inserito.
 	\begin{lstlisting}
 	public long insert(String[] infoContact) {
-	ContentValues values = new ContentValues();
-	values.put(MySQLiteHelper.COLUMN\_NAME, infoContact[0]);
-	values.put(MySQLiteHelper.COLUMN\_NUMBER, infoContact[1]);
-	long insertId = sqliteDatabase.insert(MySQLiteHelper.TABLE\_CONTACTS, null, values);
-	return insertId;
+		ContentValues values = new ContentValues();
+		values.put(MySQLiteHelper.COLUMN\_NAME, infoContact[0]);
+		values.put(MySQLiteHelper.COLUMN\_NUMBER, infoContact[1]);
+		long insertId = sqliteDatabase.insert(MySQLiteHelper.TABLE\_CONTACTS, null, values);
+		return insertId;
 	}
 	\end{lstlisting}
 
 	Come recuperare tutti gli oggetti. Si fa notare che il \lstinline|Cursor| non è altro che un puntatore sulla tabella SQLite.
 	\begin{lstlisting}
 	public List<Contact> getAllContacts() {
-	List<Contact> contacts = new ArrayList<Contact>();
-
-	Cursor cursor = database.query(MySQLiteHelper.TABLE\_CONTACTS,
-	allColumns, null, null, null, null, null);
-
-	cursor.moveToFirst();
-	while (!cursor.isAfterLast()) {
-	Contact comment = cursorToContact(cursor);
-	contacts.add(comment);
-	cursor.moveToNext();
-	}
-	cursor.close();
-
-	return contacts;
+		List<Contact> contacts = new ArrayList<Contact>();
+	
+		Cursor cursor = database.query(MySQLiteHelper.TABLE\_CONTACTS,
+		allColumns, null, null, null, null, null);
+	
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Contact comment = cursorToContact(cursor);
+			contacts.add(comment);
+			cursor.moveToNext();
+		}
+		cursor.close();
+	
+		return contacts;
 	}
 	\end{lstlisting}
 
 	E la trasformarzione da Cursor in Contact.
 	\begin{lstlisting}
 	private Contact cursorToContact(Cursor cursor) {
-	Contact contact = new Contact();
-	contact.setId(cursor.getLong(0));
-	contact.setName(cursor.getString(1));
-	contact.setSurname(cursor.getString(2));
-	contact.setEmail(cursor.getString(3));
-	contact.setComment(cursor.getString(4));
-	return contact;
+		Contact contact = new Contact();
+		contact.setId(cursor.getLong(0));
+		contact.setName(cursor.getString(1));
+		contact.setSurname(cursor.getString(2));
+		contact.setEmail(cursor.getString(3));
+		contact.setComment(cursor.getString(4));
+		return contact;
 	}
 	\end{lstlisting}
 
@@ -377,9 +370,9 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 	\begin{lstlisting}
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO\_MATCH);
 	static {
-	// possibili uri accettati
-	sURIMatcher.addURI(AUTHORITY, BASE\_PATH, TODOS);			// per lista oggetti
-	sURIMatcher.addURI(AUTHORITY, BASE\_PATH + "/#", TODO\_ID);	// per singolo oggetto
+		// possibili uri accettati
+		sURIMatcher.addURI(AUTHORITY, BASE\_PATH, TODOS);			// per lista oggetti
+		sURIMatcher.addURI(AUTHORITY, BASE\_PATH + "/#", TODO\_ID);	// per singolo oggetto
 	}
 	\end{lstlisting}
 
@@ -388,20 +381,20 @@ https://www.raywenderlich.com/126770/android-networking-tutorial-getting-started
 	public Cursor query(Uri uri, String[] projection, String selection,
 	String[] selectionArgs, String sortOrder) {
 
-	SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-	queryBuilder.setTables(TodoTable.TABLE\_TODO);
-
-	// dall'uri capisco quale query è stata fatta
-	int uriType = sURIMatcher.match(uri);
-	switch (uriType) {
-	case TODOS:
-	break;
-	case TODO\_ID:
-	queryBuilder.appendWhere(TodoTable.COLUMN\_ID + "="
-	+ uri.getLastPathSegment());
-	break;
-	default:
-	throw new IllegalArgumentException("Unknown URI: " + uri);
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		queryBuilder.setTables(TodoTable.TABLE\_TODO);
+	
+		// dall'uri capisco quale query è stata fatta
+		int uriType = sURIMatcher.match(uri);
+		switch (uriType) {
+		case TODOS:
+		break;
+		case TODO\_ID:
+		queryBuilder.appendWhere(TodoTable.COLUMN\_ID + "="
+		+ uri.getLastPathSegment());
+		break;
+		default:
+		throw new IllegalArgumentException("Unknown URI: " + uri);
 	}
 
 	SQLiteDatabase db = database.getWritableDatabase();

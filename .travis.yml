@@ -17,3 +17,12 @@ script:
 - make
 before_deploy:
 - git fetch --tags
+deploy:
+  provider: releases
+  api_key:
+    secure: Srp4zLRaIeKdQtsgxGNPkv7izphI/L83GJ/75wT80uxOxByYuY/oNF/h2wjoQlHhElmOM8p0bXPyRTaWp+9IIg9A1aVmhBFsmZaViWRLNP0Ppj4t1rZC9+ifM19w6AHmQD3Rrdm9OzpsXxHhGvcy7COkpOLtYxKqRoFk/Hs79Jgt7sspNLFTb/zKpo1B58VGNM/dFC6vk4THHQ8y9vGrYMRJZkf6IgeSdEalfDflbbI4S8YPXUJFYcyJBL2Bu1CfWrtAhQyII29vLkz7ABp+Kqiti4i2o7u8K1MwMxkjmiuaP2b/OU38Xl6xXqF3x5k4wj7FSMJklDP/EtvRpNDx/lZBc+R1nv4EO4dI9ND2rztYMblmGfGXLHeON6bb4xk4LBDQFq6SAIzXSGJm2k80mb0kqXWdBpi6mfSeSgr9E8f+dfBgDbwsbxKmDZh/BZHOlwtTkas+iH3ykuuhHE7CBMrZfndY8BBtsc+S7f1lWNTRlaZBWM5CyPljBGoP174ygpprZn3UmX3yhB2ft/1x+WP3EKS2z5GvoyTJ/VwNASniioIoidv4ZmBrFXaASNjurn3b2lZIJPfm4PU7zQ932WYJ05qiroFd+ZLivl/Al9BFcrHadzv1P2+rSNV1h1KnKHOxGH+HsPqOg9P5/fa55C8ejrrkWdxSxFwd2ZO5nLE=
+  file: MobileProgramming.pdf
+  skip_cleanup: true
+  on:
+    repo: Polpetta/MobileProgrammingNotes
+    tags: true

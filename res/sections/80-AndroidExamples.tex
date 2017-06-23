@@ -455,14 +455,313 @@ Il recupero dei dati è uguale al precedente esempio con l'uso del
 
 \subsection{WhereAmI}
 
+L'applicazione implementa una semplice \lstinline|Activity| che recupera informazioni sulla posizione del telefono. Inanzitutto è necessario il permesso da inserire nel manifest.
+
+\begin{lstlisting}[language=XML]
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+\end{lstlisting}
+
+All'interno del metodo di creazione dell'\lstinline|Activity| si recupera il \lstinline|LocationManager| dal \lstinline|SystemService|.
+
+\begin{lstlisting}[language=Java]
+LocationManager locationManager;
+String svcName = Context.LOCATION_SERVICE;
+locationManager = (LocationManager)getSystemService(svcName);
+\end{lstlisting}
+
+Successivamente si recupera la posizione con i criteri segnalati usando \lstinline|Criteria|.
+
+\begin{lstlisting}[language=Java]
+LocationManager locationManager;
+String svcName = Context.LOCATION_SERVICE;
+locationManager = (LocationManager)getSystemService(svcName);
+
+Criteria criteria = new Criteria();
+criteria.setAccuracy(Criteria.ACCURACY_FINE);
+criteria.setPowerRequirement(Criteria.POWER_LOW);
+criteria.setAltitudeRequired(false);
+criteria.setBearingRequired(false);
+criteria.setSpeedRequired(false);
+criteria.setCostAllowed(true);
+
+String provider = locationManager.getBestProvider(criteria, true);
+Location l = locationManager.getLastKnownLocation(provider);
+\end{lstlisting}
+
+\noindent Aggiorniamo la UI con la \lstinline|Location| recuperata e settiamo un listener al \lstinline|LocationManager|.
+
+\begin{lstlisting}[language=Java]
+updateWithNewLocation(l);
+
+// 2000 il tempo minimo per la notifica al listener
+// 10 la distanza minima per la notifica al listener
+locationManager.requestLocationUpdates(provider, 2000, 10, locationListener);
+\end{lstlisting}
+
+\begin{lstlisting} [language=Java]
+private void updateWithNewLocation(Location location) {             
+	String latLongString = "No location found";
+	String addressString = "No address found";
+
+	if (location != null) {
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
+		latLongString = "Lat:" + latitude + "\\nLong:" + longitude;
+
+		// recupera un indirizzo da una cordinata (latitudine e longitudine)
+		Geocoder gc = new Geocoder(this, Locale.getDefault());
+		if(Geocoder.isPresent()) {
+			try {
+				List<Address> addresses = gc.getFromLocation(latitude, longitude, 1);
+				StringBuilder sb = new StringBuilder();
+
+				if (addresses != null && addresses.size() > 0) {
+					Address address = addresses.get(0);
+
+					for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+						sb.append(address.getAddressLine(i)).append("\\n");
+						sb.append(address.getLocality()).append("\\n");
+						sb.append(address.getPostalCode()).append("\\n");
+						sb.append(address.getCountryName());
+					}
+					addressString = sb.toString();
+				}
+			} catch (IOException e) {
+				// ...
+			}
+		} else {
+			addressString = "No geocoder is present\\n";
+		}
+	}
+
+	// Aggiorno la UI
+	mLocationText.setText("Your Current Position is:\\n" + latLongString + "\\n\\n" + addressString);
+}
+\end{lstlisting}
+
+Mentre il listener è definito all'interno della \lstinline|Activity|.
+\begin{lstlisting}[language=Java]
+private final LocationListener locationListener = new LocationListener() {
+	public void onLocationChanged(Location location) {
+		updateWithNewLocation(location);
+	}
+	public void onProviderDisabled(String provider) {}
+	public void onProviderEnabled(String provider) {}
+	public void onStatusChanged(String provider, int status, Bundle extras) {}
+};
+\end{lstlisting}
+
+
 \subsection{IAmHere}
+
+L'applicazione sfruttando la posizione recuperata con i metodi precedenti mostra graficamente la posizione in una mappa.
+Per questa applicazione si sfruttano le librerie \lstinline|com.google.android.gms.maps.model|. Durante la creazione dell'\lstinline|Activity| questa volta si crea anche l'oggetto \lstinline|GoogleMap|. La mappa è associata ad un \lstinline|SupportMapFragment|.
+\begin{lstlisting}[language=XML]
+<fragment
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" 
+	android:id="@+id/map" 
+	android:name="com.google.android.gms.maps.SupportMapFragment" />
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+if (mMap == null) {
+	// se c'e' gia' il Fragment lo recupero altrimenti lo creo
+	mMap = ((SupportMapFragment) getSupportFragmentManager()
+		.findFragmentById(R.id.map))
+		.getMap();
+
+	if (mMap != null) {
+		mMap.addMarker(new MarkerOptions()
+			.position(new LatLng(0, 0)).title("Marker"));
+		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+	}
+}
+\end{lstlisting}
+
+Ora che la mappa è configurata ci manca il \lstinline|Marker| che segnala la nostra posizione all'interno di essa. Nel metodo \lstinline|UpdateWithNewLocation()| precedente aggiungiamo il seguente codice:
+
+\begin{lstlisting}[language=Java]
+LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
+mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(latlng, 17) );
+
+if(mMarker != null)
+	mMarker.remove();
+
+mMarker = mMap.addMarker(new MarkerOptions().position(latlng).icon(
+BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title("Here I Am"));
+\end{lstlisting}
+
 
 \subsection{PratoValle}
 
+L'applicazione estende la precedente rimuovendo il \lstinline|Marker| che segnala la propria prosizione ma aggiungendo alcune interazioni con la mappa. L'\lstinline|Activity| quindi estende diverse interfacce listener: 
+\begin{itemize}
+	\item \lstinline|OnMapClickListener|
+	\item \lstinline|OnMapLongClickListener| 
+	\item \lstinline|OnMarkerClickListener|
+\end{itemize}
+
+Nella configurazione della mappa si settano i listener e si posiziona con un'animazione la mappa sull'indirizzo del Prato della Valle di Padova.
+
+\begin{lstlisting}[language=Java]
+mMap.setMyLocationEnabled(true);
+mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+mMap.setOnMapClickListener(this);
+mMap.setOnMapLongClickListener(this);
+mMap.setOnMarkerClickListener(this);
+
+mMap.moveCamera(CameraUpdateFactory
+					.newLatLngZoom(PRATO_VALLE_ADDRESS, 15));
+mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+\end{lstlisting}
+
+Si mostra ora l'implementazione dei metodi dei listener.
+
+\begin{lstlisting}[language=Java]
+@Override
+public void onMapClick(LatLng point) {
+	mMap.animateCamera(CameraUpdateFactory.newLatLng(point));   
+	mMarkerIsClicked = false;
+}
+
+@Override
+public void onMapLongClick(LatLng point) {
+	mMap.addMarker(new MarkerOptions()
+						.position(point)
+						.title(point.toString()));    
+	mMarkerIsClicked = false;
+}
+
+@Override
+public boolean onMarkerClick(Marker marker) {
+		if (mPolyline != null) {
+		mPolyline.remove();
+		mPolyline = null;
+	}
+
+	if (mMarkerIsClicked) {
+		// disegna e mostra nella mappa una linea rossa 
+		// che parte dal precedente marker e finisce nell'ultimo marker
+		mRectOptions.add(marker.getPosition());
+		mRectOptions.color(Color.RED);
+		mPolyline = mMap.addPolyline(mRectOptions);
+	} else {
+		// Nuovo marker, salvo la sua posizione
+		mRectOptions = new PolylineOptions()
+							.add(marker.getPosition());
+		mMarkerIsClicked = true;
+	}
+	return true;
+}
+\end{lstlisting}
+
+
 \subsection{NotifyDemo}
 
-\subsection{BindDemo}
+L'applicazione mostra l'implementazione di un \lstinline|Service| e la comunicazione di esso con un'\lstinline|Activity|, nel codice chiamati \lstinline|NotifyService| e \lstinline|NotifyActivity| rispettivamente. Il \lstinline|Service| lancerà una notifica mentre dall'\lstinline|Activity| sarà possibile farlo partire e/o fermarlo tramite il meccanismo di \lstinline|Intent| e \lstinline|BroadcastReceiver|.
 
+Dichiariamolo nel manifest:
+\begin{lstlisting}[language=Java]
+<application>
+	<service android:name="math.unipd.it.mp.notifydemo.NotifyService"/>
+</application>
+\end{lstlisting}
+
+Nel metodo \lstinline|onCreate()| dell'\lstinline|Activity| settiamo due listener ai pulsanti per avviare e fermare il \lstinline|Service|.
+\begin{lstlisting}[language=Java]
+Button buttonStartService = 
+	(Button)findViewById(R.id.startservice);
+Button buttonStopService = 
+	(Button)findViewById(R.id.stopservice);
+
+buttonStartService.setOnClickListener(
+	new Button.OnClickListener(){
+		public void onClick(View arg0) {
+			Intent intent = 
+				new Intent(NotifyActivity.this, NotifyService.class);
+			startService(intent);
+		}
+	});
+
+buttonStopService.setOnClickListener(
+	new Button.OnClickListener(){
+		public void onClick(View arg0) {
+			Intent intent = new Intent();
+			intent.setAction(NotifyService.ACTION);
+			intent.putExtra(
+				NotifyService.STOP_SERVICE_BROADCAST_KEY, 
+				NotifyService.RQS_STOP_SERVICE);
+			sendBroadcast(intent);
+		}
+	}
+);
+\end{lstlisting}
+
+Di seguito una implementazioe di un \lstinline|BroadcastReceiver| che serve per comunicare con l'\lstinline|Service| dall'\lstinline|Activity| (vale anche il contrario).
+\begin{lstlisting}[language=Java]
+public class NotifyServiceReceiver extends BroadcastReceiver {
+	public void onReceive(Context arg0, Intent arg1) {
+		int rqs = arg1.getIntExtra(STOP_SERVICE_BROADCAST_KEY, 0);
+
+		if (rqs == RQS_STOP_SERVICE){
+			stopSelf();
+			((NotificationManager) 
+				getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+		}
+	}
+}
+\end{lstlisting}
+
+Esso viene inizializzato nel metodo \lstinline|onCreate()| del \lstinline|Service|.
+Subito dopo \lstinline|onCreate()| viene eseguito il metodo \lstinline|onStartCommand()|.
+
+
+\begin{lstlisting}[language=Java]
+public int onStartCommand(Intent intent, int flags, int startId) {
+	IntentFilter intentFilter = new IntentFilter();
+	intentFilter.addAction(ACTION);
+
+	// il BroadcastReceiver viene agganciato al Service
+	// ogni intent con Action = ACTION verra' catturato dal Receiver
+	registerReceiver(notifyServiceReceiver, intentFilter);
+
+	// Send Notification
+	Context context = getApplicationContext();
+	String notificationTitle = "Demo of Notification!";
+	String notificationText = "Service Manual Website";
+
+	Intent myIntent = 
+		new Intent(Intent.ACTION_VIEW, 
+				   Uri.parse(this.getResources()
+				   				 .getString(R.string.service_manual)));
+	myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	PendingIntent pendingIntent = 
+		PendingIntent.getActivity(getBaseContext(), 0, myIntent, 0);
+
+	Notification notification = new Notification.Builder(this)
+		.setContentTitle(notificationTitle)
+		.setContentText(notificationText)
+		.setSmallIcon(R.drawable.icon)
+		.setContentIntent(pendingIntent)
+		.build();
+
+	NotificationManager notificationManager = 
+		(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+	notificationManager.notify(0, notification); 
+
+	return super.onStartCommand(intent, flags, startId);
+}
+\end{lstlisting}
+
+
+\subsection{BindDemo}
+L'applicazione è simile alla precedente, aggiunge la possibilità all'utente da interfaccia grafica di fare bind all\lstinline|Activity| e fare unBind.
 
 
 \undef{\Activity}
@@ -483,4 +782,3 @@ Il recupero dei dati è uguale al precedente esempio con l'uso del
 \undef{\SQLiteDatabase}
 \undef{\SQLiteOpenHelper}
 \undef{\Cursor}
-				mLocationText.setText("Your Current Position is:\\n" + latLongString + "\\n\\n" + addressString);

@@ -193,8 +193,8 @@ multiple networks with smooth handovers (handoff)
 
 \textbf{GSM (Global System for Mobile Communications)} is a standard
 developed by the European Telecommunications Standards Institute (ETSI) to
-describe the protocols for second-generation (2G) digital cellular networks
-used by mobile phones.
+describe the \textbf{protocols for second-generation (2G)} digital cellular
+networks used by mobile phones. \\
 
 As of 2014, it has become the de-facto global standard for mobile
 communications with over 90\% market share, operating in over 219 countries
@@ -202,7 +202,7 @@ and territories.
 
 2G networks developed as a replacement for first generation (1G) analog
 cellular networks, and the GSM standard originally described as a digital,
-circuit-switched network optimized for full duplex voice telephony.
+circuit-switched network optimized for full duplex voice telephony. \\
 
 This expanded over time to include data communications, first by
 circuit-switched transport, then by packet data transport via GPRS
@@ -225,36 +225,45 @@ ETSI GSM standard.
 
 \textbf{1995} - GSM Specifications ported to 1900 MHz band \\
 
-GSM is the most popular 2G technology. The following are its main
-characteristics:
-
-\begin{itemize}
-  \item FDD/FDMA/TDMA channel
-  \item TDMA: 200 KHz channel with 8 voice channels;
-  \item TDMA: channel rate of 270.833 kbps (~33 kbps per user);
-  \item TDMA: divided into two logical control and data channel (22.8kbps)
-  \item Higher Quality than prior analog systems
-  \item Digital Voice 13.3Kbps
-  \item 9.6 kbps for data traffic
-  \item Low power handsets – support sleep mode
-  \item Security through encryption
-  \item Wide roaming capability
-  \item Subscriber Identity Modules (SIM cards)
-  \item Digital data service
-  \item fax, circuit switched data
-  \item SMS short messaging service
-  \item Additional features such as call waiting, voice mail, group calling,
-caller id etc.
-\end{itemize}
-
-\subsubsection{GSM – Functional Architecture}
+GSM is the most popular 2G technology. Figure \ref{fig:gsm_table} shows its
+main characteristics:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.3]{archGSM.png}
-  \caption{The structure of a GSM network}
-  \label{fig:archGSM}
+  \includegraphics[scale=0.7]{gsm_table.png}
+  \caption{Specification Summary for GSM Cellular System }
+  \label{fig:gsm_table}
 \end{figure}
+
+One of the key features of GSM is the \textbf{Subscriber Identity Module},
+commonly known as a SIM card.
+
+The SIM is a detachable smart card containing the user's subscription
+information and phone book. This allows the user to retain his or her
+information after switching handsets.
+
+Alternatively, the user can also change operators while retaining the handset
+simply by changing the SIM. Some operators will block this by allowing the
+phone to use only a single SIM, or only a SIM issued by them; this practice
+is known as SIM locking.
+
+\subsubsection{GSM – Functional Architecture}
+
+A \textbf{GSM network} comprises of many functional units.
+It can be broadly divided into:
+
+\begin{itemize}
+  \item \textbf{Base station subsystem} (BSS) - the base stations and their
+controllers
+  \item \textbf{Network and Switching Subsystem} (NSS) - the part of the
+network most similar to a fixed network, sometimes just called the core network
+  \item \textbf{GPRS Core Network} (GPRS) - the \textbf{optional} part which
+allows packet-based Internet connections (see section \ref{sec:gprs})
+  \item \textbf{Operations support system} (OSS) - network maintenance
+\end{itemize}
+
+The additional components of the GSM architecture comprise of databases and
+\textbf{messaging systems functions}:
 
 \begin{itemize}
   \item VLR : Visitor Location Register
@@ -265,7 +274,45 @@ caller id etc.
   \item EIR : Equipment Identity Register
 \end{itemize}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{archGSM.png}
+  \caption{The structure of a GSM network}
+  \label{fig:archGSM}
+\end{figure}
+
+The base transceiver stations (BTS) are organised into small groups,
+controlled by a base station controller (BSC) which is typically co-located
+with one of the BTSs.
+
+The BSC with its associated BTSs is called \textbf{base station subsystem}
+(BSS). \\
+
+Further into the core network, there is the main switching area.
+This is known as the \textbf{mobile switching centre} (MSC).
+
+Associated with it, there are the \textbf{location registers}, namely the home
+location register (HLR) and the visitor location register (VLR) which track
+the location of mobiles and enable calls to be routed to them. \\
+
+Additionally there is the \textbf{Authentication Centre} (AuC), and the
+Equipment Identify Register (EIR) that are used in authenticating the
+mobile before it is allowed onto the network and for billing.
+
+The MS and the BSS communicate across the Um interface (it is the air
+interface for the GSM mobile telephone standard, between the mobile station
+(MS) and the Base transceiver station (BTS)). It is also known as the air
+interface or the radio link.
+
+The BSS communicates with the Network Service Switching (NSS) center across
+the A interface.
+
+GSM is a cellular network, which means that cell phones connect to it by
+searching for cells in the immediate vicinity. There are five different cell
+sizes in a GSM network: \textit{macro, micro, pico, femto, and umbrella} cells.
+
 \section{General Packet Radio Service}
+\label{sec:gprs}
 
 General Packet Radio Service (\textbf{GPRS}) is a packet oriented mobile data
 service on the 2G and 3G cellular communication system's GSM. It is now

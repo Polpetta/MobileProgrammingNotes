@@ -2,8 +2,8 @@
 \label{wireless-standards-and-protocols}
 
 \textbf{Wireless sucks:} vengono persi pacchetti, servono
-regolamentazioni delle frequenze, canale di comunicazione non limitabile
-e condiviso, scarsa sicurezza, trasmissione lenta e variabile, ecc.
+regolamentazioni delle frequenze, il canale di comunicazione non è limitabile
+ed è condiviso, scarsa sicurezza, trasmissione lenta e variabile, ecc.
 
 Però fa comodo perché è veloce da installare, permette la mobilità e richiede 
 poca infrastruttura.
@@ -12,60 +12,48 @@ L'obiettivo finale è quello di avere una gerarchia di reti wireless che sia in
 grado di connettere aree geografiche molto ampie, garantendo allo stesso
 tempo una buona velocità di trasmissione.
 
-\subsection{Tecnologie correnti}\label{tecnologie-correnti}
+\section{Tecnologie correnti}\label{tecnologie-correnti}
 
 \begin{itemize}
 \item
-  \begin{quote}
   \textbf{Mobile Cellular Systems:} utilizzata per far comunicare i
   telefoni ed effettuare principalmente traffico voce. Gli access point
   coprono dai 100 metri ai 10km ma garantiscono una velocità di
   trasmissione contenuta.
-  \end{quote}
+
 \item
-  \begin{quote}
-  \textbf{WLAN}: estensione wireless della rete ethernet con copertura
+  \textbf{WLAN}: estensione wireless della rete Ethernet con copertura
   più limitata, dai 10 ai 100 metri. Aumenta però la velocità di
   trasmissione. Ci sono vari standards, come 802.11 b, a, c, n, g, ac...
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{Short-range}: connessione diretta tra dispositivi, ottimizzata
   per contenere i consumi. Esempi: Bluetooth e ZigBee.
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{Satellite systems}: connessione satellitare in grado di
   coprire tutto il mondo (i satelliti si dividono in GEO, dei quali ne bastano 3
   per coprire l'intero globo, e LEO, dei quali ne servono 77), utilizzata per 
-  trasmissioni audio/video o comunicazione(per esempio Iridium).
-  \end{quote}
+  trasmissioni audio/video o comunicazione (per esempio Iridium).
 \end{itemize}
 
-\subsection{Enti per le
-standardizzazioni}\label{enti-per-le-standardizzazioni}
+\section{Enti per le standardizzazioni}\label{enti-per-le-standardizzazioni}
 
 \begin{itemize}
 \item
-  \begin{quote}
   \textbf{3GPP}: GSM, UMTS, LTE
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{IEEE:} 802.x (LAN, PAN; WiMAX)
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{IETF (Internet Engineering Task Force)}: Mobile IP,
   TCP...
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.3]{image10}
-  \end{figure}
-  \end{quote}
 \end{itemize}
 
-\subsection{Divisione dello spettro elettromagnetico}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{image10}
+\end{figure}
+\FloatBarrier
+
+\section{Divisione dello spettro elettromagnetico}
 Lo spettro elettromagnetico è diviso in bande che possono essere riservate o 
 meno, le bande a 2,4GHz e 5GHz sono libere (e utilizzate da Bluetooth e per 
 esempio dal Wi-Fi, che usa 802.11x). In generale più bassa è la frequenza più il 
@@ -74,8 +62,8 @@ data-rate meno elevati, più la frequenza è alta invece, maggiore è la capacit
 di trasportare le informazioni ma le distanze coperte sono minori. Ciò è dovuto 
 al fatto che maggiore la frequenza è, più l'onda interagisce con la materia.
 
-\subsection{802.11 Wireless Local Area
-Network}\label{wireless-local-area-network}
+\section{802.11 Wireless Local Area Network}
+\label{wireless-local-area-network}
 
 802.X è una famiglia di standard per le reti locali e metropolitane, in
 particolare 802.11 definisce il \textbf{MAC (Medium Access Control)} e
@@ -109,30 +97,20 @@ componenti:
 
 \begin{itemize}
 \item
-  \begin{quote}
   \textbf{MAC:} si occupa del meccanismo di accesso al canale, della
   frammentazione dei pacchetti e dell'encryption dei dati.
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{MAC Management}: contiene la logica di sincronizzazione e
-  autenticazione
-  \end{quote}
+  autenticazione.
 \item
-  \begin{quote}
   \textbf{PLCP Physical Layer Convergence Protocol:} controlla il canale
-  di comunicazione
-  \end{quote}
+  di comunicazione.
 \item
-  \begin{quote}
   \textbf{PMD Physical Medium Dependent}: si occupa della codifica e
   modulazione del segnale.
-  \end{quote}
 \item
-  \begin{quote}
   \textbf{Station Management}: si occupa di tutte le funzionalità legate
   alla gestione della stazione di trasmissione.
-  \end{quote}
 \end{itemize}
 
 \begin{figure}[H]
@@ -144,8 +122,9 @@ L'accesso al canale può avvenire sfruttando \textbf{CSMA/CA: Carrier Sense
 Multiple Access with Collision Avoidance}, ovvero prima di effettuare
 una trasmissione viene controllato il canale e viene effettuata una
 trasmissione solo se questo è libero. Questo perché non è possibile
-effettuare Collision detection. Prima che la trasmissione avvenga viene aspettato
-un certo tempo fisso aumentato da un tempo di backoff, aumentato ad ogni 
+effettuare \textit{collision detection}. 
+Prima che la trasmissione avvenga viene aspettato
+un certo tempo fisso aumentato da un tempo di backoff, il quale incrementa ad ogni 
 collisione o ogni volta che il canale risulta occupato (le collisioni possono 
 avvenire lo stesso, principalmente perché il tempo di trasmissione sul canale 
 non è nullo).
@@ -194,23 +173,15 @@ uno degli access point secondo il seguente procedimento:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \begin{quote}
   Ascoltano il canale per cercare dei \textbf{beacon frame} che
   descrivono l'access point (nome \textbf{SSID} e MAC address).
-  \end{quote}
 \item
-  \begin{quote}
   Selezionano l'access point a cui associarsi.
-  \end{quote}
 \item
-  \begin{quote}
   Effettuano l'autenticazione (opzionale)
-  \end{quote}
 \item
-  \begin{quote}
   Ottengono un IP, tipicamente assegnato in DHCP, valido per la
   sotto-rete definita dall'access point.
-  \end{quote}
 \end{enumerate}
 
 Una volta associato o connesso, l'host comunicherà con tutti gli altri
@@ -246,7 +217,7 @@ fasi preliminari di connessione e possono cambiare nel tempo a seguito di una
 ri-negoziazione. Lo standard non vieta la possibilità di creare multigruppi.
 
 La scoperta di un gruppo da parte di una stazione avviene inviando un messaggio 
-sonda (probe) per individuare dei GO(di conseguenza dei gruppi) o altri 
+sonda (probe) per individuare dei GO (di conseguenza dei gruppi) o altri 
 dispositivi che non appartengono ad alcun gruppo, nel quale vengono specificate 
 le caratteristiche del dispositivo. La risposta a questo messaggio, nel caso 
 arrivi da un GO, contiene le caratteristiche del gruppo stesso. Nel caso si 
@@ -274,15 +245,15 @@ I vantaggi delle MANET rispetto al Wi-Fi Direct sono la scalabilità e la
 capacità di gestire cambi di topologia dinamici, unito al fatto che il 
 protocollo per reti ad-hoc è molto semplice. Dall'altro canto però nelle MANET 
 non è prevista alcuna funzionalità di sicurezza o crittografia automatica, 
-previsti invece dal Wi-Fi Direct, ed inoltre la "scoperta" di altri dispositivi
+previsti invece dal Wi-Fi Direct, ed inoltre la ``scoperta'' di altri dispositivi
 non viene fatta in automatico (in Wi-Fi Direct è prevista dal protocollo).
 
-\subsection{802.15 Personal Area Network}\label{personal-area-network}
+\section{802.15 Personal Area Network}\label{personal-area-network}
 
 L'obiettivo di questo standard è di definire una rete wireless a corto
 raggio e con consumi ridotti.
 
-\paragraph{Bluetooth - IEEE 802.15.1}
+\subsection{IEEE 802.15.1 - Bluetooth}
 L'idea fondamentale di \textbf{Bluetooth} è di fornire un'interfaccia comune per 
 le comunicazioni wireless ad-hoc, mantenendo:
 \begin{itemize}
@@ -298,13 +269,13 @@ utilizzata da molte altre tecnologie.
 
 Bluetooth utilizza 2 tipologie di accesso al canale: 
 \begin {itemize}
-  \item \textbf{FHSS(Frequency Hopping Spread Spectrum) con TDD(Time Division 
+  \item \textbf{FHSS (Frequency Hopping Spread Spectrum) con TDD (Time Division 
         Duplex)}, cioè la frequenza di comunicazione viene cambiata in un modo 
         pseudo-random noto sia al trasmettitore che al ricevente, simulando che 
         il canale di comunicazione sia full duplex anche se è half duplex (viene 
         simulato un canale che può essere utilizzato per l'invio e la ricezione 
         simultanea con un canale che permette solo una di queste due alla volta);
-  \item \textbf{AFH(Adaptive Frequency Hopping)}, una variante del FHSS nella 
+  \item \textbf{AFH (Adaptive Frequency Hopping)}, una variante del FHSS nella 
         quale si cerca di evitare di utilizzare dei canali che sono già in uso 
         da altri dispositivi.
 \end{itemize}
@@ -333,10 +304,10 @@ attivi (ce ne possono essere più di 200 in stato non attivi)
 
 Più piconet possono essere unite per formare una \textbf{scatternet}: in questo 
 caso la congiunzione tra le due reti avviene tramite uno dei dispositivi, con la 
-limitazione che questo non può essere master in entrambe le reti che unisce(può 
+limitazione che questo non può essere master in entrambe le reti che unisce (può 
 essere master in una e slave nell'altra o slave in entrambe).
 
-\paragraph{BLE - Bluetooth Low Energy}
+\subsubsection{BLE - Bluetooth Low Energy}
 BLE è un'evoluzione del classico Bluetooth, rilasciata nel 2010, che ne migliora 
 le performance. Infatti BLE, oltre ad essere più veloce, consuma meno energia ed 
 è meno costoso. Ciò deriva dal fatto che il chip responsabile delle trasmissioni 
@@ -349,7 +320,7 @@ massima dei pacchetti scambiati. Oltre a ciò BLE aggiunge nuovi profili:
   \item Per la localizzazione.
 \end{itemize}
 
-\paragraph{IEEE 802.15.4}
+\subsection{IEEE 802.15.4}
 Lo IEEE 802.15.4 è uno standard per le comunicazione nelle PAN a bassissimi:
 \begin{itemize}
   \item costo;
@@ -359,10 +330,10 @@ Lo IEEE 802.15.4 è uno standard per le comunicazione nelle PAN a bassissimi:
 
 I dispositivi che lo sfruttano sono pensati per avere una batteria che dura 
 molto a lungo (anche un paio d'anni), di facile utilizzo e basso costo. Tale 
-standand è utilizzato per esempio nei giocattoli interattivi e per reti 
+standard è utilizzato per esempio nei giocattoli interattivi e per reti 
 domestiche.
 
-La banda utilizzata è sempre quella a 2,4GHz, poichè libera, al quale viene 
+La banda utilizzata è sempre quella a 2,4GHz, poiché libera, al quale viene 
 aggiunta una banda a 868MHz, in Europa, e a 915MHz, negli USA.
 
 I dispositivi che sfruttano lo IEEE 802.15.4 possono essere divisi in 
@@ -393,7 +364,7 @@ I frame (messaggi) che possono essere scambiati sono di 4 tipi:
 Nelle comunicazioni è possibile sia criptare i dati che validare l'autenticità 
 dei dati.
 
-\paragraph{ZigBee}
+\subsubsection{ZigBee}
 Con ZigBee si intende una tecnologia basata sullo IEEE 802.15.4 (per i livelli 
 fisico e MAC) utilizzata nell'automazione domestica, salute, collegamenti per 
 gli interruttori della luce, telecomunicazione, ...
@@ -405,12 +376,12 @@ dispositivo dorme per un certo periodo, e poi invia nuovi dati), intermittente
 
 I dispositivi ZigBee si dividono in:
 \begin{itemize}
-  \item \textbf{ZigBee Coordinator}(ZC): il più potente dei 3, si occupa della 
+  \item \textbf{ZigBee Coordinator} (ZC): il più potente dei 3, si occupa della 
         coordinazione di rete ed eventualmente anche della gestione della chiavi 
         per la gestione della sicurezza;
-  \item \textbf{ZigBee Router}(ZR): con il compito di passare i dati da un 
+  \item \textbf{ZigBee Router} (ZR): con il compito di passare i dati da un 
         dispositivo all'altro;
-  \item \textbf{ZigBee End Device}(ZED): non si occupa dell'instradamento, ma è 
+  \item \textbf{ZigBee End Device} (ZED): non si occupa dell'instradamento, ma è 
         il nodo terminale in una rete.
 \end{itemize}
 
@@ -424,7 +395,7 @@ reti:
   \item Mesh: reti con comunicazione P2P.
 \end{itemize}
 
-\paragraph{6LowPan}
+\subsubsection{6LowPan}
 Con il termine 6LowPan ci si riferisce all'utilizzo di IPv6 nelle WPAN a basso 
 consumo energetico, le quali sfruttano 802.15.4 nei livelli più bassi (PHY/MAC). 
 Tale supporto agli IP è stato implementato poichè per gli IP esiste già una 

@@ -82,8 +82,9 @@ In questo modo possiamo decidere noi come gestire il tutto.
 \subsection{Conservare l'oggetto durante il cambiamento}
 Questa è la scelta raccomandata. Questa procedura permette il riavvio alla 
 Activity al generarsi di un cambiamento di configurazione, ma tiene un oggetto
-con lo stato per la nuova istanza. L'uso di una \textit{Fragment} \textit{class}
-è conservata durante il cambiamento. Gli step da seguire sono i seguenti:
+con lo stato per la nuova istanza. Per mantenere lo stato durante il 
+cambiamento è possibile utilizzare una \textit{Fragment class}.
+Gli step da seguire sono i seguenti:
 \begin{itemize}
     \item estendere la Fragment class e dichiarare i riferimenti all'oggetto
     \item quando il frammento è creato chiamare

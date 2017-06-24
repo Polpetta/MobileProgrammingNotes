@@ -22,9 +22,9 @@
 
 Le tecnologie di localizzazione sono una combinazione di metodi e
 tecniche che permettono di individuare la posizione di un oggetto o di una
-persona nel mondo reale. I servizi location-based servizi specifici in base alla
-posizione. Un'applicazione molto comune che utilizza questo genere di servizi è
-Google Maps.
+persona nel mondo reale. I servizi location-based sono servizi specifici che si
+basano sulla posizione. Un'applicazione molto comune che utilizza questo genere
+di servizi è Google Maps.
 Affinché funzionino correttamente e in modo efficiente, queste tecniche
 di localizzazione richiedono:
 \begin{itemize}
@@ -61,16 +61,16 @@ Questi sistemi comprendono due blocchi principali:
 
 \section{Il GPS è l'unica scelta possibile?}\label{subsubsec3.1.1}
 Il GPS non sempre è la soluzione più conveniente; per esempio
-esso funziona solo outdoor e consuma molta energia. 
-L'alto consumo energetico è dovuto al fatto che la comunicazione è molto lenta 
-e questo significa che l'antenna per al trasmissione delle informazioni resta 
-attiva più a lungo con un conseguente alto consumo di energia. 
-Questo problema va poi moltiplicato per 3 poiché bisogna comunicare con almeno 
+esso funziona solo outdoor e consuma molta energia.
+L'alto consumo energetico è dovuto al fatto che la comunicazione è molto lenta
+e questo significa che l'antenna per al trasmissione delle informazioni resta
+attiva più a lungo con un conseguente alto consumo di energia.
+Questo problema va poi moltiplicato per 3 poiché bisogna comunicare con almeno
 3 anchor nodes.
 Sono quindi state proposte altre tecniche per stabilire la
 posizione dei nodi sconosciuti. Esse sfruttano:
 \begin{itemize}
-    \item Sensing Capabilities: sfruttano la propagazione di onde radio, la 
+    \item Sensing Capabilities: sfruttano la propagazione di onde radio, la
     forza di ricezione del segnale (RSSI), il tempo di arrivo (ToA) ecc..
     \item Comunicazione Wireless
 \end{itemize}
@@ -198,7 +198,7 @@ relativa tra due nodi (opportunistic).
         RSS-Gathering e si costruisce la mappa. Un'entità autonoma misura l'RSS e
         interroga la mappa; a questo punto viene inferita la posizione effettiva.
     \end{itemize}
-    
+
     \begin{centering}
         \begin{tabularx}{\textwidth}{|l|X|X|}
             \hline
@@ -207,46 +207,46 @@ relativa tra due nodi (opportunistic).
             ~Analytical-Mapping & \tabitem Facile da implementare & \tabitem I parametri dipendono dall'ambiente \\
             & \tabitem Utile per il design dei simulatori & \tabitem Scarsa precisione \\
             \hline
-            ~Empirical-Mapping & \tabitem Può raggiungere un alto livello di accuratezza & \tabitem È necessario un ulteriore profiling dell'ambiente \\ 
-            & & \tabitem Alto overhead nella computazione offline \\ 
-            & & \tabitem Scarsa scalabilità \\ 
+            ~Empirical-Mapping & \tabitem Può raggiungere un alto livello di accuratezza & \tabitem È necessario un ulteriore profiling dell'ambiente \\
+            & & \tabitem Alto overhead nella computazione offline \\
+            & & \tabitem Scarsa scalabilità \\
             & & \tabitem Inaffidabile in ambienti dinamici \\
             \hline
         \end{tabularx}
     \end{centering}
 
-    
+
     \item \textbf{Time-Based techinque}: la stima della posizione viene effettuata tenendo conto
     del tempo di propagazione del segnale radio.
     \begin{itemize}
         \item Time of Arrival (ToA): si conta il tempo di propagazione tra due
-        nodi sincronizzati (sender e receiver devono essere sincronizzati). 
-		
+        nodi sincronizzati (sender e receiver devono essere sincronizzati).
+
 		\textit{Funzionamento}: il sender (nodo ancora) invia ad intervalli regolari un beacon; il nodo receiver (unknown) essendo sincronizzato con l'ancora, sa quando è stato inviato il pacchetto e calcola la distanza in base al ritardo con il quale l'ha ricevuto.
-		
+
         Questi metodi sono poco utilizzati perché richiedono hardware costosi e grosse capacità
         di computazione. Un esempio di applicazione è il sistema GPS a larga distanza
         con un alta risoluzione di clock.
-        
+
         \item Round-trip Time of Flight (RFOT): strategia alternativa che evita la
         sincronizzazione dei nodi. \`E possibile determinare la posizione solo conoscendo
         la velocità del protocollo usato che può essere noto, calcolato statisticamente
         o comunicato dal nodo.
-        
+
         \textit{Funzionamento}: il nodo unknown manda un beacon, i nodi ancora che lo ricevono glielo re-inviano; la distanza viene calcolata dal nodo unknown tenendo conto del tempo impiegato dai vari pacchetti per tornare.
-        
+
         \item Time Difference of Arrival (TDoA): il nodo che deve inferire la posizione riceve dai nodi ancora due segnali a frequenze diverse, tipicamente uno radio e uno ultrasuono, e calcola la distanza in base alla differenza d'arrivo dei due segnali, prendendo come riferimento il più veloce (\textbf{Single Receiver}).
         Così facendo non serve la sincronizzazione dei nodi, il consumo di energia eè ridotto ma sono necessarie più antenne.
-        
-        In alternativa è possibile utilizzare due ricevitori posti ad una distanza nota ed approssimare la distanza dalla sorgente utilizzando la differenza nel tempo di ricezione del segnale da parte dei due ricevitori (\textbf{Multiple Receiver}). 
+
+        In alternativa è possibile utilizzare due ricevitori posti ad una distanza nota ed approssimare la distanza dalla sorgente utilizzando la differenza nel tempo di ricezione del segnale da parte dei due ricevitori (\textbf{Multiple Receiver}).
         In questo caso viene utilizzato un singolo segnale.
     \end{itemize}
     \item \textbf{Angle of Arrival}: viene utilizzato l'angolo di arrivo del segnale per capire in che direzione si trova il nodo sconosciuto rispetto all'ancora dalla quale ha ricevuto il segnale.
-    
-    Se è disponibile l'informazione riguardo l'orientamento delle varie ancore bastano solo due nodi ancora per inferire la posizione, altrimenti ne sono necessari tre. 
-    
+
+    Se è disponibile l'informazione riguardo l'orientamento delle varie ancore bastano solo due nodi ancora per inferire la posizione, altrimenti ne sono necessari tre.
+
     Per determinare l’angolo di arrivo di un segnale si può utilizzare un'antenna rotante (hardware costoso) oppure un array di antenne poste a distanza fissa tra loro in modo da determinare l'angolo in base a come queste ricevono il segnale.
-    
+
     Una volta determinati i vari angoli di arrivo del segnale, si risolve un sistema di equazioni lineari per determinare la posizione relativa dell'oggetto.
 \end{itemize}
 
@@ -261,7 +261,7 @@ relativa tra due nodi (opportunistic).
 \subsection{Range-Free}\label{subsubsec3.4.2}
 \begin{itemize}
     \item \textbf{Anchor-Based}: vengono predisposti dei nodi ancora in posizioni note che inviano in broadcast la loro posizione. I nodi unknown calcolano la loro posizione utilizzando i messaggi ricevuti dalle ancore alla quali riescono a connettersi\footnote{\url{http://journals.sagepub.com/doi/full/10.1155/2013/304628} §4 e §5}.
-    
+
     Abbiamo diversi approcci:
     \begin{itemize}
         \item Area-Based: in cui la posizione viene calcolata
@@ -271,8 +271,8 @@ relativa tra due nodi (opportunistic).
         dell'intersezione trovata.
         \item Multihop Localization: non è sempre possibile che
         il nodo target sia nel range di comunicazione con il numero minimo di nodi
-        anchor richiesti per determinare la posizione. 
-        
+        anchor richiesti per determinare la posizione.
+
         In questi casi si può utilizzare l'approccio \textbf{DV-HOP}:
         i nodi anchor mandano in broadcast un messaggio contenente la loro posizione ed un hop count $(X_i, Y_i, h_i)$; quando un nodo anchor riceve un messaggio da un'altro nodo anchor, lo rimanda in broadcast, aumentando di uno l'hop count.
         Così facendo quando un nodo unknown si connette ad un nodo anchor riceve anche i messaggi broadcast inviati dalle ancore fuori range. Con queste informazioni il nodo unknown riesce a stimare la sua distanza dai nodi anchor fuori range (\textit{1-hop distance estimation})\footnote{Da notare che la stima \textit{1-hop} può essere fatta direttamente dal nodo unknown (come descritto) oppure può essere fatta dai nodi ancora.}.
@@ -282,7 +282,7 @@ relativa tra due nodi (opportunistic).
         irregolarità del segnale radio e non uniformità della densità dei nodi.
     \end{itemize}
     \item \textbf{Anchor-Free}: metodo guidato dagli eventi che sfrutta
-    proprietà spaziali e temporali degli eventi per inferire la posizione. 
+    proprietà spaziali e temporali degli eventi per inferire la posizione.
     Funziona sotto l'assunzione che alcuni eventi possono essere generati in un preciso istante e in una precisa posizione.
     Alcuni esempi di questo approccio sono \textbf{WalkingGPS} (un nodo mobile dotato di GPS fa il broadcast della sua posizione) o \textbf{Lighthouse}
 \end{itemize}

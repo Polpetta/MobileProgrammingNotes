@@ -3,114 +3,114 @@
 
 \section{Web of Things vs Internet of Things}
 
-\textbf{Internet of Things definition} \\
+\textbf{Internet of Things: una definizione} \\
 
-The Internet of Things (IoT) is a system of physical objects that can be
-discovered, monitored, controlled or interacted with by electronic devices
-which communicate over various networking interfaces, and eventually can be
-connected to the wider Internet. \\
+Internet of Things è un sistema di oggetti fisici che possono essere
+rilevati, monitorati, controllati o con cui si può interagire con
+devices elettronici, che comunicano fra loro attraverso interfacce di rete
+e, infine, che possono collegarsi a Internet.
 
-There's a new class of objects that is about to come into our houses:
-\textbf{Smart Things}. A Smart Thing is a physical object that is digitally
-augmented with one or more of the following:
+C'è una nuova classe di oggetti che sta per entrare nelle nostre case:
+le \textbf{Smart Things}. Una Smart Thing è un oggetto fisico ``digitalmente
+aumentato'' con una o più delle seguenti caratteristiche:
 
 \begin{itemize}
-  \item Sensors (temperature, light, motion, etc.)
-  \item Actuators (displays, sound, motors, etc.)
-  \item Computation (can run programs and logic)
-  \item Communication interfaces (wired or wireless)
+  \item Sensori (temperatura, luce, movimento, ecc.)
+  \item Attuatori (displays, suoni, etc.)
+  \item Proprietà computazionali (possono eseguire programmi)
+  \item Interfacce di comunicazione (wired or wireless)
 \end{itemize}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.6]{iotland.png}
-  \caption{The IoT landscape. The IoT is a network of Things, which are
-anything that can be connected in some form to the Internet.}
+  \caption{Scenario IoT. IoT è una rete di oggetti collegati ad Internet.}
   \label{fig:iotland}
 \end{figure}
 
-The Internet part simply means that the Thing (its services or data about/from
-it) can be accessed and processed by other applications through the existing
-Internet infrastructure.
+Il nome ``Internet delle cose'' significa semplicemente che un oggetto (e i
+suoi servizi o dati da/verso esso) può essere acceduto e processato da altre
+applicazioni attraverso l'esistente infrastruttura di Internet.
 
-The limitations of the IoT become obvious as soon as one wants to integrate
-devices from various manufacturers into a single application or system.
+Le limitazioni dell'IoT diventano evidenti non appena si vuole integrare
+dispositivi di vari produttori in una singola applicazione o sistema.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{integration_problem.png}
-  \caption{In the IoT, hundreds of incompatible protocols co-exist today.
-This makes the integration of data and services from various devices extremely
-complex and costly.}
+  \caption{Nell'IoT, oggi esistono centinaia di protocolli incompatibili.
+Ciò rende l'integrazione di dati e servizi da vari dispositivi estremamente
+complessa e costosa.}
   \label{fig:integration_problem}
 \end{figure}
 
-\subsection{Breaking the ``one device, one protocol, one app'' pattern}
+\subsection{Sfuggire al pattern ``un device, un protocollo, una sola app''}
 
-In the Web of Things (not IoT!), any device can be accessed using standard Web
-protocols.
+Nel Web of Things (non IoT!), è possibile accedere a qualsiasi dispositivo
+utilizzando protocolli web standard.
 
-Connecting heterogeneous devices to the Web makes the integration across
-systems and applications much simpler.
+Collegare dispositivi eterogenei al Web rende la loro integrazione in sistemi
+più ampi e/o applicazioni molto più semplice.
 
-The idea of maximizing existing and emerging tools and techniques used on the
-Web and apply them to the development of IoT scenarios is what we call the Web
-of Things.
+L'idea di applicare gli strumenti e le tecniche presenti nel
+Web allo sviluppo di scenari IoT si chiama Web of Things.
 
-While the IoT has been busy resolving networking problems, the Web of Things
-relies exclusively on application level protocols and tools.
+Mentre IoT si occupa di risolvere problemi di rete, il Web of Things si basa
+esclusivamente su protocolli e strumenti a livello di applicazione.
 
-Mapping any device into a Web mindset makes the Web of Things agnostic to the
-physical and transport layer protocols used by devices.
+Mappare un qualsiasi dispositivo in un contesto Web rende agnostico il
+Web of Things rispetto ai protocolli di livello fisico e di trasporto
+utilizzati dai dispositivi.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.6]{iotstack.png}
-  \caption{The Web of Things only deals with the highest OSI Layer, which
-handles applications, services and data.
-Working on such a high level of abstraction makes it possible to connect data
-and services from many devices regardless of the actual transport protocols
-used.
-In contrast, the Internet of Things does not advocate (sostiene) a particular
-application level protocol and is usually focusing on the lower layers of the
-OSI stack.}
+  \caption{Il Web of Things riguarda solo il più alto livello OSI, che
+gestisce applicazioni, servizi e dati.
+Lavorare con un elevato livello di astrazione consente di collegare dati
+e servizi da molti dispositivi indipendentemente dai veri e propri protocolli
+di trasporto usati.
+Al contrario, l'Internet of Things non sostiene un particolare protocollo a
+livello di applicazione e di solito si concentra sugli strati inferiori dello
+Stack OSI.}
   \label{fig:iotstack}
 \end{figure}
 
-\textbf{The goal is access the Things in a standard and transparent
-way.}
+\textbf{Lo scopo è quello di accedere alle cose in modo standardizzato e
+trasparente.}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.7]{iotweb.png}
-  \caption{The Web of Things is the ability to use modern Web standards
-directly on embedded devices.}
+  \caption{Il Web of Things è la capacità di utilizzare gli standard web moderni
+direttamente su dispositivi embedded.}
   \label{fig:iotweb}
 \end{figure}
 
-This makes the Web the ideal substrate for building a ``universal''
-architecture and Application Programming Interface (API) to interact with
-Things.
+Questo rende il Web il substrato ideale per la creazione di un'architettura
+``universale'' e di Application Programming Interface (API) con cui gli oggetti possono
+interagire.
 
-In practice, this means that the user can start interacting with Things via Web
-browsers and explore the Web of Things just as he would surf the Web (via links
-to other related things).
-Real-time data collected from distributed sensors can then be easily retrieved,
-processed, and displayed on Web pages using HTML, CSS and JavaScript.
+In pratica, questo significa che l'utente può iniziare a interagire con gli oggetti
+via Web
+
+I dati real-time raccolti da sensori distribuiti possono essere facilmente
+recuperati, elaborati e visualizzati in pagine Web utilizzando HTML, CSS e
+JavaScript.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{iotrest.png}
-  \caption{A URL for each thing and a RESTful API.
-The Web of Things allows developers and applications to exchange data with any
-device using standard HTTP/WebSockets requests, regardless of how the device is
-connected.}
+  \caption{Un URL per ogni cosa e un'API RESTful.
+Il Web delle cose consente agli sviluppatori e alle applicazioni di scambiare
+dati con qualsiasi dispositivo che utilizza le richieste HTTP / WebSockets
+standard, indipendentemente dal modo in cui il dispositivo è collegato.}
   \label{fig:iotrest}
 \end{figure}
 
-\textbf{BUT} although Web protocols are available and usable for IoT devices,
-they may be too heavy for some IoT applications. Let's have a look to others
-protocols.
+\textbf{MA} anche se i protocolli Web sono disponibili e utilizzabili per i
+dispositivi IoT, possono essere troppo pesanti per alcune applicazioni di IoT.
+Diamo un'occhiata ad altri protocolli.
 
 \subsection{Not all speak HTTP}
 

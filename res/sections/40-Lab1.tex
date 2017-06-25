@@ -1,4 +1,4 @@
-\part{Teoria Android}
+\part{Android}
 
 \chapter{Introduzione ad Android}
 
@@ -138,7 +138,7 @@ package="com.manzolik.gmanzoli.mytrains">
 	<!-- Esempio di richiesta dei permessi -->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	
+
 	<!-- Informazioni sull'applicazione -->
 	<application
 		android:allowBackup="true"
@@ -146,21 +146,21 @@ package="com.manzolik.gmanzoli.mytrains">
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		
+
 		<!-- Definizione di un service -->
 		<service
 			android:name=".services.TrainStatusNotificationService"
 			android:exported="false" />
-	
+
 		<!-- Activity principale, entry-point dell'applciazione -->
 		<activity android:name=".MainActivity">
 			<intent-filter>
 			<action android:name="android.intent.action.MAIN" />
-			
+
 			<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		
+
 		<!-- Altre Activity dell'applicazione -->
 		<activity android:name=".TrainStatusActivity" />
 		<activity android:name=".EditReminderActivity" />

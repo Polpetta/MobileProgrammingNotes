@@ -112,102 +112,105 @@ standard, indipendentemente dal modo in cui il dispositivo è collegato.}
 dispositivi IoT, possono essere troppo pesanti per alcune applicazioni di IoT.
 Diamo un'occhiata ad altri protocolli.
 
-\subsection{Not all speak HTTP}
+\subsection{Non tutti usano HTTP}
 
 \textbf{MQTT}\\
 
-MQ Telemetry Transport (MQTT) is an open source protocol for constrained
-devices and low-bandwidth, high-latency networks.
-It has a publish/subscribe messaging transport that is extremely lightweight
-and ideal for connecting small devices to constrained networks.
-MQTT is bandwidth efficient, data agnostic, and has continuous session
-awareness. It helps minimize the resource requirements for an IoT device,
-while also attempting to ensure reliability and some degree of assurance of
-delivery with grades of service.\\
+MQ Telemetry Transport (MQTT) è un protocollo open source per devices con
+vincoli di banda e reti con alta latenza.
 
-\textbf{Properties:}
+Ha un trasporto di messaggistica publish/subscribe che è estremamente leggero.
+
+MQTT è efficiente in quanto a consumi di banda e data agnostic.
+Aiuta a ridurre al minimo i requisiti di risorse per un dispositivo IoT,
+pur tentando di garantire l'affidabilità del trasporto.
+
+\textbf{Proprietà:}
 
 \begin{itemize}
-  \item client/server model, where every sensor is a client and connects to a
-server (a.k.a. broker)
-  \item clients subscribe to topic channels of interest
-  \item topic channels are hierarchical (e.g., room2BC/heating)
-  \item 3 QoS Levels: ``Fire and forget'',  ``delivered at least once'' and
+  \item modello client/server
+  \item i clients si iscrivono ai canali in base a dei ``topic di interesse''
+  \item i canali per i topic sono gerarchici (es. room2BC/heating)
+  \item 3 livelli QoS: ``Fire and forget'',  ``delivered at least once'' e
  ``delivered exactly once''.
-  \item username/password authentication
+  \item autenticazione basata su username/password
   \item TCP over SSL/TLS
 \end{itemize}
 
 \textbf{CoAP}\\
 
-The Constrained Application Protocol (CoAP) was designed for use with low-power
-and constrained networks. CoAP is a RESTful protocol. It is semantically
-aligned with HTTP, and even has a one-to-one mapping to and from HTTP.\\
+Il Constrained Application Protocol (CoAP) è stato progettato per essere
+utilizzato su reti vincolate e a basso consumo. CoAP è un protocollo RESTful.
+È semanticamente allineato con HTTP e ha persino un mapping uno-a-uno da e
+verso HTTP.\\
 
-\textbf{Properties:}
+\textbf{Proprietà:}
 
 \begin{itemize}
-  \item packets are much smaller than HTTP TCP flows
-  \item simpler and faster to parse with small memory footprint
-  \item over UDP, interoperates with HTTP and the RESTful web through simple
+  \item i pacchetti sono molto più piccoli rispetto a HTTP TCP.
+  \item (simpler and faster to parse with small memory footprint) ?
+  \item In UDP, interagisce con HTTP e il web RESTful attraverso semplici
 proxies
-  \item client/server model where clients may GET, PUT, POST and DELETE
-resources
-  \item DTLS capable CoAP devices support RSA and AES or ECC and AES
+  \item modello client/server, in cui i clients possono chiamare GET, PUT,
+POST and DELETE per ottenere/modificare/inserire/cancellare risorse.
+  \item I dispositivi CoAP in grado di supportare DTLS supportano RSA e AES o
+ECC e AES
 \end{itemize}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]{protocol_comparison.png}
-  \caption{On the left, the protocol stack for Web applications can easily
-produce a data overhead of hundreds or thousands of bytes.
-By comparison, IoT protocols are optimized for constrained devices and
-networks, and produce a much smaller data overhead of tens of bytes.}
+  \caption{Sulla sinistra, lo stack di protocollo per applicazioni Web può
+facilmente produrre un overhead di dati di centinaia o migliaia di byte.
+A destra invece, i protocolli IoT sono ottimizzati per dispositivi e reti
+vincolati, e producono un overhead di dati molto più piccolo (decine di
+byte).}
   \label{fig:protocol_comparison}
 \end{figure}
 
 \subsection{Integration Patterns}
 
-\textbf{Direct Communication}
+\textbf{Comunicazione diretta}
 
-In the most straightforward case, a Web Thing is simply a Web API that Clients
-send requests to.
-The Client and the Web Thing can be on the same network or on different
-networks.
+Nel caso più semplice, una Web Thing è semplicemente una API alla quale i
+clients inviano richieste.
+
+Il Client e la Web Thing possono essere sulla stessa rete o meno.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{direct_communication.png}
-  \caption{Direct connectivity between a Client and a Web Thing}
+  \caption{Comunicazione diretta tra un client e una web thing}
   \label{fig:direct_communication}
 \end{figure}
 
 \textbf{Gateway}
 
-Gateway-based connectivity is used when a Thing cannot offer a Web API
-directly.
+La connettività/comunicazione basata su gateway viene utilizzata quando un oggetto
+non può offrire direttamente un'API Web.
 
-In this case an intermediate Web Thing - the gateway - exposes a Web API on the
-Thing's behalf (per conto di).
-The Web Thing therefore acts as a proxy for the Thing (or gateway depending on
-the complexity/layer of the translation).
+In questo caso una Web Thing intermedia - il gateway - espone un'API Web
+per conto dell'oggetto.
+
+La Web Thing quindi funge da proxy per l'oggetto (o da gateway a seconda della
+complessità della traduzione).
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{gateway.png}
-  \caption{Gateway-based connectivity between a Client and a Web Thing}
+  \caption{Connettività basata su gateway tra un client e una web thing}
   \label{fig:gateway}
 \end{figure}
 
 \textbf{Cloud}
 
-This third case is similar to the previous case. However, this time the gateway
-is a cloud service.
+Il terzo caso è simile al precedente ma questa volta il gateway è un servizio
+cloud.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{cloud.png}
-  \caption{Cloud-based connectivity between a Client and a Web Thing}
+  \caption{Connettività basata su cloud tra un client e una web thing}
   \label{fig:cloud}
 \end{figure}
 
@@ -288,16 +291,17 @@ Automatic control of heating system;}
   \label{fig:nodered}
 \end{figure}
 
-\subsubsection{Conclusion}
+\subsubsection{Conclusioni}
 
-The Web of Things is a high-level application protocol designed to maximize
-interoperability in the IoT. Web technologies are widely popular and offer all
-the flexibility and features needed for the majority of future IoT
-applications, including discovery, security, and real-time messaging.\\
+Web of Things è un protocollo di applicazioni ad alto livello progettato per
+massimizzare l'interoperabilità nello IoT.
 
-\textbf{Sources:}\\
+Le tecnologie Web sono ampiamente diffuse e offrono tutta la flessibilità e le
+caratteristiche necessarie per le future applicazioni IoT. \\
 
-A mix of:
+\textbf{Fonti:}\\
+
+Un mix di:
 
 \begin{itemize}
   \item Course slides

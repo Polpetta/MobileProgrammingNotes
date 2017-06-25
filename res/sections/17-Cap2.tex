@@ -1,10 +1,9 @@
 \chapter{Mobility Support}
 \label{mobility support}
 
-\section{Motivation for Mobility Support}
+\section{Motivazioni per il supporto Mobile}
 
-TCP/IP has 3 loosely-connected protocol layers running on top of physical
-networking technologies.
+TCP / IP dispone di 3 livelli di protocollo superiori a quelli fisici:
 
 \begin{figure}[H]
   \centering
@@ -13,156 +12,166 @@ networking technologies.
   \label{fig:tcpiplayers}
 \end{figure}
 
-\textbf{Routing in the Internet}
+\textbf{Routing in Internet}
 
 \begin{itemize}
-  \item prefix-based routing: IP destination address and network prefix (e.g.
-129.13.42) determines physical subnet
-  \item change of physical subnet implies change of IP address in order to
-have a topological correct address
-  \item IP address is bound to a location (\textbf{point of attachment})
+  \item routing basato su prefissi: l'indirizzo IP di destinazione e il
+prefisso di rete (es. 129.13.42) determinano la sottorete fisica
+  \item un cambiamente della sottorete fisica implica un cambio
+dell'indirizzo IP
+  \item L'indirizzo IP è legato a una posizione (\textbf{point of attachment})
 \end{itemize}
 
-\textbf{Key Requirements of IP Mobility}
+\textbf{Requisiti chiave per IP mobile}
 
 \begin{itemize}
-  \item \textbf{Reachability} - A mobile user must remain reachable at all
-times via some permanent identifier regardless of its current location
+  \item \textbf{Raggiungibilità} - Un utente mobile deve rimanere
+raggiungibile in qualsiasi momento attraverso un identificatore
+permanente, indipendentemente dalla sua posizione attuale
 (\textbf{subnet of attachment)}
-  \item \textbf{Continuity} - An ongoing communication should not break when
-the mobile user moves (across subnet boundaries)
+  \item \textbf{Continuità} - Una comunicazione in corso non
+dovrebbe interrompersi quando l'utente mobile si sposta (e va fuori dai
+confini della sottorete)
 \end{itemize}
 
-\textbf{Desirables requirements}
+\textbf{Requisiti desiderabili}
 
 \begin{itemize}
-  \item \textbf{Compatibility} - No changes to current endsystems and routers
-required
-  \item \textbf{Transparency} - Continuation of communication after
-interruption of link possible
-  \item \textbf{Efficiency and scalability} - Little or no overhead (typical
-connection via low bandwidth radio link)
-  \item \textbf{Security} - Authentication of all registration messages
+  \item \textbf{Compatibilità} - Non dovrebbe esserci nessun cambiamento al
+sistema corrente e ai routers
+  \item \textbf{Trasparenza} - Continuità di comunicazione dopo l'interruzione
+di un collegamento
+  \item \textbf{Efficienza e scalabilità} - L'overhead dovrebbe essere
+basso o nullo (in una tipica connessione a banda ridotta)
+  \item \textbf{Sicurezza} - Autenticazione dei messaggi
 \end{itemize}
 
-\subsection{Problem and possible solution}
+\subsection{Problema e possibili soluzioni}
 
-None of the layers was designed for mobility.
-Mobile devices change IP address while crossing subnets and doesn't remain
-reachable anymore.
+Nessuno degli strati TCP/IP è stato progettato per la mobilità.
+I dispositivi mobili cambiano l'indirizzo IP mentre attraversano le
+sottoreti e non sono più raggiungibili.
 
-IP address change breaks transport layer connections, so continuity is
-weakened.\\
+La modifica dell'indirizzo IP interrompe le connessioni del livello di
+trasporto, quindi non c'è continuità. \\
 
-\textbf{Taxonomy}
+\textbf{Tassonomia}
 
 \begin{itemize}
-  \item Scale: macro, micro
-  \item Entities involved in mobility management: mobile-assisted, network-only
-  \item Node or group mobility
+  \item Scala: macro, micro
+  \item Entità coinvolte nella gestione della mobilità: mobile-assistite,
+network-only
+  \item Mobilità di un nodo o di un gruppo
 \end{itemize}
 
-How to handle mobility?\\
+Come gestire la mobilità?\\
 
-\textbf{Change the IP layer} so that the higher layers can still operate
-without knowing you have moved (network layer solutions to mobility - e.g.,
-MobileIP (v4, v6), GTP) or...
+\textbf{Cambiare il livello IP / di rete} in modo tale che i livelli più alti
+possano continuare a lavorare senza sapere nulla del cambiamento (soluzione
+a livello di rete per la mobilità (es. MobileIP (v4, v6), GTP)
 
-\textbf{Change TCP} so that it can cope (far fronte a) with changing end-point
-identifiers (transport layer solutions to mobility - e.g., Mobile TCP, SCTP).
+oppure...
 
-\textbf{Root of the problem and an idea}: the IP address serves as both your
-address that is used to locate you, and as your identity that is used to
-identify you in TCP connections.
+\textbf{Cambiare il livello TCP / di trasporto} in modo tale che possa far
+fronte ai cambiamenti degli identificatori degli end-point (soluzione a livello
+di trasporto per la mobilità (es. Mobile TCP, SCTP)).
+
+\textbf{Radice del problema}: l'indirizzo IP serve sia per la localizzazione,
+sia come identificatore in connessioni TCP.
 
 \subsection{Mobile IP}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip1.png}
-  \caption{Mobile IP example, entities involved}
+  \caption{Mobile IP, entità coinvolte}
   \label{fig:mobileip1}
 \end{figure}
 
-MN (Mobile Node) moves and senses a network change by listening to periodic
-beacons transmitted by the FA (Foreign Agent).
+MN (Mobile Node) può spostarsi ed è in grado di rilevare un cambio di rete
+rimanendo periodicamente in ascolto di segnali trasmessi dal FA (Foreign
+Agent).
 
-The HA (Home Agent) maintains the binding (home address, care of address,
+HA (Home Agent) mantiene il binding (home address, care of address,
 duration of validity).
 
-Care of address: temporary IP for a mobile device.
+Care of address: IP temporaneo per un dispositivo mobile.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip2.png}
-  \caption{Mobile IP example, CN -> MN}
+  \caption{Esempio mobile IP, CN -> MN}
   \label{fig:mobileip2}
 \end{figure}
 
-When any packets arrive at the home address, the Home Agent tunnels those
-packets to the foreign agent / mobile node at its new address.
+Quando i pacchetti arrivano all'home address, l'Home Agent HA apre un tunnel
+IP-in-IP (in rosso nell'immagine) verso il foreign agent FA e manda i 
+pacchetti, che li manda a sua volta al nodo mobile, al suo nuovo indirizzo.
 
-IP-in-IP tunneling means that the original IP packet is encapsulated in another
-IP packet with the new destination address being the care of address.
+Il tunneling IP-in-IP significa che il pacchetto IP originale è incapsulato
+in un altro pacchetto IP con il nuovo indirizzo di destinazione (nuovo care
+of address).
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip3.png}
-  \caption{Mobile IP example, MN -> CN}
+  \caption{Esempio mobile IP, MN -> CN}
   \label{fig:mobileip3}
 \end{figure}
 
-The mobile node can send replies directly, or reverse tunnel (i.e. firewall
-scenario) them via home agent.\\
+Il nodo mobile può inviare una risposta direttamente o con un
+reverse tunnel (es. firewall scenario) attraverso l'home agent HA
+(l'home agent rigira la risposta al destinatario). \\
 
-\textbf{Mobile IP - Cons}
+\textbf{Mobile IP - Aspetti negativi}
 
 \begin{itemize}
-  \item \textbf{Security} - Any malicious node can announce a new care of
-address and steal packets.
-To prevent this, home agent and mobile node must share a secret key and
-authenticate their communications
-  \item \textbf{Longer routes} - Packets have to travel extra distance
-to the home agent and back (triangle routing).
-MN could send the care of address (binding) to the CN (Correspondent Node)
-which uses it subsequently -> security/privacy issues!
-There is also a higher burden on the CN side
-  \item \textbf{Ingress filtering at routers}
-ISPs can block packets coming from mobile nodes if the source address is their
-old home address and does not belong to the IP block of its current network
+  \item \textbf{Sicurezza} - Un codice malevolo può
+dichiarare un nuovo care-of-address e rubare i pacchetti in arrivo
+al nodo mobile.
+Per evitare questo, l'home agent HA e il nodo mobile devono condividere
+una chiave segreta e autenticare le loro comunicazioni
+  \item \textbf{routes più lunghe} - I pacchetti devono percorrere una
+distanza extra fino all'home agent HA e poi indietro (triangle routing).
+MN potrebbe inviare direttamente il care-of-address al CN
+che lo usa successivamente -> problemi di sicurezza / privacy!
+  \item \textbf{Filtro dei pacchetti}
+ISPs possono bloccare i pacchetti in arrivo da un nodo mobile se l'indirizzo
+d'origine è il vecchio home address e non appartiene al blocco di IP della
+rete corrente.
 \end{itemize}
 
-\textbf{Mobile IP - Pros}
+\textbf{Mobile IP - Aspetti positivi}
 
 \begin{itemize}
-  \item Solves mobility at the root (IP is the lowest layer in TCP/IP)
-  \item In-built (integrato) tracking support (via permanent IP address and HA)
-  \item No change to network core (only edge routers - e.g., HA are affected)
-  \item Location privacy (no route optimization)
+  \item Risolve il problema della mobilità alla radice (IP è il livello più
+basso di TCP/IP)
+  \item Tracking-support integrato (con un indirizzo IP permanente e home agent HA)
+  \item Nessun cambiamento al core della rete (solo i routers di confine, gli HA sono coinvolti) 
+  \item Privacy della località
 \end{itemize}
 
 \textbf{Mobile IPv6}
 
 \begin{itemize}
-  \item In IPv6, the foreign agent functionality is integrated into the IP
-stack of the mobile node itself
-  \item Route Optimization is an integral part of the protocol
-  \item Built-in security
+  \item In IPv6, la funzionalità del foreign agent FA è integrata nel nodo
+mobile stesso
+  \item L'ottimizzazione delle routes è una parte integrante del protocollo
+  \item Sicurezza integrata
 \end{itemize}
 
-\section{Mobile Cellular Systems}
+\section{Sistemi mobili cellulari}
 
-\subsection{Disambiguation}
+\subsection{Disambiguazione}
 
 \begin{enumerate}
   \item E-UTRA(N) - Evolved UMTS Terrestrial Radio Access (Network)
-  \item Super 3G - Is referring to LTE, like WCDMA is referring to UTRA FDD and
-TDD
-  \item 3.9G - Used to indicate that LTE is not 4G
+  \item Super 3G - Riferito a LTE
+  \item 3.9G - Usato per indicare che LTE non è il 4G
 \end{enumerate}
 
-\textbf{Set of requirements issued by the ITU-R of the ITU in 2008 for what is
-marketed as 4G}
+\textbf{Set di requisiti richiesti da ITU-R (Radiocommunication Sector)
+dell'ITU (International Telecommunication Union) nel 2008 per il 4G:}
 
 \begin{itemize}
   \item Based on an all-Internet Protocol (IP) packet switched network

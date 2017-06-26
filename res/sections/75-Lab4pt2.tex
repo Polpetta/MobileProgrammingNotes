@@ -44,6 +44,37 @@ Per creare un servizio è necessario estendere la classe \texttt{Service}. Nell'
 	In sistema invoca questo metodo quando il servizio non non è più usato e viene distrutto. Nell'implementazione è necessario deallocare tutte le risorse come \textit{thread}, \textit{listener} e \textit{receiver}. È l'ultima chiamata che riceve il servizio.
 \end{itemize}
 
+\section{Dichiarare un Service nel manifest}
+Ogni servizio deve essere dichiarato nel \textit{manifest} aggiungendo un elemento \texttt{<service>} come figlio di \texttt{<application>}.
+\begin{lstlisting}[language=XML]
+<manifest ... >
+  ...
+  <application ... >
+      <service android:name=".ExampleService" />
+      ...
+  </application>
+</manifest>
+\end{lstlisting}
+
+L'elemento \texttt{<service>} può include altri attributi usati, ad esempio, per definire proprietà come i permessi necessari per lanciare il servizio o i processi in cui il servizio deve essere \textit{runnato}.\\
+L'unico attributo obbligatorio è \texttt{android:name}: specifica ovviamente il nome del servizio e deve rimanere sempre invariato per evitare il rischio di bug nel caso di dipendenze, start espliciti o \textit{binding}.\\
+Ad esempio un servizio può essere dichiarato come segue:
+\begin{lstlisting}[language=XML]
+<service android:description="string resource"
+         android:directBootAware=["true" | "false"]
+         android:enabled=["true" | "false"]
+         android:exported=["true" | "false"]
+         android:icon="drawable resource"
+         android:isolatedProcess=["true" | "false"]
+         android:label="string resource"
+         android:name="string"
+         android:permission="string"
+         android:process="string" >
+    . . .
+</service>
+\end{lstlisting}
+
+
 
 \section{Tipi di Servizi}
 I serivizi si possono dividere in tre tipologie:
@@ -58,17 +89,184 @@ I serivizi si possono dividere in tre tipologie:
 La caratterizzazione non è rigida: ad esempio un servizio può essere \textit{started}, ma anche permettere il \textit{binding}. Basta implementare sia \texttt{onStartCommand()} che \texttt{onBind()} quando si sta ridefinendo il \textit{lifecycle}.\\
 Tutti i servizi risiedono nel \textit{main thread}, quindi non se si deve fare \textit{networking} o operazioni \textit{CPU-intensive} sarà necessario creare un nuovo \textit{thread} all'interno del \textit{service}.
 
-\section{Dichiarare un Service nel manifest}
-aaaa
-\begin{lstlisting}[frame=single]
-<manifest ... >
-  ...
-  <application ... >
-      <service android:name=".ExampleService" />
-      ...
-  </application>
-</manifest>
+
+\subsection{Started Services}
+Sono servizi lanciati da un'altra componente tramite \texttt{startService()}, che risulta in una chiamata a \texttt{onStartCommand()}. La componente che lo lancia deve passargli un \texttt{Intent} che specifica il servizio e contiene tutti i dati necessari per la sua esecuzione.\\
+Una volta partito ha un ciclo di vita indipendente dalla componente genitrice, quindi può \textit{runnare} indefinitamente in \textit{background} ed è sua responsabilità chiamare \texttt{stopSelf()} oppure deve essere un'altra componente a chiamare \texttt{stopService()}.\\
+Le due principali classi che possono essere estese per creare uno \textit{started service} sono:
+\begin{itemize}
+	\item \texttt{Service}: è la classe base da cui estendono tutti i \textit{service}. Di dafult vive sul \textit{main thread}, quindi se deve effettuare operazione computazionalmente pesanti oppure \textit{networking} è necessario creare un altro \textit{thread}.
+	\item \texttt{IntentService}: è una sottoclasse di \texttt{Service} che usa uno \textit{worker thread} per eseguire tutte le richieste. Estendere questa classe è la scelta migliore nel caso non si debbano gestire più richieste simultaneamente.
+\end{itemize}
+
+\subsubsection{Estendere IntentService}
+La più comune implementazione di un servizio è tramite la superclasse \texttt{IntentService}.
+Questa classe esegue le seguenti operazioni:
+\begin{itemize}
+	\item Crea un \textit{default worker} che esegue tutti gli \textit{intent} specificati in \texttt{onStartCommand()} separatamente dall'\textit{UI-thread}.
+	\item Crea una coda di \textit{intent} da passare uno alla volta alla implentazione del metodo \texttt{onHandleIntent()} (di questa classe). In questo modo non ci saranno problemi di \textit{multithreading}.
+	\item Ferma il servizio dopo che tutte le richieste sono state processate, così non c'è bisogno di chiamare esplicitamente \texttt{stopSelf()}.
+	\item Fornisce una implementazione di default di \texttt{onBind()} che ritorna \texttt{null}, ovvero non permette il \textit{binding}.
+	\item Fornisce una implementazione di default di \texttt{onStartCommand()} che semplicemente inoltra le richieste alla propria implementazione di \texttt{onHandleIntent()}.
+\end{itemize}
+
+Per estendere la classe è necessario solamente un construttore e l'\textit{overrinding} di \texttt{onHandleIntent()}, come nell'esempio:
+
+\begin{lstlisting}[language=Java]
+public class HelloIntentService extends IntentService {
+
+  /**
+   * A constructor is required, and must call the super IntentService(String)
+   * constructor with a name for the worker thread.
+   */
+  public HelloIntentService() {
+      super("HelloIntentService");
+  }
+
+  /**
+   * The IntentService calls this method from the default worker thread with
+   * the intent that started the service. When this method returns, IntentService
+   * stops the service, as appropriate.
+   */
+  @Override
+  protected void onHandleIntent(Intent intent) {
+      // Normally we would do some work here, like download a file.
+      // For our sample, we just sleep for 5 seconds.
+      try {
+          Thread.sleep(5000);
+      } catch (InterruptedException e) {
+          // Restore interrupt status.
+          Thread.currentThread().interrupt();
+      }
+  }
+}
 \end{lstlisting}
+
+Se c'è la necessità di fare l'\textit{override} di altri metodi come \texttt{onCreate()}, \texttt{onStartCommand()} o \texttt{onDestroy()} è necessario chiamare l'implementazione della superclasse per fare un modo che \texttt{IntentService} gestica oppurtunamente il ciclo di vita dello \textit{worker thread}.\\
+Ad esempio questo potrebbe essere un \textit{override} di \texttt{onStartCommand()}.
+\begin{lstlisting}[language=Java]
+@Override
+public int onStartCommand(Intent intent, int flags, int startId) {
+    Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+    return super.onStartCommand(intent,flags,startId);
+}
+\end{lstlisting}
+
+Se si vuole permettere il \textit{binding} è necessario fare l'\textit{override} di \texttt{onBind()} e non chiamare l'implementazione della superclasse perché altrimenti ritornerebbe \texttt{null}.\\
+
+
+\subsubsection{Estendere Serice}
+Se il servizio deve gestire più richieste simultaneamente si rende necessario estendere la classe \texttt{Service}.\\
+Per confronto questo è un esempio di un servizio con lo stesso comportamento di quello dell'esempio precedente ma implementato usando \texttt{Service}.
+
+\begin{lstlisting}[language=Java]
+public class HelloService extends Service {
+  private Looper mServiceLooper;
+  private ServiceHandler mServiceHandler;
+
+  // Handler that receives messages from the thread
+  private final class ServiceHandler extends Handler {
+      public ServiceHandler(Looper looper) {
+          super(looper);
+      }
+      @Override
+      public void handleMessage(Message msg) {
+          // Normally we would do some work here, like download a file.
+          // For our sample, we just sleep for 5 seconds.
+          try {
+              Thread.sleep(5000);
+          } catch (InterruptedException e) {
+              // Restore interrupt status.
+              Thread.currentThread().interrupt();
+          }
+          // Stop the service using the startId, so that we don't stop
+          // the service in the middle of handling another job
+          stopSelf(msg.arg1);
+      }
+  }
+
+  @Override
+  public void onCreate() {
+    // Start up the thread running the service.  Note that we create a
+    // separate thread because the service normally runs in the process's
+    // main thread, which we don't want to block.  We also make it
+    // background priority so CPU-intensive work will not disrupt our UI.
+    HandlerThread thread = new HandlerThread("ServiceStartArguments",
+            Process.THREAD_PRIORITY_BACKGROUND);
+    thread.start();
+
+    // Get the HandlerThread's Looper and use it for our Handler
+    mServiceLooper = thread.getLooper();
+    mServiceHandler = new ServiceHandler(mServiceLooper);
+  }
+
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+      Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+
+      // For each start request, send a message to start a job and deliver the
+      // start ID so we know which request we're stopping when we finish the job
+      Message msg = mServiceHandler.obtainMessage();
+      msg.arg1 = startId;
+      mServiceHandler.sendMessage(msg);
+
+      // If we get killed, after returning from here, restart
+      return START_STICKY;
+  }
+
+  @Override
+  public IBinder onBind(Intent intent) {
+      // We don't provide binding, so return null
+      return null;
+  }
+
+  @Override
+  public void onDestroy() {
+    Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+  }
+}
+\end{lstlisting}
+
+Il metodo \texttt{onStartCommand()} deve ritornare un intero che rappresenta il modo in cui il servizio deve continuare nel caso che il sistema lo uccida. I possibili modi sono:
+
+\begin{itemize}
+	\item \texttt{START\_NOT\_STICKY}: Il sistema non ricrea il servizio a meno che non ci siano rischieste pendenti. È la soluzione più \textit{safe} per evitare che il servizio continui indefinitamente.
+	\item \texttt{START\_STICKY}: Il sistema ricrea il servizio, ma non gli riconsegna l'ultimo \textit{intent}. Il sistema gli da in pasto tutti i \textit{pending intent} o eventualmente \texttt{null} se la coda era vuota.
+	Questa cosa è adatta per servizi come i \textit{media player} che non eseguono comandi ma girano indefinitamente in attesa di un \textit{job}.
+	\item \texttt{START\_REDELIVER\_INTENT}: Come il precedente ma il sistema gli riconsegna anche l'ultimo \textit{intent}. Questa modalità è adatta a servizi che eseguono attivamente \textit{job} che devono essere rapidamente ricominciati (come i \textit{download}).
+\end{itemize}
+
+\subsection{Bound Services}
+Permettono alle altre componenti del sistema di associarsi chiamando \texttt{bindSerice()}, generalmente non permettono di far partire il servizio chiamando \texttt{startSerice()}. Permettono, invece, di avere interazioni da parte di altre componenti attraverso IPC (\textit{Inter Process Communication}).\\
+Per creare un \textit{bound service} è necessario fare l'\textit{override} di \texttt{onBind()}, che deve ritornare un \texttt{IBinder} che specifichi l'interfaccia di comunicazione.\\
+Le altre componenti si possono associare chiamando \texttt{bindService()} e disassociare chiamando \texttt{unbindService()}.\\
+Quando un \textit{bound service} non ha più componenti associate viene distrutto, non è necessario fermarlo esplicitamente.
+
+
+\subsection{Starting a Service}
+Per far partire un \textit{service} da un'\texttt{Activity} si può fare come nell'esempio:
+\begin{lstlisting}[language=Java]
+Intent intent = new Intent(this, HelloService.class);
+startService(intent)
+\end{lstlisting}
+
+Il metodo \texttt{startService()} ritorna immediatamente. Se il servizio non fornisce \textit{binding} l'\textit{intent} fornito a \texttt{startService()} è l'unica via di comunicazione con il servizio. Se si vogliono comunque avere dei risultati è consigliabile usare un \texttt{PendingIntent}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}

@@ -470,30 +470,32 @@ doveva essere rimpiazzata con una soluzione IP-base sul lungo termine.
 
 \subsubsection{Architecture of the EPC}
 
-The idea of EPC architecture is to handle the payload (the data traffic)
-efficiently from performance and costs perspective.
+L'idea dell'architettura EPC è quella di gestire il traffico dati in maniera
+ efficiente dal punto di vista delle performance e dei costi
 
-Few network nodes are involved in the handling of the traffic and protocol
-conversion is avoided.
+Pochi nodi della rete è coinvolta nella gestione del traffico e le conversioni
+ di protocollo vengono evitate.
 
-It was also decided to separate the user data (also known as the user plane)
-and the signalling (also know as the control plane) to make the scaling
-independent.
-Thanks to this functional split, the operators can dimension and adapt their
-network easily.
+È stato inoltre deciso di separare i dati degli utenti (\textbf{user plan}) da quelli di segnalazione (noti come \textbf{control plane}) in modo tale rendere
+ lo scaling indipendente.
+Grazie a questa divisione funzionale, gli operatori possono essere
+ dimensionati e adattati alla loro rete facilmente.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.7]{eps_arch.jpg}
-  \caption{basic architecture of the EPS when the User Equipment
-(UE) is connected to the EPC over E-UTRAN (LTE access network)}
+  \caption{l'architettura di base degli EPC quando l'UE è connesso all'EPC tramite E-UTRAN(LTE)}
   \label{fig:eps_arch}
 \end{figure}
 
-The Evolved NodeB (eNodeB) is the base station for LTE radio.
-In figure \ref{fig:eps_arch}, the EPC is composed of four network elements:
-the Serving Gateway (Serving GW), the PDN Gateway (PDN GW), the MME and
-the HSS.
+L'Evolved NodeB (eNodeB) è una stazione base per le trasmissioni LTE. Nella
+ figura \ref{fig:eps_arch}, l'EPC è composto da 4 elementi di rete:
+\begin{itemize}
+  \item gateway di servizio (Serving GW);
+  \item PDN Gateway (PDN GW);
+  \item MME;
+  \item HSS.
+\end{itemize}
 
-The EPC is connected to the external networks, which can include the IP
-Multimedia Core Network Subsystem (IMS).
+L'EPC è connesso alle reti esterne che possono includere l'IP Multimedia Core 
+Network Subsystem (IMS).

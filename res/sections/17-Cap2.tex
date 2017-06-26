@@ -1,10 +1,9 @@
 \chapter{Mobility Support}
 \label{mobility support}
 
-\section{Motivation for Mobility Support}
+\section{Motivazioni per il supporto Mobile}
 
-TCP/IP has 3 loosely-connected protocol layers running on top of physical
-networking technologies.
+TCP / IP dispone di 3 livelli di protocollo superiori a quelli fisici:
 
 \begin{figure}[H]
   \centering
@@ -13,257 +12,270 @@ networking technologies.
   \label{fig:tcpiplayers}
 \end{figure}
 
-\textbf{Routing in the Internet}
+\textbf{Routing in Internet}
 
 \begin{itemize}
-  \item prefix-based routing: IP destination address and network prefix (e.g.
-129.13.42) determines physical subnet
-  \item change of physical subnet implies change of IP address in order to
-have a topological correct address
-  \item IP address is bound to a location (\textbf{point of attachment})
+  \item routing basato su prefissi: l'indirizzo IP di destinazione e il
+prefisso di rete (es. 129.13.42) determinano la sottorete fisica
+  \item un cambiamente della sottorete fisica implica un cambio
+dell'indirizzo IP
+  \item L'indirizzo IP è legato a una posizione (\textbf{point of attachment})
 \end{itemize}
 
-\textbf{Key Requirements of IP Mobility}
+\textbf{Requisiti chiave per IP mobile}
 
 \begin{itemize}
-  \item \textbf{Reachability} - A mobile user must remain reachable at all
-times via some permanent identifier regardless of its current location
+  \item \textbf{Raggiungibilità} - Un utente mobile deve rimanere
+raggiungibile in qualsiasi momento attraverso un identificatore
+permanente, indipendentemente dalla sua posizione attuale
 (\textbf{subnet of attachment)}
-  \item \textbf{Continuity} - An ongoing communication should not break when
-the mobile user moves (across subnet boundaries)
+  \item \textbf{Continuità} - Una comunicazione in corso non
+dovrebbe interrompersi quando l'utente mobile si sposta (e va fuori dai
+confini della sottorete)
 \end{itemize}
 
-\textbf{Desirables requirements}
+\textbf{Requisiti desiderabili}
 
 \begin{itemize}
-  \item \textbf{Compatibility} - No changes to current endsystems and routers
-required
-  \item \textbf{Transparency} - Continuation of communication after
-interruption of link possible
-  \item \textbf{Efficiency and scalability} - Little or no overhead (typical
-connection via low bandwidth radio link)
-  \item \textbf{Security} - Authentication of all registration messages
+  \item \textbf{Compatibilità} - Non dovrebbe esserci nessun cambiamento al
+sistema corrente e ai routers
+  \item \textbf{Trasparenza} - Continuità di comunicazione dopo l'interruzione
+di un collegamento
+  \item \textbf{Efficienza e scalabilità} - L'overhead dovrebbe essere
+basso o nullo (in una tipica connessione a banda ridotta)
+  \item \textbf{Sicurezza} - Autenticazione dei messaggi
 \end{itemize}
 
-\subsection{Problem and possible solution}
+\subsection{Problema e possibili soluzioni}
 
-None of the layers was designed for mobility.
-Mobile devices change IP address while crossing subnets and doesn't remain
-reachable anymore.
+Nessuno degli strati TCP/IP è stato progettato per la mobilità.
+I dispositivi mobili cambiano l'indirizzo IP mentre attraversano le
+sottoreti e non sono più raggiungibili.
 
-IP address change breaks transport layer connections, so continuity is
-weakened.\\
+La modifica dell'indirizzo IP interrompe le connessioni del livello di
+trasporto, quindi non c'è continuità. \\
 
-\textbf{Taxonomy}
+\textbf{Tassonomia}
 
 \begin{itemize}
-  \item Scale: macro, micro
-  \item Entities involved in mobility management: mobile-assisted, network-only
-  \item Node or group mobility
+  \item Scala: macro, micro
+  \item Entità coinvolte nella gestione della mobilità: mobile-assistite,
+network-only
+  \item Mobilità di un nodo o di un gruppo
 \end{itemize}
 
-How to handle mobility?\\
+Come gestire la mobilità?\\
 
-\textbf{Change the IP layer} so that the higher layers can still operate
-without knowing you have moved (network layer solutions to mobility - e.g.,
-MobileIP (v4, v6), GTP) or...
+\textbf{Cambiare il livello IP / di rete} in modo tale che i livelli più alti
+possano continuare a lavorare senza sapere nulla del cambiamento (soluzione
+a livello di rete per la mobilità (es. MobileIP (v4, v6), GTP)
 
-\textbf{Change TCP} so that it can cope (far fronte a) with changing end-point
-identifiers (transport layer solutions to mobility - e.g., Mobile TCP, SCTP).
+oppure...
 
-\textbf{Root of the problem and an idea}: the IP address serves as both your
-address that is used to locate you, and as your identity that is used to
-identify you in TCP connections.
+\textbf{Cambiare il livello TCP / di trasporto} in modo tale che possa far
+fronte ai cambiamenti degli identificatori degli end-point (soluzione a livello
+di trasporto per la mobilità (es. Mobile TCP, SCTP)).
+
+\textbf{Radice del problema}: l'indirizzo IP serve sia per la localizzazione,
+sia come identificatore in connessioni TCP.
 
 \subsection{Mobile IP}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip1.png}
-  \caption{Mobile IP example, entities involved}
+  \caption{Mobile IP, entità coinvolte}
   \label{fig:mobileip1}
 \end{figure}
 
-MN (Mobile Node) moves and senses a network change by listening to periodic
-beacons transmitted by the FA (Foreign Agent).
+MN (Mobile Node) può spostarsi ed è in grado di rilevare un cambio di rete
+rimanendo periodicamente in ascolto di segnali trasmessi dal FA (Foreign
+Agent).
 
-The HA (Home Agent) maintains the binding (home address, care of address,
+HA (Home Agent) mantiene il binding (home address, care of address,
 duration of validity).
 
-Care of address: temporary IP for a mobile device.
+Care of address: IP temporaneo per un dispositivo mobile.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip2.png}
-  \caption{Mobile IP example, CN -> MN}
+  \caption{Esempio mobile IP, CN -> MN}
   \label{fig:mobileip2}
 \end{figure}
 
-When any packets arrive at the home address, the Home Agent tunnels those
-packets to the foreign agent / mobile node at its new address.
+Quando i pacchetti arrivano all'home address, l'Home Agent HA apre un tunnel
+IP-in-IP (in rosso nell'immagine) verso il foreign agent FA e manda i 
+pacchetti, che li manda a sua volta al nodo mobile, al suo nuovo indirizzo.
 
-IP-in-IP tunneling means that the original IP packet is encapsulated in another
-IP packet with the new destination address being the care of address.
+Il tunneling IP-in-IP significa che il pacchetto IP originale è incapsulato
+in un altro pacchetto IP con il nuovo indirizzo di destinazione (nuovo care
+of address).
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.2]{mobileip3.png}
-  \caption{Mobile IP example, MN -> CN}
+  \caption{Esempio mobile IP, MN -> CN}
   \label{fig:mobileip3}
 \end{figure}
 
-The mobile node can send replies directly, or reverse tunnel (i.e. firewall
-scenario) them via home agent.\\
+Il nodo mobile può inviare una risposta direttamente o con un
+reverse tunnel (es. firewall scenario) attraverso l'home agent HA
+(l'home agent rigira la risposta al destinatario). \\
 
-\textbf{Mobile IP - Cons}
+\textbf{Mobile IP - Aspetti negativi}
 
 \begin{itemize}
-  \item \textbf{Security} - Any malicious node can announce a new care of
-address and steal packets.
-To prevent this, home agent and mobile node must share a secret key and
-authenticate their communications
-  \item \textbf{Longer routes} - Packets have to travel extra distance
-to the home agent and back (triangle routing).
-MN could send the care of address (binding) to the CN (Correspondent Node)
-which uses it subsequently -> security/privacy issues!
-There is also a higher burden on the CN side
-  \item \textbf{Ingress filtering at routers}
-ISPs can block packets coming from mobile nodes if the source address is their
-old home address and does not belong to the IP block of its current network
+  \item \textbf{Sicurezza} - Un codice malevolo può
+dichiarare un nuovo care-of-address e rubare i pacchetti in arrivo
+al nodo mobile.
+Per evitare questo, l'home agent HA e il nodo mobile devono condividere
+una chiave segreta e autenticare le loro comunicazioni
+  \item \textbf{routes più lunghe} - I pacchetti devono percorrere una
+distanza extra fino all'home agent HA e poi indietro (triangle routing).
+MN potrebbe inviare direttamente il care-of-address al CN
+che lo usa successivamente -> problemi di sicurezza / privacy!
+  \item \textbf{Filtro dei pacchetti}
+ISPs possono bloccare i pacchetti in arrivo da un nodo mobile se l'indirizzo
+d'origine è il vecchio home address e non appartiene al blocco di IP della
+rete corrente.
 \end{itemize}
 
-\textbf{Mobile IP - Pros}
+\textbf{Mobile IP - Aspetti positivi}
 
 \begin{itemize}
-  \item Solves mobility at the root (IP is the lowest layer in TCP/IP)
-  \item In-built (integrato) tracking support (via permanent IP address and HA)
-  \item No change to network core (only edge routers - e.g., HA are affected)
-  \item Location privacy (no route optimization)
+  \item Risolve il problema della mobilità alla radice (IP è il livello più
+basso di TCP/IP)
+  \item Tracking-support integrato (con un indirizzo IP permanente e home agent
+HA)
+  \item Nessun cambiamento al core della rete (solo i routers di confine,
+gli HA sono coinvolti) 
+  \item Privacy della località
 \end{itemize}
 
 \textbf{Mobile IPv6}
 
 \begin{itemize}
-  \item In IPv6, the foreign agent functionality is integrated into the IP
-stack of the mobile node itself
-  \item Route Optimization is an integral part of the protocol
-  \item Built-in security
+  \item In IPv6, la funzionalità del foreign agent FA è integrata nel nodo
+mobile stesso
+  \item L'ottimizzazione delle routes è una parte integrante del protocollo
+  \item Sicurezza integrata
 \end{itemize}
 
-\section{Mobile Cellular Systems}
+\section{Sistemi mobili cellulari}
 
-\subsection{Disambiguation}
+\subsection{Disambiguazione}
 
 \begin{enumerate}
   \item E-UTRA(N) - Evolved UMTS Terrestrial Radio Access (Network)
-  \item Super 3G - Is referring to LTE, like WCDMA is referring to UTRA FDD and
-TDD
-  \item 3.9G - Used to indicate that LTE is not 4G
+  \item Super 3G - Riferito a LTE
+  \item 3.9G - Usato per indicare che LTE non è il 4G
 \end{enumerate}
 
-\textbf{Set of requirements issued by the ITU-R of the ITU in 2008 for what is
-marketed as 4G}
+\textbf{Set di requisiti richiesti da ITU-R (Radiocommunication Sector)
+dell'ITU (International Telecommunication Union) nel 2008 per il 4G:}
 
 \begin{itemize}
-  \item Based on an all-Internet Protocol (IP) packet switched network
-  \item Interoperability with existing wireless standards
-  \item A nominal data rate of 100 Mbit/s (while mobile) and 1 Gbit/s (while
-client and station are in relatively fixed positions)
-  \item Dynamically share and use the network resources to support more
-simultaneous users per cell
-  \item Scalable channel bandwidth 5–20 MHz, optionally up to 40 MHz
-  \item Peak link spectral efficiency of 15 bit/s/Hz in the downlink, and 6.75
-bit/s/Hz in the uplink
-  \item Seamless (senza interruzioni) connectivity and global roaming across
-multiple networks with smooth handovers (handoff)
-  \item System spectral efficiency of up to 3 bit/s/Hz/cell in the downlink and
-2.25 bit/s/Hz/cell for indoor usage
-  \item Ability to offer high quality of service for multimedia support
+  \item Basato su protocolo IP
+  \item Interoperabilità con tutti gli standard wireless esistenti
+  \item Un data rate nominale di 100 Mbit/s (su mobile) e 1 Gbit/s (quando
+client e stazione sono in posizioni fisse (relative))
+  \item Condivisione e utilizzo dinamico delle risorse della rete per
+supportare più utenti per cella.
+  \item Banda dei canali scalabile 5–20 MHz, fino a 40 MHz
+  \item Efficienza massima di 15 bit/s/Hz in downlink, e 6.75
+bit/s/Hz in uplink
+  \item Connettività senza interruzioni e roaming globale attraverso reti
+diverse, con handovers/handoff leggeri
+  \item Efficienza per il sistema: 3 bit/s/Hz/cell in downlink
+e 2.25 bit/s/Hz/cell per uso domestico
+  \item Capacità di offrire un'alta qualità del servizio per il supporto
+multimediale
 \end{itemize}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{mobtech.png}
-  \caption{Mobile technologies market share of subscriptions worldwide from
-  2016 to 2011}
+  \caption{Previsione delle quote di mercato degli abbonamenti alle tecnologie
+mobili in tutto il mondo dal 2016 al 2021}
   \label{fig:mobtech}
 \end{figure}
 
 \subsection{GSM}
 
-\textbf{GSM (Global System for Mobile Communications)} is a standard
-developed by the European Telecommunications Standards Institute (ETSI) to
-describe the \textbf{protocols for second-generation (2G)} digital cellular
-networks used by mobile phones. \\
+GSM (Sistema globale per le comunicazioni mobili) è uno standard
+sviluppato da ETSI (European Telecommunications Standards Institute) con lo
+scopo di descrivere i \textbf{protocolli per la seconda generazione 2G} di reti
+cellulari digitali per utenti mobili. \\
 
-As of 2014, it has become the de-facto global standard for mobile
-communications with over 90\% market share, operating in over 219 countries
-and territories.
+A partire dal 2014, è diventato lo standard mondiale de-facto per le
+comunicazioni mobili con oltre 90 \% di mercato, operante in oltre 219 paesi
+e territori.
 
-2G networks developed as a replacement for first generation (1G) analog
-cellular networks, and the GSM standard originally described as a digital,
-circuit-switched network optimized for full duplex voice telephony. \\
+Le reti 2G sono state sviluppate per sostituire le reti analogiche cellulari
+di prima generazione (1G).
 
-This expanded over time to include data communications, first by
-circuit-switched transport, then by packet data transport via GPRS
-(General Packet Radio Services) and EDGE (Enhanced Data rates for GSM
-Evolution, or EGPRS).
+Lo standard GSM si è ampliato nel tempo fino a includere comunicazioni di
+dati, dapprima grazie a un trasporto circuit-switched, poi tramite GPRS
+(General Packet Radio Services) e EDGE (Enhanced Data rates for GSM
+Evolution, or EGPRS)
 
-Subsequently, the 3GPP developed third-generation (3G) UMTS standards, followed
-by fourth-generation (4G) LTE Advanced standards, which do not form part of the
-ETSI GSM standard.
+Successivamente, il 3GPP ha sviluppato gli standard UMTS di terza generazione
+(3G), seguiti da quelli di quarta generazione (4G) LTE standard avanzati,
+che non fanno parte degli standard ETSI GSM.
 
-\subsubsection{History...}
+\subsubsection{Storia...}
 
-\textbf{1982 - Groupe Speciale Mobile is established}
+\textbf{1982 - nasce il gruppo speciale per la mobilità}
 
 \textbf{1989} - European Telecommunications Standardization Institute
-(ETSI) takes over standardization and changes name: Global System for Mobile
-(GSM) communication
+(ETSI) si assume la responsabilità di creare degli standard e cambia nome:
+Global System for Mobile (GSM) communication
 
-\textbf{1990} - First Official Commercial launch in Europe
+\textbf{1990} - Primo lancio ufficiale commerciale in Europa
 
-\textbf{1995} - GSM Specifications ported to 1900 MHz band \\
-
-GSM is the most popular 2G technology. Figure \ref{fig:gsm_table} shows its
-main characteristics:
+GSM è la più popolare tecnologia 2G. La figura \ref{fig:gsm_table} mostra
+alcune delle sue caratteristiche principali:
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.7]{gsm_table.png}
-  \caption{Specification Summary for GSM Cellular System }
+  \caption{Tabella riassuntiva delle specifiche dello standard GSM Cellular
+System}
   \label{fig:gsm_table}
 \end{figure}
 
-One of the key features of GSM is the \textbf{Subscriber Identity Module},
-commonly known as a SIM card.
+Una delle caratteristiche fondamentali di GSM è il \textbf{Subscriber Identity
+Module}, comunemente conosciuto come una carta SIM.
 
-The SIM is a detachable smart card containing the user's subscription
-information and phone book. This allows the user to retain his or her
-information after switching handsets.
+La SIM è una smart card rimovibile contenente l'abbonamento dell'utente, le
+sue informazioni e la sua rubrica telefonica.
 
-Alternatively, the user can also change operators while retaining the handset
-simply by changing the SIM. Some operators will block this by allowing the
-phone to use only a single SIM, or only a SIM issued by them; this practice
-is known as SIM locking.
+Questo consente all'utente di mantenere i propri dati cambiando dispositivo.
 
-\subsubsection{GSM – Functional Architecture}
+In alternativa, l'utente può anche cambiare operatore mantenendo il
+proprio dispositivo, semplicemente cambiando la SIM.
 
-A \textbf{GSM network} comprises of many functional units.
-It can be broadly divided into:
+Alcuni operatori possono bloccare questa possibilità, permettendo a un
+telefono di utilizzare una sola SIM, o solo una SIM emessa da quell'operatore;
+questa pratica è conosciuta come blocco SIM.
+
+\subsubsection{GSM – Architettura funzionale}
+
+Una \textbf{rete GSM} comprende molte unità funzionali.
+Può essere suddivisa in:
 
 \begin{itemize}
-  \item \textbf{Base station subsystem} (BSS) - the base stations and their
-controllers
-  \item \textbf{Network and Switching Subsystem} (NSS) - the part of the
-network most similar to a fixed network, sometimes just called the core network
-  \item \textbf{GPRS Core Network} (GPRS) - the \textbf{optional} part which
-allows packet-based Internet connections (see section \ref{sec:gprs})
-  \item \textbf{Operations support system} (OSS) - network maintenance
+  \item \textbf{Base station subsystem} (BSS) - stazione di base
+  \item \textbf{Network and Switching Subsystem} (NSS) - la parte della
+rete più simile a una rete fissa, a volte chiamata core network.
+  \item \textbf{GPRS Core Network} (GPRS) - la parte \textbf{opzionale} che
+permette connessioni Internet basate su pacchetti (vedi sezione \ref{sec:gprs})
+  \item \textbf{Operations support system} (OSS) - manutenzione della rete
 \end{itemize}
 
-The additional components of the GSM architecture comprise of databases and
-\textbf{messaging systems functions}:
+I componenti aggiuntivi dell'architettura GSM comprendono database e
+\textbf{funzioni di messaggistica}:
 
 \begin{itemize}
   \item VLR : Visitor Location Register
@@ -277,39 +289,39 @@ The additional components of the GSM architecture comprise of databases and
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{archGSM.png}
-  \caption{The structure of a GSM network}
+  \caption{Struttura di una rete GSM}
   \label{fig:archGSM}
 \end{figure}
 
-The base transceiver stations (BTS) are organised into small groups,
-controlled by a base station controller (BSC) which is typically co-located
-with one of the BTSs.
+Le stazioni di base (BTS) sono organizzate in piccoli gruppi, controllate da
+una stazione di base di controllo (BSC) che è tipicamente co-localizzata in una
+delle stazioni di base.
 
-The BSC with its associated BTSs is called \textbf{base station subsystem}
-(BSS). \\
+Tutto il sistema, composto dal BSC con i suoi BTS associati si chiama
+\textbf{sottosistema di stazioni di base} (BSS). \\
 
-Further into the core network, there is the main switching area.
-This is known as the \textbf{mobile switching centre} (MSC).
+Addentrandosi nella reta, c'è la zona principale di commutazione, nota come
+\textbf{switching center mobile} (MSC).
 
-Associated with it, there are the \textbf{location registers}, namely the home
-location register (HLR) and the visitor location register (VLR) which track
-the location of mobiles and enable calls to be routed to them. \\
+Associati ad essa, ci sono i \textbf{registri di posizione}, cioè gli
+home location registers (HLR) e i visitor location register (VLR) che tengono
+traccia della località degli utenti mobili e consentono alle chiamate di
+essere instradate a loro\\
 
-Additionally there is the \textbf{Authentication Centre} (AuC), and the
-Equipment Identify Register (EIR) that are used in authenticating the
-mobile before it is allowed onto the network and for billing.
+Inoltre, ci sono il centro di autenticazione (AuC) e il equipment identify
+register (EIR), utilizzati per l'autenticazione dei messaggi prima
+che siano immessi sulla rete e per la fatturazione.
 
-The MS and the BSS communicate across the Um interface (it is the air
-interface for the GSM mobile telephone standard, between the mobile station
-(MS) and the Base transceiver station (BTS)). It is also known as the air
-interface or the radio link.
+La MS e la BSS comunicano attraverso l'interfaccia Um (nota come
+air-interface)
 
-The BSS communicates with the Network Service Switching (NSS) center across
-the A interface.
+Il BSS comunica con il centro di Network Service Switching (NSS) attraverso
+l'interfaccia A.
 
-GSM is a cellular network, which means that cell phones connect to it by
-searching for cells in the immediate vicinity. There are five different cell
-sizes in a GSM network: \textit{macro, micro, pico, femto, and umbrella} cells.
+GSM è una rete cellulare, il che significa che i telefoni si
+connettono ad essa tramite la ricerca di celle nelle immediate vicinanze.
+Ci sono cinque tipi di celle, in base alle dimensioni, in una rete GSM:
+celle \textit{macro, micro, pico, femto e umbrella}.
 
 \section{General Packet Radio Service}
 \label{sec:gprs}

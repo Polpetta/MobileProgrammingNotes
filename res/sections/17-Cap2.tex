@@ -146,8 +146,10 @@ rete corrente.
 \begin{itemize}
   \item Risolve il problema della mobilità alla radice (IP è il livello più
 basso di TCP/IP)
-  \item Tracking-support integrato (con un indirizzo IP permanente e home agent HA)
-  \item Nessun cambiamento al core della rete (solo i routers di confine, gli HA sono coinvolti) 
+  \item Tracking-support integrato (con un indirizzo IP permanente e home agent
+HA)
+  \item Nessun cambiamento al core della rete (solo i routers di confine,
+gli HA sono coinvolti) 
   \item Privacy della località
 \end{itemize}
 
@@ -174,105 +176,106 @@ mobile stesso
 dell'ITU (International Telecommunication Union) nel 2008 per il 4G:}
 
 \begin{itemize}
-  \item Based on an all-Internet Protocol (IP) packet switched network
-  \item Interoperability with existing wireless standards
-  \item A nominal data rate of 100 Mbit/s (while mobile) and 1 Gbit/s (while
-client and station are in relatively fixed positions)
-  \item Dynamically share and use the network resources to support more
-simultaneous users per cell
-  \item Scalable channel bandwidth 5–20 MHz, optionally up to 40 MHz
-  \item Peak link spectral efficiency of 15 bit/s/Hz in the downlink, and 6.75
-bit/s/Hz in the uplink
-  \item Seamless (senza interruzioni) connectivity and global roaming across
-multiple networks with smooth handovers (handoff)
-  \item System spectral efficiency of up to 3 bit/s/Hz/cell in the downlink and
-2.25 bit/s/Hz/cell for indoor usage
-  \item Ability to offer high quality of service for multimedia support
+  \item Basato su protocolo IP
+  \item Interoperabilità con tutti gli standard wireless esistenti
+  \item Un data rate nominale di 100 Mbit/s (su mobile) e 1 Gbit/s (quando
+client e stazione sono in posizioni fisse (relative))
+  \item Condivisione e utilizzo dinamico delle risorse della rete per
+supportare più utenti per cella.
+  \item Banda dei canali scalabile 5–20 MHz, fino a 40 MHz
+  \item Efficienza massima di 15 bit/s/Hz in downlink, e 6.75
+bit/s/Hz in uplink
+  \item Connettività senza interruzioni e roaming globale attraverso reti
+diverse, con handovers/handoff leggeri
+  \item Efficienza per il sistema: 3 bit/s/Hz/cell in downlink
+e 2.25 bit/s/Hz/cell per uso domestico
+  \item Capacità di offrire un'alta qualità del servizio per il supporto
+multimediale
 \end{itemize}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{mobtech.png}
-  \caption{Mobile technologies market share of subscriptions worldwide from
-  2016 to 2011}
+  \caption{Previsione delle quote di mercato degli abbonamenti alle tecnologie
+mobili in tutto il mondo dal 2016 al 2021}
   \label{fig:mobtech}
 \end{figure}
 
 \subsection{GSM}
 
-\textbf{GSM (Global System for Mobile Communications)} is a standard
-developed by the European Telecommunications Standards Institute (ETSI) to
-describe the \textbf{protocols for second-generation (2G)} digital cellular
-networks used by mobile phones. \\
+GSM (Sistema globale per le comunicazioni mobili) è uno standard
+sviluppato da ETSI (European Telecommunications Standards Institute) con lo
+scopo di descrivere i \textbf{protocolli per la seconda generazione 2G} di reti
+cellulari digitali per utenti mobili. \\
 
-As of 2014, it has become the de-facto global standard for mobile
-communications with over 90\% market share, operating in over 219 countries
-and territories.
+A partire dal 2014, è diventato lo standard mondiale de-facto per le
+comunicazioni mobili con oltre 90 \% di mercato, operante in oltre 219 paesi
+e territori.
 
-2G networks developed as a replacement for first generation (1G) analog
-cellular networks, and the GSM standard originally described as a digital,
-circuit-switched network optimized for full duplex voice telephony. \\
+Le reti 2G sono state sviluppate per sostituire le reti analogiche cellulari
+di prima generazione (1G).
 
-This expanded over time to include data communications, first by
-circuit-switched transport, then by packet data transport via GPRS
-(General Packet Radio Services) and EDGE (Enhanced Data rates for GSM
-Evolution, or EGPRS).
+Lo standard GSM si è ampliato nel tempo fino a includere comunicazioni di
+dati, dapprima grazie a un trasporto circuit-switched, poi tramite GPRS
+(General Packet Radio Services) e EDGE (Enhanced Data rates for GSM
+Evolution, or EGPRS)
 
-Subsequently, the 3GPP developed third-generation (3G) UMTS standards, followed
-by fourth-generation (4G) LTE Advanced standards, which do not form part of the
-ETSI GSM standard.
+Successivamente, il 3GPP ha sviluppato gli standard UMTS di terza generazione
+(3G), seguiti da quelli di quarta generazione (4G) LTE standard avanzati,
+che non fanno parte degli standard ETSI GSM.
 
-\subsubsection{History...}
+\subsubsection{Storia...}
 
-\textbf{1982 - Groupe Speciale Mobile is established}
+\textbf{1982 - nasce il gruppo speciale per la mobilità}
 
 \textbf{1989} - European Telecommunications Standardization Institute
-(ETSI) takes over standardization and changes name: Global System for Mobile
-(GSM) communication
+(ETSI) si assume la responsabilità di creare degli standard e cambia nome:
+Global System for Mobile (GSM) communication
 
-\textbf{1990} - First Official Commercial launch in Europe
+\textbf{1990} - Primo lancio ufficiale commerciale in Europa
 
-\textbf{1995} - GSM Specifications ported to 1900 MHz band \\
-
-GSM is the most popular 2G technology. Figure \ref{fig:gsm_table} shows its
-main characteristics:
+GSM è la più popolare tecnologia 2G. La figura \ref{fig:gsm_table} mostra
+alcune delle sue caratteristiche principali:
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.7]{gsm_table.png}
-  \caption{Specification Summary for GSM Cellular System }
+  \caption{Tabella riassuntiva delle specifiche dello standard GSM Cellular
+System}
   \label{fig:gsm_table}
 \end{figure}
 
-One of the key features of GSM is the \textbf{Subscriber Identity Module},
-commonly known as a SIM card.
+Una delle caratteristiche fondamentali di GSM è il \textbf{Subscriber Identity
+Module}, comunemente conosciuto come una carta SIM.
 
-The SIM is a detachable smart card containing the user's subscription
-information and phone book. This allows the user to retain his or her
-information after switching handsets.
+La SIM è una smart card rimovibile contenente l'abbonamento dell'utente, le
+sue informazioni e la sua rubrica telefonica.
 
-Alternatively, the user can also change operators while retaining the handset
-simply by changing the SIM. Some operators will block this by allowing the
-phone to use only a single SIM, or only a SIM issued by them; this practice
-is known as SIM locking.
+Questo consente all'utente di mantenere i propri dati cambiando dispositivo.
 
-\subsubsection{GSM – Functional Architecture}
+In alternativa, l'utente può anche cambiare operatore mantenendo il
+proprio dispositivo, semplicemente cambiando la SIM.
 
-A \textbf{GSM network} comprises of many functional units.
-It can be broadly divided into:
+Alcuni operatori possono bloccare questa possibilità, permettendo a un
+telefono di utilizzare una sola SIM, o solo una SIM emessa da quell'operatore;
+questa pratica è conosciuta come blocco SIM.
+
+\subsubsection{GSM – Architettura funzionale}
+
+Una \textbf{rete GSM} comprende molte unità funzionali.
+Può essere suddivisa in:
 
 \begin{itemize}
-  \item \textbf{Base station subsystem} (BSS) - the base stations and their
-controllers
-  \item \textbf{Network and Switching Subsystem} (NSS) - the part of the
-network most similar to a fixed network, sometimes just called the core network
-  \item \textbf{GPRS Core Network} (GPRS) - the \textbf{optional} part which
-allows packet-based Internet connections (see section \ref{sec:gprs})
-  \item \textbf{Operations support system} (OSS) - network maintenance
+  \item \textbf{Base station subsystem} (BSS) - stazione di base
+  \item \textbf{Network and Switching Subsystem} (NSS) - la parte della
+rete più simile a una rete fissa, a volte chiamata core network.
+  \item \textbf{GPRS Core Network} (GPRS) - la parte \textbf{opzionale} che
+permette connessioni Internet basate su pacchetti (vedi sezione \ref{sec:gprs})
+  \item \textbf{Operations support system} (OSS) - manutenzione della rete
 \end{itemize}
 
-The additional components of the GSM architecture comprise of databases and
-\textbf{messaging systems functions}:
+I componenti aggiuntivi dell'architettura GSM comprendono database e
+\textbf{funzioni di messaggistica}:
 
 \begin{itemize}
   \item VLR : Visitor Location Register
@@ -286,39 +289,39 @@ The additional components of the GSM architecture comprise of databases and
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{archGSM.png}
-  \caption{The structure of a GSM network}
+  \caption{Struttura di una rete GSM}
   \label{fig:archGSM}
 \end{figure}
 
-The base transceiver stations (BTS) are organised into small groups,
-controlled by a base station controller (BSC) which is typically co-located
-with one of the BTSs.
+Le stazioni di base (BTS) sono organizzate in piccoli gruppi, controllate da
+una stazione di base di controllo (BSC) che è tipicamente co-localizzata in una
+delle stazioni di base.
 
-The BSC with its associated BTSs is called \textbf{base station subsystem}
-(BSS). \\
+Tutto il sistema, composto dal BSC con i suoi BTS associati si chiama
+\textbf{sottosistema di stazioni di base} (BSS). \\
 
-Further into the core network, there is the main switching area.
-This is known as the \textbf{mobile switching centre} (MSC).
+Addentrandosi nella reta, c'è la zona principale di commutazione, nota come
+\textbf{switching center mobile} (MSC).
 
-Associated with it, there are the \textbf{location registers}, namely the home
-location register (HLR) and the visitor location register (VLR) which track
-the location of mobiles and enable calls to be routed to them. \\
+Associati ad essa, ci sono i \textbf{registri di posizione}, cioè gli
+home location registers (HLR) e i visitor location register (VLR) che tengono
+traccia della località degli utenti mobili e consentono alle chiamate di
+essere instradate a loro\\
 
-Additionally there is the \textbf{Authentication Centre} (AuC), and the
-Equipment Identify Register (EIR) that are used in authenticating the
-mobile before it is allowed onto the network and for billing.
+Inoltre, ci sono il centro di autenticazione (AuC) e il equipment identify
+register (EIR), utilizzati per l'autenticazione dei messaggi prima
+che siano immessi sulla rete e per la fatturazione.
 
-The MS and the BSS communicate across the Um interface (it is the air
-interface for the GSM mobile telephone standard, between the mobile station
-(MS) and the Base transceiver station (BTS)). It is also known as the air
-interface or the radio link.
+La MS e la BSS comunicano attraverso l'interfaccia Um (nota come
+air-interface)
 
-The BSS communicates with the Network Service Switching (NSS) center across
-the A interface.
+Il BSS comunica con il centro di Network Service Switching (NSS) attraverso
+l'interfaccia A.
 
-GSM is a cellular network, which means that cell phones connect to it by
-searching for cells in the immediate vicinity. There are five different cell
-sizes in a GSM network: \textit{macro, micro, pico, femto, and umbrella} cells.
+GSM è una rete cellulare, il che significa che i telefoni si
+connettono ad essa tramite la ricerca di celle nelle immediate vicinanze.
+Ci sono cinque tipi di celle, in base alle dimensioni, in una rete GSM:
+celle \textit{macro, micro, pico, femto e umbrella}.
 
 \section{General Packet Radio Service}
 \label{sec:gprs}

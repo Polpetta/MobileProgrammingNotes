@@ -1,3 +1,18 @@
+\documentclass{book}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\lstset{language=XML}
+
+\title{Mobile programming- Laboratorio 4}
+\author{pado}
+\date{June 2017}
+
+\begin{document}
+
+\maketitle
+
 \chapter{Services}
 
 I \textit{Services} sono componenti di un'applicazione che eseguono operazioni in \textit{background} senza fornire una inferfaccia grafica. \\
@@ -13,7 +28,7 @@ Inoltre, tramite l'operazione di \textit{bind}, una componente può essere assoc
 \section{Lifecycle}
 \begin{figure}
     \centering
-    \includegraphics[scale = 0.6]{../img/service_lifecycle.jpg}
+    \includegraphics[scale = 0.6]{res/img/service_lifecycle.jpg}
     \caption{Service Lifecycle}
     \label{fig:my_label}
 \end{figure}
@@ -241,7 +256,174 @@ Il metodo \texttt{startService()} ritorna immediatamente. Se il servizio non for
 
 
 
+\chapter{Broadcast Receivers}
 
+Un servizio \textit{running} può notificare l'utente in due modi: una \textit{toast notification} oppure una \textit{status bar notification}.
+
+\section{Toast Notifications}
+Sono notifiche che appaiono per un breve periodo prima di scomparire. Possono avere durata lunga o corta e una gravità per decidere in quale porzione dello schermo debbano essere visualizzate.
+
+\begin{lstlisting}[language=Java]
+Toast toast = Toast.makeText(
+		getApplicationContext(),
+		"I am a Toast!",
+		Toast.LENGTH_SHORT);
+toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
+toast.show();
+\end{lstlisting}
+
+
+\section{Status Bar Notifications}
+Sono mostrate al di fuori della normale UI, sulla barra delle notifiche.\\
+Un oggetto notifica deve contenere una piccola icona (\texttt{setSmallIcon()}), un titolo (\texttt{setContentTitle()}), un testo dettagliato (\texttt{setContentText()}) ed opzionalmente una azione.\\
+Una azione fornisce un utente per andare direttamente dalla zona delle notifiche ad una \textit{Activity} dell'applicazione.\\
+Per costruire una notifica è necessario usare un \textit{builder} come segue:
+\begin{lstlisting}[language=Java]
+Intent notificationIntent = new Intent(this, ExampleActivity.class);
+PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+Notification notification = new Notification.Builder(this)
+    .setContentTitle(getText(R.string.notification_title))
+    .setContentText(getText(R.string.notification_message))
+    .setSmallIcon(R.drawable.icon)
+    .setContentIntent(pendingIntent)
+    .setTicker(getText(R.string.ticker_text))
+    .build();
+
+\end{lstlisting}
+
+Per far partire la notifica invece usare il \texttt{NotificationManager}:
+\begin{lstlisting}[language=Java]
+NotificationManager mNotificationManager =
+    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+mNotificationManager.notify(mId, mBuilder.build());
+
+\end{lstlisting}
+
+\section{Ricevere Notifiche}
+Le applicazioni \textit{Android} possono mandare o ricevere messaggi sal sistema in maniera simile al pattern \textit{publish-subscribe}.\\
+I messaggi sono inviati quando succedono "eventi importanti": ad esempio quando il sistema si è avviato, oppure è iniziata la carica; inoltre le applicazioni possono notificare eventi personalizzati.\\
+Le applicazioni possono registrarsi per ricevere i \textit{broadcast} a cui sono interessate; il sistema si occupa automaticamente di reindirizzare i corretti messaggi ai corretti destinatari.\\
+Le applicazioni possono ricevere \textit{broadcast} in due modi:
+
+\subsection{Manifest-declared Receivers}
+Si possono dichiarare dei \textit{receivers} nel \textit{manifest}, in questo modo l'app si registra all'istallazione.
+\begin{lstlisting}[language=XML]
+<receiver android:name=".MyBroadcastReceiver"  android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+    </intent-filter>
+</receiver> 
+\end{lstlisting}
+
+
+\subsection{Context-registered receiver}
+Ricevono i \textit{broadcast} fino a quando il loro contesto è valido. Ad esempio se si registra il \textit{receiver} al contesto di una \textit{activity} rimarrà attivo fino alla distruzione dell'\textit{activity}.\\
+
+\begin{lstlisting}[language=Java]
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "MyBroadcastReceiver";
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Action: " + intent.getAction() + "\n");
+        sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
+        String log = sb.toString();
+        Log.d(TAG, log);
+        Toast.makeText(context, log, Toast.LENGTH_LONG).show();
+    }
+}
+
+BroadcastReceiver br = new MyBroadcastReceiver();
+
+IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+this.registerReceiver(br, filter);
+\end{lstlisting}
+
+Per smettere di ricevere le notifiche da un \textit{broadcast} basta chiamare \texttt{unregisterReceiver()}.\\
+Nota bene:
+\begin{itemize}
+	\item Nel caso ci si registri dentro \texttt{onCreate()} bisogna disiscriversi in \texttt{onDestroy()} per evitare \textit{memory leaks}.
+	\item Nel caso ci si registri dentro \texttt{onResume()} bisogna disiscriversi in \texttt{onPause()} per evitare di registrarsi più volte.
+\end{itemize}
+
+
+\subsection{Ricevere messaggi Asincronamente}
+Di default il metodo \texttt{onReceive()} vive sull'\textit{UI-thread}. Per renderlo asincrono si può fare come segue:
+
+\begin{lstlisting}[language=Java]
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "MyBroadcastReceiver";
+
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        final PendingResult pendingResult = goAsync();
+        AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Action: " + intent.getAction() + "\n");
+                sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
+                Log.d(TAG, log);
+                // Must call finish() so the BroadcastReceiver can be recycled.
+                pendingResult.finish();
+                return data;
+            }
+        };
+        asyncTask.execute();
+    }
+}
+\end{lstlisting}
+
+
+\section{Inviare Broadcast}
+\textit{Android} fornisce tre metodi per inviare \textit{broadcast}:
+
+\begin{itemize}
+	\item \texttt{sendOrderedBroadcast(Intent, String)}\\
+	Il metodo manda i \textit{broadcast} ad un \textit{receiver} alla volta. Dato che i \textit{receiver} ricevono il messaggio a turno ognuno può decidere se propagarlo, oppure abortire completamente il passaggio del \textit{broadcast}. L'ordine di priorità dei riceventi può essere modificato dal \textit{manifest} usando l'attributo \texttt{android:priority}.
+	\item \texttt{sendBroadcast(Intent)}\\
+	Manda il \textit{broadcast} a tutti i \textit{receiver} in ordine non prefissato. Ciò significa che i riceventi non possono propagare i risultati ed abortire il processo; ma è più efficiente.
+	\item \texttt{LocalBroadcastManager.sendBroadcast}\\
+	Manda il messaggio ai soli \textit{receiver} all'interno della stessa applicazione. Molto efficiente e permette di non considerare le implicazioni di sicurezza dovute ad app esterne.
+\end{itemize}
+
+\subsection{Filtrare tramite permessi}
+\subsubsection{In invio}
+\textit{Android} permette di restringere i \textit{broadcast} tramite permessi. quando si invia un \textit{broadcast} si può specificare un set di permessi che il ricevente deve avere per poter ricevere il messaggio.\\
+Ad esempio se il \textit{broadcast} è inviato in questa maniera:
+\begin{lstlisting}[language=Java]
+sendBroadcast(new Intent("com.example.NOTIFY"),
+              Manifest.permission.SEND_SMS);
+\end{lstlisting}
+Potrà essere ricevuto solo da \textit{receiver} che abbiano nel \textit{manifest}:
+\begin{lstlisting}[language=XML]
+<uses-permission android:name="android.permission.SEND_SMS"/>
+\end{lstlisting}
+
+\subsubsection{In ricezione}
+Anche in ricezione si possono porre restrizioni.\\
+Ad esempio se l'app destinataria dichiara nel \textit{manifest} queste linee:
+\begin{lstlisting}[language=XML]
+<receiver android:name=".MyBroadcastReceiver"
+          android:permission="android.permission.SEND_SMS">
+    <intent-filter>
+        <action android:name="android.intent.action.AIRPLANE_MODE"/>
+    </intent-filter>
+</receiver>
+\end{lstlisting}
+E possiede un \textit{context-registered receiver} del tipo:
+\begin{lstlisting}[language=Java]
+IntentFilter filter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null );
+\end{lstlisting}
+Allora l'applicazione mittente per poter comunicare con quest'ultima dovrà richiedere i permessi per inviare gli SMS:
+\begin{lstlisting}[language=XML]
+<uses-permission android:name="android.permission.SEND_SMS"/>
+\end{lstlisting}
 
 
 

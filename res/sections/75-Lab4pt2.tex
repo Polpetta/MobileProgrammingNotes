@@ -1,18 +1,3 @@
-\documentclass{book}
-\usepackage[utf8]{inputenc}
-\usepackage{listings}
-\usepackage{graphicx}
-\graphicspath{ {images/} }
-\lstset{language=XML}
-
-\title{Mobile programming- Laboratorio 4}
-\author{pado}
-\date{June 2017}
-
-\begin{document}
-
-\maketitle
-
 \chapter{Services}
 
 I \textit{Services} sono componenti di un'applicazione che eseguono operazioni in \textit{background} senza fornire una interfaccia grafica. \\
@@ -28,7 +13,7 @@ Inoltre, tramite l'operazione di \textit{bind}, una componente può essere assoc
 \section{Lifecycle}
 \begin{figure}
     \centering
-    \includegraphics[scale = 0.6]{res/img/service_lifecycle.jpg}
+    \includegraphics[scale=0.6]{service_lifecycle}
     \caption{Service Lifecycle}
     \label{fig:my_label}
 \end{figure}
@@ -424,16 +409,3 @@ Allora l'applicazione mittente per poter comunicare con quest'ultima dovrà rich
 \begin{lstlisting}[language=XML]
 <uses-permission android:name="android.permission.SEND_SMS"/>
 \end{lstlisting}
-
-
-
-
-
-
-
-
-
-
-
-
-\end{document}

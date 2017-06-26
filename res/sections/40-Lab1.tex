@@ -79,7 +79,7 @@ Android si basa su un'architettura a stack (figura \ref{fig:android-stack}):
 		\textbf{Android runtime:} inizialmente utilizzava la Dalvik Virtual
 		Machine, un'implementazione della JVM adatta a funzionare con poche
 		risorse, con licenza open source e più efficiente della OracleJVM. Le
-		applicazioni consistevano quindi una serie di file \texttt{.dex} contenti del
+		applicazioni consistevano in una serie di file \texttt{.dex} contenti del
 		Bytecode che veniva interpretato dalla VM e che in alcuni casi veniva
 		ottimizzato mediante un compilatore just-in-time. A partire da Android
 		5.0 la DalvikVM è stata sostituita da \textbf{Android Runtime (ART)},
@@ -213,7 +213,7 @@ controllato dal sistema operativo e non dall'applicazione, il quale può
 scegliere di terminare o sospendere il processo in base alle sue
 necessità.
 
-Android prevede quattro tipologie di processi, che in ordine di priorità
+Android prevede quattro tipologie di processi, in ordine di priorità
 d'esecuzione/risorse sono:
 
 \begin{itemize}
@@ -258,7 +258,7 @@ Tali eventi sono:
 		per essere nascosta all'utente perché è stata avviata un'altra
 		\texttt{Activity}. Il gestore dell'evento dovrebbe essere veloce e dovrebbe
 		essere utilizzato per fermare le operazioni CPU-intensive, come le
-		animazioni. Da notare che quando viene eseguito il gestore
+		animazioni. Da notare che, quando viene eseguito il gestore,
 		l'\textbf{\texttt{Activity} è ancora visibile all'utente}.
 	\item \texttt{onStop()} viene sollevato quando l'\texttt{Activity} non è più visibile
 		all'utente e il gestore dovrebbe essere utilizzato per rilasciare

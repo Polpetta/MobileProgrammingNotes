@@ -1,7 +1,7 @@
 \chapter{Services}
 
 I \textit{Services} sono componenti di un'applicazione che eseguono operazioni in \textit{background} senza fornire una interfaccia grafica. \\
-Una qualsiasi componente può lanciarne uno ed esso rimarrà attivo in \textit{background} anche se l'untente passa ad un altra app.\\
+Una qualsiasi componente può lanciarne uno ed esso rimarrà attivo in \textit{background} anche se l'utente passa ad un altra app.\\
 Inoltre, tramite l'operazione di \textit{bind}, una componente può essere associata ad un servizio per poterci comunicare o effettuare operazioni di IPC (Inter Process Comunication).\\
 È buona norma usare un \textit{service} per:
 \begin{itemize}
@@ -62,12 +62,12 @@ Ad esempio un servizio può essere dichiarato come segue:
 
 
 \section{Tipi di Servizi}
-I serivizi si possono dividere in tre tipologie:
+I servizi si possono dividere in tre tipologie:
 \begin{itemize}
 	\item \textbf{Scheduled}: Questi \textit{services} sono fatti partire da una API come il \texttt{JobScheduler}. Uno scheduler lancia i servizi a lui associati al verificarsi di alcune condizioni temporali e di \textit{network}.\\
 	N.B. \texttt{JobScheduler} è disponibile solo da Android 5.0 (API 21) in poi.
-	\item \textbf{Started}: Un servizio è \textit{started} quando viene fatto partire esplicitamente da un'altra componente tramite una chiamata a \texttt{startService()}. Quando un servizio è lanciato in questo modo esegue indefinitamente, anche nel caso in cui il componente che l'ha lanciato venga distrutto. Generalmente esegue una singola operazione (come completare un \textit{download}) e poi è sua responsabilità autosospendersi. 
-	\item \textbf{Bound}: Un servizio è \textit{bound} quando un'altra componente gli viene associata tramite una chiamata a \texttt{bindService()}. Offre una interfaccia \textit{client-server} che permette alle componenti di interagire con il servzio, mandare richieste, ricevere risultati o addirittura effettuare IPC. Un servizio di questo tipo continua solamente fino a quando ha componenti associate, quando tutte le componenti si sono disassociate esso termina.
+	\item \textbf{Started}: Un servizio è \textit{started} quando viene fatto partire esplicitamente da un'altra componente tramite una chiamata a \texttt{startService()}. Quando un servizio è lanciato in questo modo esegue indefinitamente, anche nel caso in cui il componente che l'ha lanciato venga distrutto. Generalmente esegue una singola operazione (come completare un \textit{download}) e poi è sua responsabilità auto sospendersi. 
+	\item \textbf{Bound}: Un servizio è \textit{bound} quando un'altra componente gli viene associata tramite una chiamata a \texttt{bindService()}. Offre una interfaccia \textit{client-server} che permette alle componenti di interagire con il servizio, mandare richieste, ricevere risultati o addirittura effettuare IPC. Un servizio di questo tipo continua solamente fino a quando ha componenti associate, quando tutte le componenti si sono disassociate esso termina.
 \end{itemize}
 
 
@@ -80,7 +80,7 @@ Sono servizi lanciati da un'altra componente tramite \texttt{startService()}, ch
 Una volta partito ha un ciclo di vita indipendente dalla componente genitrice, quindi può \textit{runnare} indefinitamente in \textit{background} ed è sua responsabilità chiamare \texttt{stopSelf()} oppure deve essere un'altra componente a chiamare \texttt{stopService()}.\\
 Le due principali classi che possono essere estese per creare uno \textit{started service} sono:
 \begin{itemize}
-	\item \texttt{Service}: è la classe base da cui estendono tutti i \textit{service}. Di dafult vive sul \textit{main thread}, quindi se deve effettuare operazione computazionalmente pesanti oppure \textit{networking} è necessario creare un altro \textit{thread}.
+	\item \texttt{Service}: è la classe base da cui estendono tutti i \textit{service}. Di default vive sul \textit{main thread}, quindi se deve effettuare operazione computazionalmente pesanti oppure \textit{networking} è necessario creare un altro \textit{thread}.
 	\item \texttt{IntentService}: è una sottoclasse di \texttt{Service} che usa uno \textit{worker thread} per eseguire tutte le richieste. Estendere questa classe è la scelta migliore nel caso non si debbano gestire più richieste simultaneamente.
 \end{itemize}
 
@@ -89,13 +89,13 @@ La più comune implementazione di un servizio è tramite la superclasse \texttt{
 Questa classe esegue le seguenti operazioni:
 \begin{itemize}
 	\item Crea un \textit{default worker} che esegue tutti gli \textit{intent} specificati in \texttt{onStartCommand()} separatamente dall'\textit{UI-thread}.
-	\item Crea una coda di \textit{intent} da passare uno alla volta alla implentazione del metodo \texttt{onHandleIntent()} (di questa classe). In questo modo non ci saranno problemi di \textit{multithreading}.
+	\item Crea una coda di \textit{intent} da passare uno alla volta alla implementazione del metodo \texttt{onHandleIntent()} (di questa classe). In questo modo non ci saranno problemi di \textit{multithreading}.
 	\item Ferma il servizio dopo che tutte le richieste sono state processate, così non c'è bisogno di chiamare esplicitamente \texttt{stopSelf()}.
 	\item Fornisce una implementazione di default di \texttt{onBind()} che ritorna \texttt{null}, ovvero non permette il \textit{binding}.
 	\item Fornisce una implementazione di default di \texttt{onStartCommand()} che semplicemente inoltra le richieste alla propria implementazione di \texttt{onHandleIntent()}.
 \end{itemize}
 
-Per estendere la classe è necessario solamente un construttore e l'\textit{overrinding} di \texttt{onHandleIntent()}, come nell'esempio:
+Per estendere la classe è necessario solamente un costruttore e l'\textit{overrinding} di \texttt{onHandleIntent()}, come nell'esempio:
 
 \begin{lstlisting}[language=Java]
 public class HelloIntentService extends IntentService {
@@ -127,7 +127,7 @@ public class HelloIntentService extends IntentService {
 }
 \end{lstlisting}
 
-Se c'è la necessità di fare l'\textit{override} di altri metodi come \texttt{onCreate()}, \texttt{onStartCommand()} o \texttt{onDestroy()} è necessario chiamare l'implementazione della superclasse per fare un modo che \texttt{IntentService} gestica oppurtunamente il ciclo di vita dello \textit{worker thread}.\\
+Se c'è la necessità di fare l'\textit{override} di altri metodi come \texttt{onCreate()}, \texttt{onStartCommand()} o \texttt{onDestroy()} è necessario chiamare l'implementazione della superclasse per fare un modo che \texttt{IntentService} gestisca opportunamente il ciclo di vita dello \textit{worker thread}.\\
 Ad esempio questo potrebbe essere un \textit{override} di \texttt{onStartCommand()}.
 \begin{lstlisting}[language=Java]
 @Override
@@ -140,7 +140,7 @@ public int onStartCommand(Intent intent, int flags, int startId) {
 Se si vuole permettere il \textit{binding} è necessario fare l'\textit{override} di \texttt{onBind()} e non chiamare l'implementazione della superclasse perché altrimenti ritornerebbe \texttt{null}.\\
 
 
-\subsubsection{Estendere Serice}
+\subsubsection{Estendere Service}
 Se il servizio deve gestire più richieste simultaneamente si rende necessario estendere la classe \texttt{Service}.\\
 Per confronto questo è un esempio di un servizio con lo stesso comportamento di quello dell'esempio precedente ma implementato usando \texttt{Service}.
 
@@ -215,14 +215,14 @@ public class HelloService extends Service {
 Il metodo \texttt{onStartCommand()} deve ritornare un intero che rappresenta il modo in cui il servizio deve continuare nel caso che il sistema lo uccida. I possibili modi sono:
 
 \begin{itemize}
-	\item \texttt{START\_NOT\_STICKY}: Il sistema non ricrea il servizio a meno che non ci siano rischieste pendenti. È la soluzione più \textit{safe} per evitare che il servizio continui indefinitamente.
+	\item \texttt{START\_NOT\_STICKY}: Il sistema non ricrea il servizio a meno che non ci siano richieste pendenti. È la soluzione più \textit{safe} per evitare che il servizio continui indefinitamente.
 	\item \texttt{START\_STICKY}: Il sistema ricrea il servizio, ma non gli riconsegna l'ultimo \textit{intent}. Il sistema gli da in pasto tutti i \textit{pending intent} o eventualmente \texttt{null} se la coda era vuota.
 	Questa cosa è adatta per servizi come i \textit{media player} che non eseguono comandi ma girano indefinitamente in attesa di un \textit{job}.
 	\item \texttt{START\_REDELIVER\_INTENT}: Come il precedente ma il sistema gli riconsegna anche l'ultimo \textit{intent}. Questa modalità è adatta a servizi che eseguono attivamente \textit{job} che devono essere rapidamente ricominciati (come i \textit{download}).
 \end{itemize}
 
 \subsection{Bound Services}
-Permettono alle altre componenti del sistema di associarsi chiamando \texttt{bindSerice()}, generalmente non permettono di far partire il servizio chiamando \texttt{startSerice()}. Permettono, invece, di avere interazioni da parte di altre componenti attraverso IPC (\textit{Inter Process Communication}).\\
+Permettono alle altre componenti del sistema di associarsi chiamando \texttt{bindService()}, generalmente non permettono di far partire il servizio chiamando \texttt{startService()}. Permettono, invece, di avere interazioni da parte di altre componenti attraverso IPC (\textit{Inter Process Communication}).\\
 Per creare un \textit{bound service} è necessario fare l'\textit{override} di \texttt{onBind()}, che deve ritornare un \texttt{IBinder} che specifichi l'interfaccia di comunicazione.\\
 Le altre componenti si possono associare chiamando \texttt{bindService()} e disassociare chiamando \texttt{unbindService()}.\\
 Quando un \textit{bound service} non ha più componenti associate viene distrutto, non è necessario fermarlo esplicitamente.
@@ -287,7 +287,7 @@ mNotificationManager.notify(mId, mBuilder.build());
 \end{lstlisting}
 
 \section{Ricevere Notifiche}
-Le applicazioni \textit{Android} possono mandare o ricevere messaggi sal sistema in maniera simile al pattern \textit{publish-subscribe}.\\
+Le applicazioni \textit{Android} possono mandare o ricevere messaggi dal sistema in maniera simile al pattern \textit{publish-subscribe}.\\
 I messaggi sono inviati quando succedono "eventi importanti": ad esempio quando il sistema si è avviato, oppure è iniziata la carica; inoltre le applicazioni possono notificare eventi personalizzati.\\
 Le applicazioni possono registrarsi per ricevere i \textit{broadcast} a cui sono interessate; il sistema si occupa automaticamente di reindirizzare i corretti messaggi ai corretti destinatari.\\
 Le applicazioni possono ricevere \textit{broadcast} in due modi:

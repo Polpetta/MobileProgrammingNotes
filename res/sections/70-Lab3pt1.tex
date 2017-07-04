@@ -1,0 +1,324 @@
+% \documentclass{article}
+% \usepackage[utf8]{inputenc}
+% \usepackage{listings}
+% \usepackage{graphicx}
+% \graphicspath{ {images/} }
+% \lstset{language=XML}
+%
+% \title{Mobile programming- Laboratorio 3}
+% \author{pasoa}
+% \date{June 2017}
+
+% \begin{document}
+
+% \maketitle
+
+\newcommand{\Activity}{\texttt{Activity}\xspace}
+\newcommand{\Intent}{\texttt{Intent}\xspace}
+\newcommand{\View}{\texttt{View}\xspace}
+\newcommand{\ViewGroup}{\texttt{ViewGroup}\xspace}
+\newcommand{\LinearLayout}{\texttt{LinearLayout}\xspace}
+\newcommand{\RelativeLayout}{\texttt{RelativeLayout}\xspace}
+\newcommand{\ScrollView}{\texttt{ScrollView}\xspace}
+\newcommand{\ListView}{\texttt{ListView}\xspace}
+\newcommand{\SharedPreferences}{\texttt{SharedPreferences}\xspace}
+\newcommand{\ListFragment}{\texttt{ListFragment}\xspace}
+\newcommand{\MainActivity}{\texttt{MainActivity}\xspace}
+\newcommand{\AsyncTask}{\texttt{AsyncTask}\xspace}
+\newcommand{\FrameLayout}{\texttt{FrameLayout}\xspace}
+\newcommand{\WorkoutListFragment}{\texttt{WorkoutListFragment}\xspace}
+\newcommand{\Fragment}{\texttt{Fragment}\xspace}
+\newcommand{\SQLiteDatabase}{\texttt{SQLiteDatabase}\xspace}
+\newcommand{\SQLiteOpenHelper}{\texttt{SQLiteOpenHelper}\xspace}
+\newcommand{\Cursor}{\texttt{Cursor}\xspace}
+
+\chapter{Cambiamento della configurazione e persistenza dei dati}
+
+\section{Adattarsi al cambiamento di configurazioni}
+Quando si verifica un cambiamento nella configurazione, il sistema runtime di
+Android fa ricominciare le \Activity e i \Fragment. Questo accade per dare la
+possibilità all'applicazione di adattarsi all'ambiente con la nuova
+configurazione, rilanciandola automaticamente. 
+
+Troviamo diversi tipi di eventi che generano questa operazione, come ad esempio il cambio dell'orientamento dello schermo.
+Il riferimento lo troviamo in \texttt{android:configChange}.
+
+Chiaramente questo fenomeno, se non gestito, ha conseguenze catastrofiche: tutte
+le variabili delle nostre \Activity e \Fragment verranno distrutte e ricaricate,
+perdendo di conseguenza le informazioni su cui si stava lavorando. 
+
+È necessario quindi salvare lo stato del processo prima che le \Activity (o \Fragment) vengano distrutte e caricare tale stato al verificarsi di
+\texttt{(onSave(Restore)InstanceState())}; tuttavia interrompere un processo in
+esecuzione può essere indesiderato o costoso.
+
+Dobbiamo infatti tener conto che l'esecuzione di operazioni quali
+\texttt{onSaveInstanceState} e \texttt{onReloadInstanceState} possono portare ad
+una sgradevole esperienza per l'utente (per la complessità delle operazioni) ed
+inoltre potrebbe non essere possibile ripristinare completamente lo stato
+dell'\Activity con il \texttt{Bundle}: questa operazione di ripristino non è
+realizzabile per grossi oggetti ed i dati devono essere serializzati e
+de-serializzati.
+
+In queste situazioni possiamo pensare di dover gestire il cambiamento di
+configurazione noi stessi oppure conservare un oggetto durante tale evento.
+
+\subsection{Impedire il riavvio del sistema}
+
+Se vogliamo impedire il riavvio del sistema al cambiamento di una configurazione, possiamo gestire il cambiamento manualmente con la funzione \texttt{onConfigurationChanged}. 
+A tale metodo passiamo un \textit{oggetto di configurazione} nel quale sono specificate le configurazioni del nuovo device.
+Quando questo metodo viene chiamato, l'oggetto \textit{Resource} viene aggiornato con la
+nuova configurazione.\\
+Nel file \texttt{manifest.xml} dobbiamo quindi specificare quali sono i
+cambiamenti che gestiamo:
+
+\begin{lstlisting}[language=XML]
+<activity android:name=".MyActivity"
+	android:configChanges="orientation|keyboardHidden"
+	android:label="@string/app_name">
+\end{lstlisting}
+
+In questo caso stiamo specificando che il sistema non si riavvierà al
+verificarsi di \texttt{orientation} e \texttt{keyboardHidden} ma saremo noi a
+gestirli.
+
+Nell'\Activity gestiremo il tutto come segue:
+
+\begin{lstlisting}[language=Java]
+@Override
+public void onConfigurationChanged(Configuration newConfig) {
+	super.onConfigurationChanged(newConfig);
+	// Checks the orientation of the screen
+	if (newConfig.orientation ==
+		    Configuration.ORIENTATION_LANDSCAPE) {
+		Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+	} else if (newConfig.orientation ==
+		   Configuration.ORIENTATION_PORTRAIT){
+		Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+	}
+}
+\end{lstlisting}
+
+In questo modo possiamo decidere noi come gestire il tutto.
+
+\subsection{Conservare l'oggetto durante il cambiamento}
+Questa è la scelta raccomandata. Questa procedura permette il riavvio alla 
+\Activity al generarsi di un cambiamento di configurazione, ma tiene un oggetto
+con lo stato per la nuova istanza. Per mantenere lo stato durante il 
+cambiamento è possibile utilizzare una \texttt{Fragment class}.
+Gli step da seguire sono i seguenti:
+\begin{itemize}
+    \item estendere il \Fragment e dichiarare i riferimenti all'oggetto
+    \item quando il \Fragment è creato chiamare
+\texttt{setRetainInstance(boolean)}
+    \item aggiungere il \Fragment all'\Activity
+    \item usare il \texttt{FragmentManager} per recuperare il \Fragment al
+riavvio dell'\Activity
+
+\end{itemize}
+
+Ad esempio:
+
+\begin{lstlisting}[language=Java]
+public class RetainedFragment extends Fragment {
+	// data object we want to retain
+	private MyDataObject data;
+
+	// this method is only called once for this fragment
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// retain this fragment
+		setRetainInstance(true); 
+	}
+	
+	@Override
+	public void onAttach(Context context) {
+		//called when Activity:onCreate() has finnished
+		//update the pointer to the activity: (Activity)context
+	}
+}
+\end{lstlisting}
+
+\section{Datastorage in Android}
+Possiamo salvare un semplice file come sequenza di dati. Il salvataggio può 
+essere fatto in due posizioni:
+\begin{itemize}
+    \item \textit{Internal Storage}: possiamo salvare il file direttamente nella
+memoria interna ed il file salvato sarà privato, ovvero accessibile solo
+dall'applicazione (altre applicazioni non possono accedervi).
+    \item \textit{External Storage}: possiamo salvare il file in una memoria
+esterna, come ad esempio una SD card, oppure nella memoria del telefono; con
+questo tipo di configurazione il file sarà accessibile da altre applicazioni
+\end{itemize}
+
+Possiamo salvare in insiemi Chiave-Valore: utilizziamo un \textit{shared
+preference file} il quale ci permette di svolgere questa operazione. In questo
+caso i dati persistono anche se l'applicazione viene chiusa. \\
+Un'altra soluzine consiste nell'uso di \textit{SQLite Database}, ovvero una
+struttura per il salvataggio di informazioni in un database; Android memorizza
+il database in uno spazio privato non accessibile da altre applicazioni.
+
+\subsection{SQLite DB}
+
+\`E una libreria che ci permette di gestire un database senza l'utilizzo di un
+server. Essa comprende tutte le funzionalità dei database e supporta alcuni
+tipi di dato, come \texttt{INTEGER}, \texttt{REAL}, \texttt{TEXT}. 
+Prima di memorizzare i nostri dati sul database, dobbiamo convertirli in tali tipi.
+
+La classe \texttt{SQLiteManager} ci permette di gestire il database. In essa
+dobbiamo definire le componenti del database, come il nome, le tabelle con i
+relativi campi e le query. Troviamo override di metodi quali \texttt{onCreate},
+chiamato alla creazione del database, e \texttt{onUpgrade} per aggiornarne la
+versione, stabilendo il modo in cui farlo e cosa farne nei dati precedentemente
+salvati.
+
+Operazioni comuni in un database sono la lettura e scrittura; per farlo dobbiamo
+avere un riferimento al database. Per inserire dati passiamo tramite l'oggetto
+\texttt{ContentValues}, il quale accetta una coppia chiave-valore, ad esempio:
+
+\begin{lstlisting}[language=Java]
+ContentValues values = new ContentValues();
+values.put(MySQLiteHelper.COLUMN_NAME, value);
+\end{lstlisting}
+
+Per la lettura utilizziamo un oggetto \texttt{Cursor}, che conterrà il risultato
+della ricerca; ad esempio:
+
+\begin{lstlisting}[language=Java]
+Cursor cursor = database.query(
+    MySQLiteHelper.TABLE_CONTACTS, /* name of table */
+    allColumns, /* projection: all columns */
+    MySQLiteHelper.COLUMN_ID + /* selection: where
+                                    clause */
+    " = " + insertId, /* this particular id */
+    null, /* don't use selection args */
+    null, /* don't group the rows */
+    null, /* don't filter by row groups */
+    null); /* don't sort the order */
+\end{lstlisting}
+
+Per leggere una riga del risultato contenuto nel \Cursor dobbiamo prima settarne
+la posizione di inizio (e.g. \texttt{cursor.MoveToFirst()} per iniziare dal primo
+elemento, \texttt{cursor.MoveNext()} per passare all'elemento successivo a quello
+attuale, ...).
+
+Per eliminare il database, possiamo utilizzare il metodo di \texttt{SQLiteDatabaseHelper}
+\texttt{delete} dove specifichiamo cosa vogliamo eliminare.
+\begin{lstlisting}[language=Java]
+database.delete(MySQLiteHelper.TABLE_CONTACTS,
+	MySQLiteHelper.COLUMN_ID   + " = " + id, null);
+\end{lstlisting}
+
+È importante gestire correttamente l'acquisizione e il rilascio delle risorse
+durante la vita dell'attività:
+
+\begin{lstlisting}[language=Java]
+@Override
+	protected void onResume() {
+	datasource.open();
+	super.onResume();
+}
+
+@Override
+protected void onPause() {
+	datasource.close();
+	super.onPause();
+}
+\end{lstlisting}
+
+Lettura e scrittura su database provocano un consumo maggiore di prestazioni e 
+l'esperienza utente potrebbe risentirne. Per risolvere questo problema Android
+mette a disposizione letture asincrona chiamate \texttt{CursorLoader} e
+\texttt{AsyncTaskLoader}\textit{--}\texttt{LoadingInBackground()}. Il \texttt{CursorLoader} richiede un'implementazione del \textit{Content Provider}.
+
+\subsection{Content Provider}
+
+L'obiettivo del \texttt{ContentProvider} è quello di gestire l'accesso ai dati e
+fornirne meccanismi per la definizione della loro sicurezza. Come accennato in
+precedenza, il \texttt{CursorLoader} fa affidamento al \texttt{ContentProvider} per
+l'esecuzione di query asincrone per poi ritornare il risultato alla UI.
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.8]{cp}
+    \caption{Content Provider}
+    \label{fig:my_label}
+\end{figure}
+
+Il suo comportamento è simile ai database in quanto possiamo fare interrogazioni
+(query), modificarne il contenuto, inserire, eliminare ed aggiornare i dati.
+Nella maggior parte dei casi il contenuto è memorizzato in database SQLite. 
+
+Le query al \texttt{ContentProvider} vanno definite in un formato
+specifico (URI):
+
+\begin{center}
+	\texttt{<prefix>://<authority>/<data\_type>/<id>}
+\end{center}
+
+dove:
+\begin{itemize}
+    \item \texttt{prefix}: sempre impostato sul contenuto;
+    \item \texttt{authority}: specifica il nome del \texttt{ContentProvider};
+    \item \texttt{data\_type}: indica il tipo di dati che il provider fornisce;
+    \item \texttt{id}: indica la specifica riga da richiedere.
+\end{itemize}
+
+Ad esempio, se volessimo avere informazioni per il quinto contatto del \texttt{ContentProvider} ``\texttt{Content}'' l'URI sarà del tipo:
+
+\begin{center}
+	\texttt{content://contacts/people/5}
+\end{center}
+
+\noindent dove \textit{people} è il tipo di dato che ci ritorna.
+
+Per creare una classe \texttt{ContentProvider} come prima cosa dobbiamo estendere
+\texttt{ContentProvider}; dopodiché dobbiamo definire l'URI, il quale verrà
+usato per accedere ai contenuti. Dobbiamo inoltre definire il database (usando
+SQLite) che conterrà le informazioni; a questo punto si definiscono le
+possibili queries per specifiche operazioni. Infine, registriamo il \texttt{ContentProvider} nel manifest dell'applicazione tramite il tag ``\texttt{<provider>}''.
+
+\begin{lstlisting}[language=XML]
+<provider
+	android:name="math.unipd.it.mp.todos.contentprovider.MyTodoContentProvider"
+	android:authorities="math.unipd.it.mp.todos.contentprovider"
+	android:exported="true">
+	<!--
+		name: class which implements the content provider
+		authorities: tag to refer the content provider
+		exported: allows external application to use this content provider
+	-->
+</provider>
+\end{lstlisting}
+
+I principali metodi che dobbiamo sovrascrivere sono:
+\begin{itemize}
+    \item \texttt{onCreate()}: chiamato alla creazione del provider.
+    \item \texttt{query()}: riceve una richiesta dal client; il risultato è ritornato in
+un oggetto \Cursor.
+    \item \texttt{insert()}: inserisce un nuovo record nel \texttt{ContentProvider}.
+    \item \texttt{delete()}: elimina un record dal \texttt{ContentProvider}.
+    \item \texttt{update()}: aggiorna un record esistente.
+    \item \texttt{getType()}: ritorna il tipo di dato dato un URI.
+\end{itemize}
+% \end{document}
+
+
+
+\undef{\Activity}
+\undef{\Intent}
+\undef{\View}
+\undef{\ViewGroup}
+\undef{\LinearLayout}
+\undef{\RelativeLayout}
+\undef{\ScrollView}
+\undef{\ListView}
+\undef{\SharedPreferences}
+\undef{\ListFragment}
+\undef{\MainActivity}
+\undef{\AsyncTask}
+\undef{\FrameLayout}
+\undef{\WorkoutListFragment}
+\undef{\Fragment}
+\undef{\SQLiteDatabase}
+\undef{\SQLiteOpenHelper}
+\undef{\Cursor}

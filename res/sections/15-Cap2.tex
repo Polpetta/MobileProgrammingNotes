@@ -1,0 +1,417 @@
+\chapter{Wireless standards and protocols}
+\label{wireless-standards-and-protocols}
+
+\textbf{Wireless sucks:} vengono persi pacchetti, servono
+regolamentazioni delle frequenze, il canale di comunicazione non è limitabile
+ed è condiviso, scarsa sicurezza, trasmissione lenta e variabile, ecc.
+
+Però fa comodo perché è veloce da installare, permette la mobilità e richiede
+poca infrastruttura.
+
+L'obiettivo finale è quello di avere una gerarchia di reti wireless che sia in
+grado di connettere aree geografiche molto ampie, garantendo allo stesso
+tempo una buona velocità di trasmissione.
+
+\section{Tecnologie correnti}\label{tecnologie-correnti}
+
+\begin{itemize}
+\item
+  \textbf{Mobile Cellular Systems:} utilizzata per far comunicare i
+  telefoni ed effettuare principalmente traffico voce. Gli access point
+  coprono dai 100 metri ai 10km ma garantiscono una velocità di
+  trasmissione contenuta.
+
+\item
+  \textbf{WLAN}: estensione wireless della rete Ethernet con copertura
+  più limitata, dai 10 ai 100 metri. Aumenta però la velocità di
+  trasmissione. Ci sono vari standards, come 802.11 b, a, c, n, g, ac...
+\item
+  \textbf{Short-range}: connessione diretta tra dispositivi, ottimizzata
+  per contenere i consumi. Esempi: Bluetooth e ZigBee.
+\item
+  \textbf{Satellite systems}: connessione satellitare in grado di
+  coprire tutto il mondo (i satelliti si dividono in GEO, dei quali ne bastano 3
+  per coprire l'intero globo, e LEO, dei quali ne servono 77), utilizzata per
+  trasmissioni audio/video o comunicazione (per esempio Iridium).
+\end{itemize}
+
+\section{Enti per le standardizzazioni}\label{enti-per-le-standardizzazioni}
+
+\begin{itemize}
+\item
+  \textbf{3GPP}: GSM, UMTS, LTE
+\item
+  \textbf{IEEE:} 802.x (LAN, PAN; WiMAX)
+\item
+  \textbf{IETF (Internet Engineering Task Force)}: Mobile IP,
+  TCP...
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{image10}
+\end{figure}
+\FloatBarrier
+
+\section{Divisione dello spettro elettromagnetico}
+Lo spettro elettromagnetico è diviso in bande che possono essere riservate o
+meno, le bande a 2,4GHz e 5GHz sono libere (e utilizzate da Bluetooth e per
+esempio dal Wi-Fi, che usa 802.11x). In generale più bassa è la frequenza più il
+segnale è in grado di coprire distanze maggiori ma è in grado di raggiungere
+data-rate meno elevati, più la frequenza è alta invece, maggiore è la capacità
+di trasportare le informazioni ma le distanze coperte sono minori. Ciò è dovuto
+al fatto che maggiore la frequenza è, più l'onda interagisce con la materia.
+
+\section{802.11 Wireless Local Area Network}
+\label{wireless-local-area-network}
+
+802.X è una famiglia di standard per le reti locali e metropolitane, in
+particolare 802.11 definisce il \textbf{MAC (Medium Access Control)} e
+il \textbf{PHY (Physical layer)} per le reti wireless.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image8}
+\end{figure}
+
+L'obiettivo prefissato per 802.11 è quello di permettere di connettersi
+a reti wireless secondo uno standard unico per tutto il mondo, che non
+richiede licenze, facile da usare, robusto e che consuma poco. Anche la sicurezza
+e la privacy devono essere garantite.
+
+Viene quindi definita una pila di protocolli che specifica come avviene
+la comunicazione tra i vari dispositivi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image6a}
+\end{figure}
+
+L'utilizzo tipico prevede un dispositivo mobile che si connette ad un
+access point mediante 802.11, l'accesso point è inoltre connesso
+all'infrastruttura cablata tramite 802.3, il che permette al dispositivo
+mobile di comunicare con tutti i dispositivi connessi alla rete cablata.
+
+Più nel dettaglio, gli strati del MAC e PHY layer sono divisi in vari
+componenti:
+
+\begin{itemize}
+\item
+  \textbf{MAC:} si occupa del meccanismo di accesso al canale, della
+  frammentazione dei pacchetti e dell'encryption dei dati.
+\item
+  \textbf{MAC Management}: contiene la logica di sincronizzazione e
+  autenticazione.
+\item
+  \textbf{PLCP Physical Layer Convergence Protocol:} controlla il canale
+  di comunicazione.
+\item
+  \textbf{PMD Physical Medium Dependent}: si occupa della codifica e
+  modulazione del segnale.
+\item
+  \textbf{Station Management}: si occupa di tutte le funzionalità legate
+  alla gestione della stazione di trasmissione.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image12}
+\end{figure}
+
+L'accesso al canale può avvenire sfruttando \textbf{CSMA/CA: Carrier Sense
+Multiple Access with Collision Avoidance}, ovvero prima di effettuare
+una trasmissione viene controllato il canale e viene effettuata una
+trasmissione solo se questo è libero. Questo perché non è possibile
+effettuare \textit{collision detection}.
+Prima che la trasmissione avvenga viene aspettato
+un certo tempo fisso aumentato da un tempo di backoff, il quale incrementa ad ogni
+collisione o ogni volta che il canale risulta occupato (le collisioni possono
+avvenire lo stesso, principalmente perché il tempo di trasmissione sul canale
+non è nullo).
+
+Ci sono varie versioni dello standard 802.11, ognuna delle quali definisce
+particolari velocità di trasmissioni, frequenze(2,4GHz, 5GHz o entrambi) e
+caratteristiche del dispositivo di trasmissione/modulazione del segnale.
+
+Per gestire la convivenza di più reti wireless è stato predisposto un
+meccanismo di canali che utilizzano frequenze di trasmissioni diverse.
+
+\subsubsection{Infrastruttura Vs Ad-Hoc network Vs Wi-Fi
+Direct}\label{infrastruttura-vs-ad-hoc-network-vs-wi-fi-direct}
+
+\paragraph{Infrastruttura }\label{infrastruttura}
+
+Tipicamente 802.11 viene utilizzato in modalità \textbf{Infrastruttura},
+ovvero ci sono degli access point che collegano una rete wireless ad una
+rete cablata, in modo che i dispositivi mobile possono usufruire degli
+stessi servizi.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image7}
+\end{figure}
+
+In questo caso si hanno delle \textbf{Station (STA)} che sono dei
+terminali con accesso alla rete wireless e che sono in grado di
+comunicare con l'access point. Vengono poi identificati vari \textbf{BSS
+(Basic Service Set)} che definiscono un gruppo di stazioni che
+comunicano sulla stessa frequenza radio. Un \textbf{Access Point} è una
+particolare stazione che è connessa sia alla rete wireless che al
+sistema di distribuzione dell'infrastruttura (tipicamente la rete
+cablata). Un \textbf{Portal} è un ponte che permette la comunicazione
+tra due reti diverse (da notare che non è tra AP ad AP), come tra la
+rete wireless e quella wired. Il \textbf{Distribution System} è un
+interconnessione di reti eterogenee definite da vari \textbf{BSS} che
+formano un'unica rete logica che prende il nome di \textbf{Extended
+Service Set (ESS)}.
+
+Il set-up della rete wireless viene gestito da un amministratore, il
+quale stabilisce i canali di trasmissione dei vari access point, stando
+attendo a limitare le interferenze. I vari host si connetteranno poi a
+uno degli access point secondo il seguente procedimento:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Ascoltano il canale per cercare dei \textbf{beacon frame} che
+  descrivono l'access point (nome \textbf{SSID} e MAC address).
+\item
+  Selezionano l'access point a cui associarsi.
+\item
+  Effettuano l'autenticazione (opzionale)
+\item
+  Ottengono un IP, tipicamente assegnato in DHCP, valido per la
+  sotto-rete definita dall'access point.
+\end{enumerate}
+
+Una volta associato o connesso, l'host comunicherà con tutti gli altri
+host collegati in rete mediante l'access point (no connessione diretta).
+
+\paragraph{Ad Hoc}\label{ad-hoc}
+
+Nella modalità \textbf{Ad-Hoc} la comunicazione è invece limitata
+all'interno di un singolo \textbf{BSS}, che in questo caso prende il
+nome di \textbf{Independent Basic Service Set}, in quanto non è
+collegato con un sistema di distribuzione.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image11}
+\end{figure}
+
+In questo caso il meccanismo di creazione della rete e associazione è
+diverso. In primo luogo è necessario un dispositivo che sia in grado di
+avviare un \textbf{IBSS} che inizia a trasmettere un beacon con SSID,
+BSSID e TSF (timer value). Gli altri dispositivi si connettono alla rete
+così creata e a turno si prendono l'onere di trasmettere il beacon
+identificativo. In questo caso non ci sono obblighi legati alla
+sicurezza/crittografia/autenticazione.
+
+\paragraph{WiFi-Direct o P2P}\label{wifi-direct-o-p2p}
+
+Standard a livello applicazione che permette a due dispositivi di connettersi
+tra loro senza infrastruttura. Questo avviene perché un dispositivo agisce come
+soft access point (AP) o \textbf{group-owner} (\textbf{GO}), mentre gli altri si
+connettono come se fossero delle normali stazioni. Tali ruoli sono decisi nelle
+fasi preliminari di connessione e possono cambiare nel tempo a seguito di una
+ri-negoziazione. Lo standard non vieta la possibilità di creare multigruppi.
+
+La scoperta di un gruppo da parte di una stazione avviene inviando un messaggio
+sonda (probe) per individuare dei GO (di conseguenza dei gruppi) o altri
+dispositivi che non appartengono ad alcun gruppo, nel quale vengono specificate
+le caratteristiche del dispositivo. La risposta a questo messaggio, nel caso
+arrivi da un GO, contiene le caratteristiche del gruppo stesso. Nel caso si
+voglia formare un nuovo gruppo viene prima di tutto definito il dispositivo
+che avrà il ruolo di GO. Fatto ciò, viene effettuata una fase di
+\textbf{WPS (WiFi Proteced Set Up)}, ed infine stabiliti gli IP, mediante DHCP.
+Nel caso il gruppo sia già formato, invece, la parte di negoziazione viene
+saltata. L'SSID delle reti WiFi-Direct è della forma `DIRECT-randomNumber'.
+Una volta formato il gruppo, GO e clients possono andare in modalità risparmio energetico
+periodicamente, nei periodi di inattività.
+
+Il supporto per i dispositivi mobile però è abbastanza limitato, a differenza per
+esempio di TV o stampanti. Per ovviare a tale problema ci sono soluzioni a
+livello applicazione (o è possibile utilizzare dispositivi con il root, nel caso
+di Android).
+
+La differenza principale tra reti Wi-Fi Direct e MANETs è che nelle prime
+viene deciso un dispositivo che farà da access point e di conseguenza tutte le
+comunicazioni della rete dovranno fluire attraverso tale dispositivo. Nelle reti
+Ad-hoc invece è possibile implementare effettivamente il P2P, poichè ogni
+dispositivo è in grado di indirizzare i propri messaggi verso tutte le altre
+stazioni della rete.
+
+I vantaggi delle MANET rispetto al Wi-Fi Direct sono la scalabilità e la
+capacità di gestire cambi di topologia dinamici, unito al fatto che il
+protocollo per reti ad-hoc è molto semplice. Dall'altro canto però nelle MANET
+non è prevista alcuna funzionalità di sicurezza o crittografia automatica,
+previsti invece dal Wi-Fi Direct, ed inoltre la ``scoperta'' di altri dispositivi
+non viene fatta in automatico (in Wi-Fi Direct è prevista dal protocollo).
+
+\section{802.15 Personal Area Network}\label{personal-area-network}
+
+L'obiettivo di questo standard è di definire una rete wireless a corto
+raggio e con consumi ridotti.
+
+\subsection{IEEE 802.15.1 - Bluetooth}
+L'idea fondamentale di \textbf{Bluetooth} è di fornire un'interfaccia comune per
+le comunicazioni wireless ad-hoc, mantenendo:
+\begin{itemize}
+  \item costi bassi;
+  \item raggio d'azione piuttosto corto: il range è 1-100m ma tipicamente non si
+        va oltre i 10m;
+  \item limitando il consumo energetico: infatti Bluetooth consuma meno sia del
+        3G che del Wi-Fi.
+\end{itemize}
+Cercando di mantenere una velocità di trasmissione accettabile (2.1Mbps).
+Tale tecnologia sfrutta la banda a 2.4GHz che, però, essendo libera, è
+utilizzata da molte altre tecnologie.
+
+Bluetooth utilizza 2 tipologie di accesso al canale:
+\begin {itemize}
+  \item \textbf{FHSS (Frequency Hopping Spread Spectrum) con TDD (Time Division
+        Duplex)}, cioè la frequenza di comunicazione viene cambiata in un modo
+        pseudo-random noto sia al trasmettitore che al ricevente, simulando che
+        il canale di comunicazione sia full duplex anche se è half duplex (viene
+        simulato un canale che può essere utilizzato per l'invio e la ricezione
+        simultanea con un canale che permette solo una di queste due alla volta);
+  \item \textbf{AFH (Adaptive Frequency Hopping)}, una variante del FHSS nella
+        quale si cerca di evitare di utilizzare dei canali che sono già in uso
+        da altri dispositivi.
+\end{itemize}
+
+Un dispositivo che utilizza Bluetooth può essere in uno dei seguenti stati:
+\begin{itemize}
+  \item Stand-by: quando è disconnesso dalla rete;
+  \item Inquiry: quando sta cercando altri dispositivi Bluetooth;
+  \item Page: quando è connesso ad un altro dispositivo;
+  \item Connected: quando è parte di una piconet;
+  \item Parked: quando è addormentato per risparmiare più energia possibile;
+  \item Sniff: quando controlla il canale periodicamente al posto di essere
+        sempre in ascolto (risparmio energetico)
+  \item Hold: quando si addormenta per un determinato periodo, passato il quale
+        ritorna in uno stato attivo.
+\end{itemize}
+
+Questa tecnologia prevede che un certo dispositivo implementi uno o più profili,
+ovvero una serie di protocolli che definiscono lo scopo per il quale Bluetooth è
+sfruttato (esempi di profili sono: trasmissione di file, telefonia cordless,
+accesso rete LAN, sincronizzazione, ...).
+
+Tramite il Bluetooth i dispositivi creano delle reti a stella chiamate
+\textbf{piconet}. In ogni piconet è presente un master e al massimo 7 slave
+attivi (ce ne possono essere più di 200 in stato non attivi)
+
+Più piconet possono essere unite per formare una \textbf{scatternet}: in questo
+caso la congiunzione tra le due reti avviene tramite uno dei dispositivi, con la
+limitazione che questo non può essere master in entrambe le reti che unisce (può
+essere master in una e slave nell'altra o slave in entrambe).
+
+\subsubsection{BLE - Bluetooth Low Energy}
+BLE è un'evoluzione del classico Bluetooth, rilasciata nel 2010, che ne migliora
+le performance. Infatti BLE, oltre ad essere più veloce, consuma meno energia ed
+è meno costoso. Ciò deriva dal fatto che il chip responsabile delle trasmissioni
+è inattivo per la maggior parte del tempo ed è stata diminuita la dimensione
+massima dei pacchetti scambiati. Oltre a ciò BLE aggiunge nuovi profili:
+\begin{itemize}
+  \item Health care;
+  \item Sport e fitness;
+  \item Sensori di vari tipo (per monitorare l'ambiente o i dati degli utenti);
+  \item Per la localizzazione.
+\end{itemize}
+
+\subsection{IEEE 802.15.4}
+Lo IEEE 802.15.4 è uno standard per le comunicazione nelle PAN a bassissimo:
+\begin{itemize}
+  \item costo;
+  \item velocità;
+  \item energia.
+\end{itemize}
+
+I dispositivi che lo sfruttano sono pensati per avere una batteria che dura
+molto a lungo (anche un paio d'anni), di facile utilizzo e basso costo. Tale
+standard è utilizzato per esempio nei giocattoli interattivi e per reti
+domestiche.
+
+La banda utilizzata è sempre quella a 2,4GHz, poiché libera, al quale viene
+aggiunta una banda a 868MHz, in Europa, e a 915MHz, negli USA.
+
+I dispositivi che sfruttano lo IEEE 802.15.4 possono essere divisi in
+\textbf{full function device (FFD)}, i quali implementano tutte le funzionalità
+previste dal protocollo, \textbf{reduced function device (RFD)}, che invece ne
+prevedono solamente un sottoinsieme e possono essere solamente impiegati come
+foglie nelle reti, e \textbf{PAN coordinator}, che hanno lo scopo di fare da
+coordinatori alla rete.
+
+Nelle reti con topologia a stella ci sarà un PAN coordinator come nodo centrale
+e una combinazione qualsiasi delle altre due tipologie come foglie della rete.
+Nelle reti ad albero, invece, il PAN coordinator sarà la radice dell'albero, gli
+RFD le foglie, mentre gli FFD potranno essere sia foglie che nodi interni. In
+una rete P2P, invece, deve essere sempre presente almeno un PAN coordinator,
+tramite il quale passano le comunicazioni, ed inoltre è possibile che siano
+presenti anche altri collegamenti punto a punto tra gli altri nodi della rete.
+
+I frame (messaggi) che possono essere scambiati sono di 4 tipi:
+\begin{itemize}
+  \item Beacon, mandati in broadcast dal coordinator, contengono informazioni
+        sulla rete;
+  \item Command frames, usati per l'associazione/dissociazione, notifica di
+        conflitti, richiesta di dati e beacon, etc...;
+  \item Data frames, messaggi che trasportano i dati;
+  \item Acknowledgement frames, che notificano la ricezione dei dati con successo.
+\end{itemize}
+
+Nelle comunicazioni è possibile sia criptare i dati che validare l'autenticità
+dei dati.
+
+\subsubsection{ZigBee}
+Con ZigBee si intende una tecnologia basata sullo IEEE 802.15.4 (per i livelli
+fisico e MAC) utilizzata nell'automazione domestica, salute, collegamenti per
+gli interruttori della luce, telecomunicazione, ...
+
+Essa supporta vari tipologie di traffico, come traffico periodico (invio, il
+dispositivo dorme per un certo periodo, e poi invia nuovi dati), intermittente
+(il dispositivo è svegliato solo all'occorrenza), con bassa latenza (effettuare
+ l'invio di dati entro un certo limite).
+
+I dispositivi ZigBee si dividono in:
+\begin{itemize}
+  \item \textbf{ZigBee Coordinator} (ZC): il più potente dei 3, si occupa della
+        coordinazione di rete ed eventualmente anche della gestione della chiavi
+        per la gestione della sicurezza;
+  \item \textbf{ZigBee Router} (ZR): con il compito di passare i dati da un
+        dispositivo all'altro;
+  \item \textbf{ZigBee End Device} (ZED): non si occupa dell'instradamento, ma è
+        il nodo terminale in una rete.
+\end{itemize}
+
+Sfruttando questi dispositivi è quindi possibile creare differenti tipologie di
+reti:
+\begin{itemize}
+  \item A stella: con un ZC centrale e dispositivi ZED direttamente collegato ad
+        esso;
+  \item Ad albero: con un ZC radice, ZR come nodi interni e ZED come foglie,
+        sfrutta il routing gerarchico per l'instradamento dei pacchetti;
+  \item Mesh: reti con comunicazione P2P.
+\end{itemize}
+
+\subsubsection{6LowPan}
+Con il termine 6LowPan ci si riferisce all'utilizzo di IPv6 nelle WPAN a basso
+consumo energetico, le quali sfruttano 802.15.4 nei livelli più bassi (PHY/MAC).
+Tale supporto agli IP è stato implementato poichè per gli IP esiste già una
+infrastruttura consolidata e dispositivi IP-based possono essere messi in
+comunicazione tra loro direttamente, senza la necessità di gateways o proxies.
+
+Le problematiche principali di utilizzare IPv6 con dei sottostrati basati
+sull'802.15.4 è il calcolo di come dividere gli header dei pacchetti (nello
+strato MAC sono gestiti pacchetti di grandezza al massimo 25 otteti, un header
+IPv6 è di 40) ed in generale la frammentazione dei pacchetti. Oltre a questi, IP
+assume che i dispositivi siano sempre attivi, cosa non vera per i dispositivi
+che sfruttano 802.15.4, che devono limitare lo spreco di energia. Un ulteriore
+problema è il multicast, previsto da IP ma non supportato dall'802.15.4 perché
+troppo oneroso in termini di energia.
+
+Per ovviare ai problemi di dimensionalità dei pacchetti IP, 6LowPan sfrutta la
+compressione dei dati, eliminando anche informazioni dagli header che possono
+essere dedotte dal contesto, e frammenta i pacchetti, evitando di ripetere ad
+ogni pacchetto l'header IP.
